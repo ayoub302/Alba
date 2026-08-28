@@ -2,6 +2,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "env": {
+    "VITE_API_URL": "https://alba-g4jq.onrender.com/api",
+    "VITE_AUTH0_DOMAIN": "dev-uwowt36tx31qj7v5.us.auth0.com",
+    "VITE_AUTH0_CLIENT_ID": "FzBHEQmqJWfdZRvYrU4ipPc61ehLasBf",
+    "VITE_AUTH0_AUDIENCE": "belleza-arabe-api"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
