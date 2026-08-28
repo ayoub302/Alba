@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import LoginButton from "./LoginButton";
+import { Menu, X } from "lucide-react";
 
 const navLeft = [
   { label: "Inicio", href: "#inicio" },
@@ -36,103 +37,40 @@ export default function Navbar() {
   return (
     <>
       <header
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 50,
-          transition: "all 0.5s ease",
-          background: scrolled
-            ? "rgba(245,235,220,0.95)"
-            : "linear-gradient(to bottom, rgba(245,235,220,0.9), transparent)",
-          backdropFilter: scrolled ? "blur(14px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(183,142,86,0.2)" : "none",
-          padding: scrolled ? "8px 0" : "16px 0",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+          scrolled
+            ? "bg-[#f5ebdc]/95 backdrop-blur-xl border-b border-[#b78e56]/20 py-2"
+            : "bg-gradient-to-b from-[#f5ebdc]/90 to-transparent py-4"
+        }`}
       >
-        <div
-          style={{
-            maxWidth: "1280px",
-            margin: "0 auto",
-            padding: "0 1.5rem",
-            display: "grid",
-            gridTemplateColumns: "1fr auto 1fr",
-            alignItems: "center",
-            gap: "1rem",
-          }}
-        >
-          {/* Navegación izquierda */}
-          <nav
-            style={{
-              display: "none",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              gap: "2rem",
-            }}
-            className="lg-flex"
-          >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4">
+          {/* Navegación izquierda - Desktop */}
+          <nav className="hidden lg:flex items-center justify-end gap-6 xl:gap-8">
             {navLeft.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                style={{
-                  position: "relative",
-                  padding: "8px 0",
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  letterSpacing: "0.12em",
-                  color: "#5c4033",
-                  textTransform: "uppercase",
-                  textDecoration: "none",
-                  transition: "color 0.3s ease",
-                }}
-                onMouseEnter={(e) => (e.target.style.color = "#b78e56")}
-                onMouseLeave={(e) => (e.target.style.color = "#5c4033")}
+                className="relative py-2 text-[11px] xl:text-[13px] font-light tracking-[0.12em] text-[#5c4033] hover:text-[#b78e56] transition-colors duration-300 group uppercase whitespace-nowrap"
               >
                 {link.label}
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: "-2px",
-                    left: "50%",
-                    width: 0,
-                    height: "2px",
-                    background: "#b78e56",
-                    transition: "all 0.3s ease",
-                    borderRadius: "2px",
-                  }}
-                  className="nav-underline"
-                />
+                <span className="absolute -bottom-0.5 left-1/2 w-0 h-[1.5px] bg-[#b78e56] transition-all duration-300 ease-out group-hover:w-full group-hover:left-0" />
               </a>
             ))}
           </nav>
 
-          {/* LOGO */}
+          {/* LOGO - Responsive */}
           <a
             href="#inicio"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-            }}
+            className="flex items-center justify-center shrink-0"
           >
             <div
-              style={{
-                position: "relative",
-                width: scrolled ? 85 : 120,
-                height: scrolled ? 85 : 120,
-                transition: "all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+              className={`relative transition-all duration-500 ease-out ${
+                scrolled
+                  ? "w-16 h-16 md:w-20 md:h-20"
+                  : "w-20 h-20 md:w-28 md:h-28"
+              }`}
             >
-              <svg
-                viewBox="0 0 120 120"
-                style={{ width: "100%", height: "100%" }}
-              >
+              <svg viewBox="0 0 120 120" className="w-full h-full">
                 <defs>
                   <linearGradient
                     id="albaGold"
@@ -317,126 +255,43 @@ export default function Navbar() {
             </div>
           </a>
 
-          {/* Navegación derecha + CTA + LoginButton */}
-          <div
-            style={{
-              display: "none",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              gap: "2rem",
-            }}
-            className="lg-flex"
-          >
-            <nav style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          {/* Navegación derecha + CTA + LoginButton - Desktop */}
+          <div className="hidden lg:flex items-center justify-start gap-4 xl:gap-8">
+            <nav className="flex items-center gap-4 xl:gap-8">
               {navRight.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  style={{
-                    position: "relative",
-                    padding: "8px 0",
-                    fontSize: "14px",
-                    fontWeight: 400,
-                    letterSpacing: "0.12em",
-                    color: "#5c4033",
-                    textTransform: "uppercase",
-                    textDecoration: "none",
-                    transition: "color 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => (e.target.style.color = "#b78e56")}
-                  onMouseLeave={(e) => (e.target.style.color = "#5c4033")}
+                  className="relative py-2 text-[11px] xl:text-[13px] font-light tracking-[0.12em] text-[#5c4033] hover:text-[#b78e56] transition-colors duration-300 group uppercase whitespace-nowrap"
                 >
                   {link.label}
+                  <span className="absolute -bottom-0.5 left-1/2 w-0 h-[1.5px] bg-[#b78e56] transition-all duration-300 ease-out group-hover:w-full group-hover:left-0" />
                 </a>
               ))}
             </nav>
 
             <Link
               to="/reserva"
-              style={{
-                position: "relative",
-                padding: "10px 28px",
-                background: "transparent",
-                border: "2px solid #b78e56",
-                color: "#5c4033",
-                fontSize: "12px",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: "0.15em",
-                textDecoration: "none",
-                overflow: "hidden",
-                transition: "all 0.3s ease",
-                borderRadius: "4px",
-                display: "inline-block",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#f5ebdc";
-                e.currentTarget.querySelector(".btn-fill").style.transform =
-                  "scaleX(1)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "#5c4033";
-                e.currentTarget.querySelector(".btn-fill").style.transform =
-                  "scaleX(0)";
-              }}
+              className="relative px-5 xl:px-7 py-2 xl:py-2.5 bg-transparent border-2 border-[#b78e56] text-[#5c4033] font-medium text-[10px] xl:text-xs uppercase tracking-[0.15em] overflow-hidden group transition-colors duration-300 hover:text-[#f5ebdc]"
             >
-              <span
-                className="btn-fill"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "#b78e56",
-                  transform: "scaleX(0)",
-                  transformOrigin: "left",
-                  transition: "transform 0.3s ease",
-                  zIndex: -1,
-                }}
-              />
-              <span style={{ position: "relative", zIndex: 1 }}>
-                Reservar Cita
-              </span>
+              <span className="absolute inset-0 bg-[#b78e56] scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100" />
+              <span className="relative z-10">Reservar Cita</span>
             </Link>
 
-            {/* 👇 AQUÍ VA EL LoginButton */}
             <LoginButton />
           </div>
 
           {/* Mobile hamburger */}
           <button
-            style={{
-              display: "flex",
-              justifySelf: "end",
-              padding: "8px",
-              background: "none",
-              border: "none",
-              color: "#b78e56",
-              cursor: "pointer",
-            }}
-            className="lg-hidden"
+            className="lg:hidden justify-self-end p-2 text-[#b78e56] hover:text-[#c9a86a] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Abrir menú"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              {mobileOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </>
-              )}
-            </svg>
+            {mobileOpen ? (
+              <X className="w-5 h-5 md:w-6 md:h-6" />
+            ) : (
+              <Menu className="w-5 h-5 md:w-6 md:h-6" />
+            )}
           </button>
         </div>
       </header>
@@ -449,21 +304,9 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.3 }}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              zIndex: 40,
-              background: "rgba(245,235,220,0.98)",
-              backdropFilter: "blur(14px)",
-              borderBottom: "1px solid rgba(183,142,86,0.2)",
-              paddingTop: "96px",
-              pointerEvents: mobileOpen ? "auto" : "none",
-            }}
-            className="lg-hidden"
+            className="fixed top-0 left-0 right-0 z-40 bg-[#f5ebdc]/98 backdrop-blur-xl border-b border-[#b78e56]/20 pt-20 md:pt-24 lg:hidden"
           >
-            <div style={{ padding: "1.5rem" }}>
+            <div className="p-4 md:p-6 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
               {allLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -472,28 +315,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.08 }}
-                  style={{
-                    display: "block",
-                    padding: "12px 16px",
-                    fontSize: "0.875rem",
-                    fontWeight: 400,
-                    letterSpacing: "0.05em",
-                    color: "#5c4033",
-                    textTransform: "uppercase",
-                    textDecoration: "none",
-                    borderLeft: "2px solid transparent",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.color = "#b78e56";
-                    e.target.style.borderLeftColor = "#b78e56";
-                    e.target.style.background = "rgba(183,142,86,0.05)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.color = "#5c4033";
-                    e.target.style.borderLeftColor = "transparent";
-                    e.target.style.background = "transparent";
-                  }}
+                  className="block py-3 px-4 text-sm md:text-base font-light tracking-wider text-[#5c4033] hover:text-[#b78e56] hover:bg-[#b78e56]/5 border-l-2 border-transparent hover:border-[#b78e56] transition-all uppercase"
                 >
                   {link.label}
                 </motion.a>
@@ -502,39 +324,16 @@ export default function Navbar() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
+                className="space-y-3 mt-2"
               >
                 <Link
                   to="/reserva"
                   onClick={() => setMobileOpen(false)}
-                  style={{
-                    display: "block",
-                    marginTop: "1rem",
-                    padding: "14px",
-                    background: "#b78e56",
-                    color: "#f5ebdc",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    textAlign: "center",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                    textDecoration: "none",
-                    borderRadius: "4px",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = "#c9a86a";
-                    e.target.style.transform = "scale(1.02)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = "#b78e56";
-                    e.target.style.transform = "scale(1)";
-                  }}
+                  className="block py-3 px-4 bg-[#b78e56] text-[#f5ebdc] font-medium text-sm md:text-base text-center uppercase tracking-wider hover:bg-[#c9a86a] transition-colors rounded"
                 >
                   Reservar Cita
                 </Link>
-
-                {/* 👇 LoginButton en móvil también */}
-                <div style={{ marginTop: "1rem", textAlign: "center" }}>
+                <div className="flex justify-center">
                   <LoginButton />
                 </div>
               </motion.div>
@@ -545,18 +344,6 @@ export default function Navbar() {
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=swap');
-        
-        @media (min-width: 1024px) {
-          .lg-flex { display: flex !important; }
-          .lg-hidden { display: none !important; }
-        }
-        .nav-underline {
-          transition: all 0.3s ease;
-        }
-        a:hover .nav-underline {
-          width: 100% !important;
-          left: 0 !important;
-        }
       `}</style>
     </>
   );

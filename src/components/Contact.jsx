@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-// 👇 CORREGIDO - Usa variable de entorno
+// 👇 Usa variable de entorno
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 const contactItems = [
@@ -100,15 +100,19 @@ export default function Contact() {
   return (
     <section
       id="contacto"
-      style={{ padding: "8rem 1.5rem", background: "#faf6f0" }}
+      style={{
+        padding: "6rem 1rem",
+        background: "#faf6f0",
+      }}
     >
       <div
         style={{
           maxWidth: "1100px",
           margin: "0 auto",
           display: "grid",
-          gap: "4rem",
+          gap: "3rem",
           alignItems: "start",
+          gridTemplateColumns: "1fr",
         }}
         className="contact-grid"
       >
@@ -118,13 +122,14 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          style={{ padding: "0 0.5rem" }}
         >
           <div
             style={{
               display: "flex",
               alignItems: "center",
               gap: "0.75rem",
-              fontSize: "0.75rem",
+              fontSize: "clamp(0.65rem, 0.8vw, 0.75rem)",
               fontWeight: 500,
               letterSpacing: "0.2em",
               textTransform: "uppercase",
@@ -132,17 +137,17 @@ export default function Contact() {
             }}
           >
             <span
-              style={{ width: "32px", height: "1px", background: "#b78e56" }}
+              style={{ width: "28px", height: "1px", background: "#b78e56" }}
             />
             Contacto
           </div>
 
           <h2
             style={{
-              fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
               fontWeight: 300,
               color: "#5c4033",
-              marginTop: "1rem",
+              marginTop: "0.75rem",
               fontFamily: "'Georgia', serif",
               lineHeight: 1.1,
             }}
@@ -156,6 +161,7 @@ export default function Contact() {
               fontWeight: 300,
               fontFamily: "'Georgia', serif",
               lineHeight: 1.7,
+              fontSize: "clamp(0.9rem, 1.1vw, 1rem)",
             }}
           >
             Si tienes cualquier duda o quieres más información, completa el
@@ -181,7 +187,7 @@ export default function Contact() {
             >
               <label
                 style={{
-                  fontSize: "0.8rem",
+                  fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                   fontWeight: 500,
                   color: "#5c4033",
                   letterSpacing: "0.05em",
@@ -198,15 +204,17 @@ export default function Contact() {
                 required
                 placeholder="Tu nombre"
                 style={{
-                  padding: "14px 18px",
+                  padding: "clamp(10px, 1.2vw, 14px) clamp(14px, 1.5vw, 18px)",
                   border: "1px solid rgba(183,142,86,0.3)",
                   borderRadius: "8px",
                   background: "#fff",
                   color: "#5c4033",
                   fontFamily: "'Georgia', serif",
-                  fontSize: "1rem",
+                  fontSize: "clamp(0.9rem, 1vw, 1rem)",
                   outline: "none",
                   transition: "border-color 0.3s ease",
+                  width: "100%",
+                  boxSizing: "border-box",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#b78e56")}
                 onBlur={(e) =>
@@ -224,7 +232,7 @@ export default function Contact() {
             >
               <label
                 style={{
-                  fontSize: "0.8rem",
+                  fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                   fontWeight: 500,
                   color: "#5c4033",
                   letterSpacing: "0.05em",
@@ -242,15 +250,17 @@ export default function Contact() {
                 maxLength={9}
                 placeholder="Ej: 688766728"
                 style={{
-                  padding: "14px 18px",
+                  padding: "clamp(10px, 1.2vw, 14px) clamp(14px, 1.5vw, 18px)",
                   border: "1px solid rgba(183,142,86,0.3)",
                   borderRadius: "8px",
                   background: "#fff",
                   color: "#5c4033",
                   fontFamily: "'Georgia', serif",
-                  fontSize: "1rem",
+                  fontSize: "clamp(0.9rem, 1vw, 1rem)",
                   outline: "none",
                   transition: "border-color 0.3s ease",
+                  width: "100%",
+                  boxSizing: "border-box",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#b78e56")}
                 onBlur={(e) =>
@@ -268,7 +278,7 @@ export default function Contact() {
             >
               <label
                 style={{
-                  fontSize: "0.8rem",
+                  fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                   fontWeight: 500,
                   color: "#5c4033",
                   letterSpacing: "0.05em",
@@ -285,16 +295,18 @@ export default function Contact() {
                 rows={4}
                 placeholder="Escribe tu consulta o duda"
                 style={{
-                  padding: "14px 18px",
+                  padding: "clamp(10px, 1.2vw, 14px) clamp(14px, 1.5vw, 18px)",
                   border: "1px solid rgba(183,142,86,0.3)",
                   borderRadius: "8px",
                   background: "#fff",
                   color: "#5c4033",
                   fontFamily: "'Georgia', serif",
-                  fontSize: "1rem",
+                  fontSize: "clamp(0.9rem, 1vw, 1rem)",
                   outline: "none",
                   resize: "vertical",
                   transition: "border-color 0.3s ease",
+                  width: "100%",
+                  boxSizing: "border-box",
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "#b78e56")}
                 onBlur={(e) =>
@@ -303,6 +315,7 @@ export default function Contact() {
               />
             </div>
 
+            {/* ---- MENSAJE DE ERROR ---- */}
             <AnimatePresence>
               {error && (
                 <motion.div
@@ -313,8 +326,8 @@ export default function Contact() {
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "1rem",
-                    padding: "1.25rem 1.5rem",
+                    gap: "0.75rem",
+                    padding: "clamp(0.75rem, 1vw, 1.25rem) clamp(1rem, 1.5vw, 1.5rem)",
                     background: "#fdf9f5",
                     border: "1px solid rgba(163,53,38,0.25)",
                     borderRadius: "14px",
@@ -323,8 +336,8 @@ export default function Contact() {
                 >
                   <div
                     style={{
-                      width: "36px",
-                      height: "36px",
+                      width: "clamp(30px, 3vw, 36px)",
+                      height: "clamp(30px, 3vw, 36px)",
                       borderRadius: "50%",
                       border: "1px solid rgba(163,53,38,0.35)",
                       display: "flex",
@@ -342,7 +355,7 @@ export default function Contact() {
                         fontStyle: "italic",
                         color: "#7a2e24",
                         margin: 0,
-                        fontSize: "1rem",
+                        fontSize: "clamp(0.85rem, 1vw, 1rem)",
                         fontFamily: "'Georgia', serif",
                       }}
                     >
@@ -352,7 +365,7 @@ export default function Contact() {
                       style={{
                         color: "#9a5347",
                         margin: "5px 0 0 0",
-                        fontSize: "0.875rem",
+                        fontSize: "clamp(0.75rem, 0.85vw, 0.875rem)",
                         lineHeight: 1.55,
                         fontFamily: "system-ui, sans-serif",
                       }}
@@ -372,10 +385,10 @@ export default function Contact() {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: "0.5rem",
-                padding: "16px 32px",
+                padding: "clamp(12px, 1.5vw, 16px) clamp(24px, 2.5vw, 32px)",
                 background: enviando ? "#c4b49a" : "#b78e56",
                 color: "#faf6f0",
-                fontSize: "0.875rem",
+                fontSize: "clamp(0.75rem, 0.85vw, 0.875rem)",
                 fontWeight: 500,
                 letterSpacing: "0.05em",
                 textTransform: "uppercase",
@@ -385,6 +398,8 @@ export default function Contact() {
                 transition: "all 0.3s ease",
                 fontFamily: "'Georgia', serif",
                 opacity: enviando ? 0.7 : 1,
+                width: "100%",
+                boxSizing: "border-box",
               }}
               onMouseEnter={(e) => {
                 if (!enviando) {
@@ -404,6 +419,7 @@ export default function Contact() {
             </button>
           </form>
 
+          {/* ---- MENSAJE DE ÉXITO ---- */}
           <AnimatePresence>
             {enviado && (
               <motion.div
@@ -415,8 +431,8 @@ export default function Contact() {
                   marginTop: "1.25rem",
                   display: "flex",
                   alignItems: "flex-start",
-                  gap: "1rem",
-                  padding: "1.25rem 1.5rem",
+                  gap: "0.75rem",
+                  padding: "clamp(0.75rem, 1vw, 1.25rem) clamp(1rem, 1.5vw, 1.5rem)",
                   background: "#fffdf9",
                   border: "1px solid rgba(183,142,86,0.28)",
                   borderRadius: "14px",
@@ -426,8 +442,8 @@ export default function Contact() {
               >
                 <div
                   style={{
-                    width: "36px",
-                    height: "36px",
+                    width: "clamp(30px, 3vw, 36px)",
+                    height: "clamp(30px, 3vw, 36px)",
                     borderRadius: "50%",
                     border: "1px solid rgba(183,142,86,0.4)",
                     display: "flex",
@@ -445,7 +461,7 @@ export default function Contact() {
                       fontStyle: "italic",
                       color: "#5c4033",
                       margin: 0,
-                      fontSize: "1.05rem",
+                      fontSize: "clamp(0.9rem, 1.05vw, 1.05rem)",
                     }}
                   >
                     Mensaje enviado con éxito
@@ -454,7 +470,7 @@ export default function Contact() {
                     style={{
                       color: "#8a7a5c",
                       margin: "5px 0 0 0",
-                      fontSize: "0.875rem",
+                      fontSize: "clamp(0.75rem, 0.85vw, 0.875rem)",
                       lineHeight: 1.55,
                       fontFamily: "system-ui, sans-serif",
                     }}
@@ -483,7 +499,7 @@ export default function Contact() {
               style={{
                 border: "1px solid rgba(201,160,108,0.35)",
                 borderRadius: "19px",
-                padding: "3rem 2.75rem",
+                padding: "clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 2.5vw, 2.75rem)",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -502,8 +518,8 @@ export default function Contact() {
                   position: "absolute",
                   top: "-50px",
                   right: "-50px",
-                  width: "190px",
-                  height: "190px",
+                  width: "clamp(120px, 15vw, 190px)",
+                  height: "clamp(120px, 15vw, 190px)",
                   borderRadius: "50%",
                   border: "1px solid rgba(201,160,108,0.22)",
                 }}
@@ -513,8 +529,8 @@ export default function Contact() {
                   position: "absolute",
                   top: "-14px",
                   right: "-14px",
-                  width: "110px",
-                  height: "110px",
+                  width: "clamp(70px, 10vw, 110px)",
+                  height: "clamp(70px, 10vw, 110px)",
                   borderRadius: "50%",
                   border: "1px solid rgba(201,160,108,0.18)",
                 }}
@@ -537,7 +553,7 @@ export default function Contact() {
                   />
                   <p
                     style={{
-                      fontSize: "0.7rem",
+                      fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                       fontWeight: 600,
                       letterSpacing: "0.28em",
                       textTransform: "uppercase",
@@ -551,7 +567,7 @@ export default function Contact() {
 
                 <h3
                   style={{
-                    fontSize: "clamp(1.9rem, 3vw, 2.4rem)",
+                    fontSize: "clamp(1.5rem, 3vw, 2.4rem)",
                     fontWeight: 400,
                     fontStyle: "italic",
                     color: "#f6efe1",
@@ -581,8 +597,8 @@ export default function Contact() {
                     >
                       <div
                         style={{
-                          width: "38px",
-                          height: "38px",
+                          width: "clamp(32px, 3.5vw, 38px)",
+                          height: "clamp(32px, 3.5vw, 38px)",
                           borderRadius: "50%",
                           border: "1px solid rgba(201,160,108,0.4)",
                           display: "flex",
@@ -600,7 +616,7 @@ export default function Contact() {
                       <div style={{ paddingTop: "6px" }}>
                         <p
                           style={{
-                            fontSize: "0.68rem",
+                            fontSize: "clamp(0.55rem, 0.65vw, 0.68rem)",
                             fontWeight: 600,
                             letterSpacing: "0.14em",
                             textTransform: "uppercase",
@@ -612,7 +628,7 @@ export default function Contact() {
                         </p>
                         <p
                           style={{
-                            fontSize: "1.02rem",
+                            fontSize: "clamp(0.85rem, 1vw, 1.02rem)",
                             color: "#f6efe1",
                             margin: 0,
                             lineHeight: 1.6,
@@ -670,8 +686,8 @@ export default function Contact() {
                 >
                   <div
                     style={{
-                      width: "38px",
-                      height: "38px",
+                      width: "clamp(32px, 3.5vw, 38px)",
+                      height: "clamp(32px, 3.5vw, 38px)",
                       borderRadius: "50%",
                       border: "1px solid rgba(201,160,108,0.4)",
                       display: "flex",
@@ -685,7 +701,7 @@ export default function Contact() {
                   <div style={{ flex: 1, paddingTop: "6px" }}>
                     <p
                       style={{
-                        fontSize: "0.68rem",
+                        fontSize: "clamp(0.55rem, 0.65vw, 0.68rem)",
                         fontWeight: 600,
                         letterSpacing: "0.14em",
                         textTransform: "uppercase",
@@ -721,7 +737,7 @@ export default function Contact() {
                               alignItems: "baseline",
                               gap: "0.6rem",
                               fontFamily: "'Georgia', serif",
-                              fontSize: "0.94rem",
+                              fontSize: "clamp(0.8rem, 0.9vw, 0.94rem)",
                             }}
                           >
                             <span
@@ -791,7 +807,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          style={{ position: "relative" }}
+          style={{ position: "relative", padding: "0 0.5rem" }}
         >
           <div
             style={{
@@ -804,30 +820,37 @@ export default function Contact() {
             <img
               src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&q=80"
               alt="Salón de belleza"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+              loading="lazy"
             />
           </div>
           <div
             style={{
               position: "absolute",
-              bottom: "-1.5rem",
-              left: "-1.5rem",
+              bottom: "-0.75rem",
+              left: "0.5rem",
               background: "#faf6f0",
-              padding: "1.5rem",
+              padding: "clamp(0.75rem, 1.5vw, 1.5rem)",
               boxShadow: "0 20px 60px rgba(92,64,51,0.1)",
               borderRadius: "12px",
               border: "1px solid rgba(183,142,86,0.15)",
-              maxWidth: "220px",
+              maxWidth: "clamp(140px, 20vw, 220px)",
+              width: "auto",
             }}
           >
             <div style={{ display: "flex", gap: "4px", color: "#b78e56" }}>
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={16} fill="#b78e56" color="#b78e56" />
+                <Star key={i} size="clamp(12px, 1.2vw, 16px)" fill="#b78e56" color="#b78e56" />
               ))}
             </div>
             <p
               style={{
-                fontSize: "0.875rem",
+                fontSize: "clamp(0.7rem, 0.85vw, 0.875rem)",
                 fontWeight: 500,
                 color: "#5c4033",
                 marginTop: "8px",
@@ -838,7 +861,7 @@ export default function Contact() {
             </p>
             <p
               style={{
-                fontSize: "0.75rem",
+                fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
                 color: "#8a7a5c",
                 marginTop: "2px",
               }}
@@ -850,8 +873,23 @@ export default function Contact() {
       </div>
 
       <style>{`
-        @media (min-width: 900px) {
-          .contact-grid { grid-template-columns: 1.1fr 0.9fr !important; }
+        @media (min-width: 768px) {
+          .contact-grid {
+            grid-template-columns: 1.1fr 0.9fr !important;
+            gap: 4rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .contact-grid {
+            gap: 2rem !important;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .contact-grid {
+            gap: 5rem !important;
+          }
         }
       `}</style>
     </section>

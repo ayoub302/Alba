@@ -7,15 +7,16 @@ export default function PoliticaPrivacidad() {
       style={{
         background: "#faf6f0",
         minHeight: "100vh",
-        padding: "10rem 1.5rem 4rem",
+        padding:
+          "clamp(6rem, 14vw, 10rem) clamp(1rem, 3vw, 1.5rem) clamp(2rem, 5vw, 4rem)",
       }}
     >
       <div
         style={{
-          maxWidth: "900px",
+          maxWidth: "min(900px, 100%)",
           margin: "0 auto",
           background: "#fff",
-          padding: "3rem",
+          padding: "clamp(1.5rem, 4vw, 3rem)",
           borderRadius: "16px",
           boxShadow: "0 10px 40px rgba(92,64,51,0.06)",
         }}
@@ -27,31 +28,43 @@ export default function PoliticaPrivacidad() {
         >
           <h1
             style={{
-              fontSize: "2.5rem",
+              fontSize: "clamp(2rem, 5vw, 2.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginBottom: "1.5rem",
+              marginBottom: "clamp(0.75rem, 1.5vw, 1.5rem)",
             }}
           >
             Política de Privacidad
           </h1>
           <p
-            style={{ color: "#8a7a5c", lineHeight: 1.7, marginBottom: "2rem" }}
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              marginBottom: "2rem",
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
           >
             Última actualización: 24 de agosto de 2026
           </p>
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             1. Responsable del tratamiento
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             Peluquería Alba (en adelante, "el Titular") con domicilio social en
             Donostia Kalea, 6 bajo, 20100 Errenteria (Gipuzkoa), España. Correo
             electrónico de contacto: hola@peluqueriaalba.com
@@ -59,21 +72,32 @@ export default function PoliticaPrivacidad() {
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginTop: "2rem",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             2. Finalidad del tratamiento
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             Los datos personales facilitados a través de los formularios de
             contacto serán tratados con las siguientes finalidades:
           </p>
           <ul
-            style={{ color: "#8a7a5c", lineHeight: 1.7, paddingLeft: "1.5rem" }}
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              paddingLeft: "clamp(1rem, 2vw, 1.5rem)",
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
           >
             <li>
               Gestionar las consultas y solicitudes de información realizadas
@@ -92,20 +116,31 @@ export default function PoliticaPrivacidad() {
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginTop: "2rem",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             3. Legitimación
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             La base legal para el tratamiento de datos es:
           </p>
           <ul
-            style={{ color: "#8a7a5c", lineHeight: 1.7, paddingLeft: "1.5rem" }}
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              paddingLeft: "clamp(1rem, 2vw, 1.5rem)",
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
           >
             <li>
               <strong>Consentimiento del interesado:</strong> Al enviar el
@@ -124,16 +159,22 @@ export default function PoliticaPrivacidad() {
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginTop: "2rem",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             4. Conservación de los datos
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             Los datos se conservarán mientras se mantenga la relación comercial
             y, posteriormente, durante los plazos legalmente exigidos (por
             ejemplo, plazos fiscales). Cuando ya no sean necesarios para la
@@ -143,16 +184,22 @@ export default function PoliticaPrivacidad() {
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginTop: "2rem",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             5. Destinatarios
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             No se cederán datos a terceros, salvo obligación legal. Pueden tener
             acceso a los datos proveedores de servicios tecnológicos (hosting,
             email, etc.) que actúan como encargados del tratamiento bajo
@@ -161,20 +208,31 @@ export default function PoliticaPrivacidad() {
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginTop: "2rem",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             6. Derechos de los usuarios
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             Cualquier persona tiene derecho a:
           </p>
           <ul
-            style={{ color: "#8a7a5c", lineHeight: 1.7, paddingLeft: "1.5rem" }}
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              paddingLeft: "clamp(1rem, 2vw, 1.5rem)",
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
           >
             <li>Acceder a sus datos personales.</li>
             <li>Solicitar la rectificación o supresión.</li>
@@ -183,7 +241,14 @@ export default function PoliticaPrivacidad() {
             <li>Ejercer el derecho a la portabilidad de los datos.</li>
             <li>Retirar el consentimiento en cualquier momento.</li>
           </ul>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7, marginTop: "1rem" }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              marginTop: "1rem",
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             Puede ejercer estos derechos enviando un correo electrónico a
             hola@peluqueriaalba.com o una carta a la dirección indicada. También
             tiene derecho a presentar una reclamación ante la Agencia Española
@@ -192,26 +257,40 @@ export default function PoliticaPrivacidad() {
 
           <h2
             style={{
-              fontSize: "1.5rem",
+              fontSize: "clamp(1.2rem, 2.5vw, 1.5rem)",
               fontWeight: 600,
               color: "#5c4033",
-              marginTop: "2rem",
               marginBottom: "1rem",
+              marginTop: "clamp(1.5rem, 3vw, 2rem)",
             }}
           >
             7. Seguridad
           </h2>
-          <p style={{ color: "#8a7a5c", lineHeight: 1.7 }}>
+          <p
+            style={{
+              color: "#8a7a5c",
+              lineHeight: 1.7,
+              fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+            }}
+          >
             El Titular aplica las medidas técnicas y organizativas necesarias
             para garantizar la seguridad de los datos personales y evitar su
             alteración, pérdida, tratamiento o acceso no autorizado, conforme al
             RGPD y a la LOPDGDD.
           </p>
 
-          <div style={{ marginTop: "2.5rem" }}>
+          <div
+            style={{
+              marginTop: "clamp(1.5rem, 3vw, 2.5rem)",
+            }}
+          >
             <Link
               to="/"
-              style={{ color: "#b78e56", textDecoration: "underline" }}
+              style={{
+                color: "#b78e56",
+                textDecoration: "underline",
+                fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+              }}
             >
               ← Volver al inicio
             </Link>

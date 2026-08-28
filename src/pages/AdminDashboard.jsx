@@ -16,13 +16,18 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 
-// ✅ CORREGIDO - Usa variable de entorno
+// ============================================
+// CONFIGURACIÓN GLOBAL
+// ============================================
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 const WHATSAPP_NUMBER = "34688766728";
 
+// ============================================
+// ESTILOS RESPONSIVE CON CLAMP
+// ============================================
 const labelStyle = {
   display: "block",
-  fontSize: "0.75rem",
+  fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
   fontWeight: 500,
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -32,8 +37,8 @@ const labelStyle = {
 
 const textareaStyle = {
   width: "100%",
-  padding: "12px 14px",
-  fontSize: "0.9rem",
+  padding: "clamp(8px, 1vw, 12px) clamp(10px, 1.2vw, 14px)",
+  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
   fontFamily: "'Inter', sans-serif",
   color: "#5c4033",
   background: "#fff",
@@ -41,18 +46,20 @@ const textareaStyle = {
   borderRadius: "8px",
   outline: "none",
   resize: "vertical",
-  minHeight: "80px",
+  minHeight: "clamp(60px, 8vw, 80px)",
+  boxSizing: "border-box",
 };
 
 const buttonStyle = {
-  padding: "10px 24px",
+  padding: "clamp(6px, 0.8vw, 10px) clamp(12px, 1.5vw, 24px)",
   border: "none",
   borderRadius: "8px",
   cursor: "pointer",
-  fontSize: "0.85rem",
+  fontSize: "clamp(0.65rem, 0.75vw, 0.85rem)",
   fontWeight: 500,
   fontFamily: "'Inter', sans-serif",
   transition: "all 0.3s ease",
+  whiteSpace: "nowrap",
 };
 
 const modalOverlayStyle = {
@@ -64,20 +71,23 @@ const modalOverlayStyle = {
   alignItems: "center",
   justifyContent: "center",
   zIndex: 1000,
-  padding: "1rem",
+  padding: "clamp(0.5rem, 2vw, 1rem)",
 };
 
 const modalContentStyle = {
   background: "#fff",
   borderRadius: "16px",
-  maxWidth: "500px",
+  maxWidth: "min(500px, 95vw)",
   width: "100%",
-  padding: "2rem",
+  padding: "clamp(1rem, 2vw, 2rem)",
   boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
   maxHeight: "90vh",
   overflowY: "auto",
 };
 
+// ============================================
+// COMPONENTE: RESENA CARD (responsive)
+// ============================================
 function ResenaCard({
   resena,
   onPublicar,
@@ -95,18 +105,21 @@ function ResenaCard({
     setEliminando(false);
   };
 
+  const isMobile = window.innerWidth < 480;
+
   return (
     <div
       style={{
         background: "#fff",
         borderRadius: "8px",
-        padding: "1rem 1.25rem",
+        padding: "clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.2vw, 1.25rem)",
         marginBottom: "0.75rem",
         border: "1px solid rgba(183,142,86,0.1)",
         display: "flex",
+        flexDirection: isMobile ? "column" : "row",
         justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: "1rem",
+        alignItems: isMobile ? "stretch" : "flex-start",
+        gap: "clamp(0.5rem, 1vw, 1rem)",
       }}
     >
       <div style={{ flex: 1 }}>
@@ -114,7 +127,8 @@ function ResenaCard({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
+            gap: "clamp(0.4rem, 0.75vw, 0.75rem)",
+            flexWrap: "wrap",
             marginBottom: "4px",
           }}
         >
@@ -122,16 +136,26 @@ function ResenaCard({
             style={{
               fontWeight: 600,
               color: "#5c4033",
-              fontSize: "0.95rem",
+              fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
               fontFamily: "'Inter', sans-serif",
             }}
           >
             {resena.nombre}
           </span>
-          <span style={{ fontSize: "0.85rem", color: "#b78e56" }}>
+          <span
+            style={{
+              fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
+              color: "#b78e56",
+            }}
+          >
             {"⭐".repeat(resena.rating)}
           </span>
-          <span style={{ fontSize: "0.7rem", color: "#8a7a5c" }}>
+          <span
+            style={{
+              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+              color: "#8a7a5c",
+            }}
+          >
             {new Date(resena.creado).toLocaleDateString()}
           </span>
         </div>
@@ -139,7 +163,7 @@ function ResenaCard({
           style={{
             margin: "4px 0 0",
             color: "#6b5b45",
-            fontSize: "0.9rem",
+            fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
             fontFamily: "'Inter', sans-serif",
           }}
         >
@@ -147,14 +171,22 @@ function ResenaCard({
         </p>
         {resena.estado === "publicada" && resena.publicado && (
           <p
-            style={{ fontSize: "0.7rem", color: "#4CAF50", margin: "4px 0 0" }}
+            style={{
+              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+              color: "#4CAF50",
+              margin: "4px 0 0",
+            }}
           >
             ✅ Publicada el {new Date(resena.publicado).toLocaleDateString()}
           </p>
         )}
         {resena.estado === "rechazada" && (
           <p
-            style={{ fontSize: "0.7rem", color: "#a8452f", margin: "4px 0 0" }}
+            style={{
+              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+              color: "#a8452f",
+              margin: "4px 0 0",
+            }}
           >
             ❌ Rechazada
           </p>
@@ -162,15 +194,22 @@ function ResenaCard({
       </div>
 
       {showActions && (
-        <div style={{ display: "flex", gap: "0.5rem", flexShrink: 0 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: "0.5rem",
+            flexShrink: 0,
+            flexWrap: "wrap",
+          }}
+        >
           <button
             onClick={() => onPublicar(resena.id)}
             style={{
               ...buttonStyle,
-              padding: "6px 14px",
+              padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
               background: "#4CAF50",
               color: "#fff",
-              fontSize: "0.75rem",
+              fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
             }}
           >
             ✅ Publicar
@@ -179,10 +218,10 @@ function ResenaCard({
             onClick={() => onRechazar(resena.id)}
             style={{
               ...buttonStyle,
-              padding: "6px 14px",
+              padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
               background: "#e67e22",
               color: "#fff",
-              fontSize: "0.75rem",
+              fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
             }}
           >
             Rechazar
@@ -196,11 +235,11 @@ function ResenaCard({
           disabled={eliminando}
           style={{
             ...buttonStyle,
-            padding: "6px 14px",
+            padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
             background: "transparent",
             color: "#a8452f",
             border: "1px solid #a8452f",
-            fontSize: "0.75rem",
+            fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
           }}
         >
           {eliminando ? "..." : "🗑️ Eliminar"}
@@ -210,6 +249,9 @@ function ResenaCard({
   );
 }
 
+// ============================================
+// SECCIÓN: RESEÑAS
+// ============================================
 function ResenasSection({
   resenas,
   cargandoResenas,
@@ -231,11 +273,13 @@ function ResenasSection({
 
   return (
     <div>
+      {/* Estadísticas */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-          gap: "1rem",
+          gridTemplateColumns:
+            "repeat(auto-fit, minmax(min(100%, 120px), 1fr))",
+          gap: "clamp(0.5rem, 1vw, 1rem)",
           marginBottom: "1.5rem",
         }}
       >
@@ -249,13 +293,13 @@ function ResenasSection({
             style={{
               background: "#fff",
               borderRadius: "8px",
-              padding: "1rem",
+              padding: "clamp(0.5rem, 1vw, 1rem)",
               border: "1px solid rgba(183,142,86,0.1)",
             }}
           >
             <p
               style={{
-                fontSize: "0.7rem",
+                fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                 color: "#8a7a5c",
                 margin: "0 0 4px",
               }}
@@ -264,7 +308,7 @@ function ResenasSection({
             </p>
             <p
               style={{
-                fontSize: "1.5rem",
+                fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
                 fontWeight: 300,
                 color: stat.color,
                 margin: 0,
@@ -276,12 +320,13 @@ function ResenasSection({
         ))}
       </div>
 
+      {/* Pendientes */}
       {pendientes.length > 0 && (
         <div style={{ marginBottom: "2rem" }}>
           <h3
             style={{
               color: "#e67e22",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               marginBottom: "0.75rem",
             }}
           >
@@ -299,12 +344,13 @@ function ResenasSection({
         </div>
       )}
 
+      {/* Publicadas */}
       {publicadas.length > 0 && (
         <div style={{ marginBottom: "2rem" }}>
           <h3
             style={{
               color: "#4CAF50",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               marginBottom: "0.75rem",
             }}
           >
@@ -323,12 +369,13 @@ function ResenasSection({
         </div>
       )}
 
+      {/* Rechazadas */}
       {rechazadas.length > 0 && (
         <div>
           <h3
             style={{
               color: "#a8452f",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               marginBottom: "0.75rem",
             }}
           >
@@ -357,7 +404,9 @@ function ResenasSection({
   );
 }
 
-// 👇 Componente para mostrar los mensajes
+// ============================================
+// SECCIÓN: MENSAJES
+// ============================================
 function MensajesSection({
   mensajes,
   cargandoMensajes,
@@ -375,14 +424,17 @@ function MensajesSection({
 
   const pendientes = mensajes.filter((m) => m.estado === "pendiente");
   const leidos = mensajes.filter((m) => m.estado === "leido");
+  const isMobile = window.innerWidth < 480;
 
   return (
     <div>
+      {/* Estadísticas */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-          gap: "1rem",
+          gridTemplateColumns:
+            "repeat(auto-fit, minmax(min(100%, 120px), 1fr))",
+          gap: "clamp(0.5rem, 1vw, 1rem)",
           marginBottom: "1.5rem",
         }}
       >
@@ -395,13 +447,13 @@ function MensajesSection({
             style={{
               background: "#fff",
               borderRadius: "8px",
-              padding: "1rem",
+              padding: "clamp(0.5rem, 1vw, 1rem)",
               border: "1px solid rgba(183,142,86,0.1)",
             }}
           >
             <p
               style={{
-                fontSize: "0.7rem",
+                fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                 color: "#8a7a5c",
                 margin: "0 0 4px",
               }}
@@ -410,7 +462,7 @@ function MensajesSection({
             </p>
             <p
               style={{
-                fontSize: "1.5rem",
+                fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
                 fontWeight: 300,
                 color: stat.color,
                 margin: 0,
@@ -422,12 +474,13 @@ function MensajesSection({
         ))}
       </div>
 
+      {/* Pendientes */}
       {pendientes.length > 0 && (
         <div style={{ marginBottom: "2rem" }}>
           <h3
             style={{
               color: "#e67e22",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               marginBottom: "0.75rem",
             }}
           >
@@ -439,13 +492,15 @@ function MensajesSection({
               style={{
                 background: "#fff",
                 borderRadius: "8px",
-                padding: "1rem 1.25rem",
+                padding:
+                  "clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.2vw, 1.25rem)",
                 marginBottom: "0.75rem",
                 border: "1px solid rgba(183,142,86,0.1)",
                 display: "flex",
+                flexDirection: isMobile ? "column" : "row",
                 justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: "1rem",
+                alignItems: isMobile ? "stretch" : "flex-start",
+                gap: "clamp(0.5rem, 1vw, 1rem)",
               }}
             >
               <div style={{ flex: 1 }}>
@@ -453,7 +508,7 @@ function MensajesSection({
                   style={{
                     fontWeight: 600,
                     color: "#5c4033",
-                    fontSize: "0.95rem",
+                    fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
                     fontFamily: "'Inter', sans-serif",
                     margin: "0 0 4px",
                   }}
@@ -464,7 +519,7 @@ function MensajesSection({
                   style={{
                     margin: "4px 0 0",
                     color: "#6b5b45",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                     fontFamily: "'Inter', sans-serif",
                   }}
                 >
@@ -472,7 +527,7 @@ function MensajesSection({
                 </p>
                 <p
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                     color: "#8a7a5c",
                     margin: "4px 0 0",
                   }}
@@ -480,28 +535,38 @@ function MensajesSection({
                   {new Date(mensaje.creado).toLocaleDateString()}
                 </p>
               </div>
-              <div style={{ display: "flex", gap: "0.5rem", flexShrink: 0 }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.5rem",
+                  flexShrink: 0,
+                  flexWrap: "wrap",
+                }}
+              >
                 <button
                   onClick={() => onResponder(mensaje)}
                   style={{
                     ...buttonStyle,
-                    padding: "6px 14px",
+                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
                     background: "#25D366",
                     color: "#fff",
-                    fontSize: "0.75rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
                   }}
                 >
-                  <MessageCircle size={14} style={{ marginRight: "4px" }} />
+                  <MessageCircle
+                    size={14}
+                    style={{ marginRight: "4px" }}
+                  />{" "}
                   Responder
                 </button>
                 <button
                   onClick={() => onLeer(mensaje.id)}
                   style={{
                     ...buttonStyle,
-                    padding: "6px 14px",
+                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
                     background: "#4CAF50",
                     color: "#fff",
-                    fontSize: "0.75rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
                   }}
                 >
                   ✅ Leído
@@ -510,11 +575,11 @@ function MensajesSection({
                   onClick={() => onEliminar(mensaje.id)}
                   style={{
                     ...buttonStyle,
-                    padding: "6px 14px",
+                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
                     background: "transparent",
                     color: "#a8452f",
                     border: "1px solid #a8452f",
-                    fontSize: "0.75rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
                   }}
                 >
                   🗑️ Eliminar
@@ -525,12 +590,13 @@ function MensajesSection({
         </div>
       )}
 
+      {/* Leídos */}
       {leidos.length > 0 && (
         <div>
           <h3
             style={{
               color: "#4CAF50",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               marginBottom: "0.75rem",
             }}
           >
@@ -542,13 +608,15 @@ function MensajesSection({
               style={{
                 background: "#fff",
                 borderRadius: "8px",
-                padding: "1rem 1.25rem",
+                padding:
+                  "clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.2vw, 1.25rem)",
                 marginBottom: "0.75rem",
                 border: "1px solid rgba(183,142,86,0.1)",
                 display: "flex",
+                flexDirection: isMobile ? "column" : "row",
                 justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: "1rem",
+                alignItems: isMobile ? "stretch" : "flex-start",
+                gap: "clamp(0.5rem, 1vw, 1rem)",
               }}
             >
               <div style={{ flex: 1 }}>
@@ -556,7 +624,7 @@ function MensajesSection({
                   style={{
                     fontWeight: 600,
                     color: "#5c4033",
-                    fontSize: "0.95rem",
+                    fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
                     fontFamily: "'Inter', sans-serif",
                     margin: "0 0 4px",
                   }}
@@ -567,7 +635,7 @@ function MensajesSection({
                   style={{
                     margin: "4px 0 0",
                     color: "#6b5b45",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                     fontFamily: "'Inter', sans-serif",
                   }}
                 >
@@ -575,7 +643,7 @@ function MensajesSection({
                 </p>
                 <p
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                     color: "#8a7a5c",
                     margin: "4px 0 0",
                   }}
@@ -583,29 +651,39 @@ function MensajesSection({
                   {new Date(mensaje.creado).toLocaleDateString()}
                 </p>
               </div>
-              <div style={{ display: "flex", gap: "0.5rem", flexShrink: 0 }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.5rem",
+                  flexShrink: 0,
+                  flexWrap: "wrap",
+                }}
+              >
                 <button
                   onClick={() => onResponder(mensaje)}
                   style={{
                     ...buttonStyle,
-                    padding: "6px 14px",
+                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
                     background: "#25D366",
                     color: "#fff",
-                    fontSize: "0.75rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
                   }}
                 >
-                  <MessageCircle size={14} style={{ marginRight: "4px" }} />
+                  <MessageCircle
+                    size={14}
+                    style={{ marginRight: "4px" }}
+                  />{" "}
                   Responder
                 </button>
                 <button
                   onClick={() => onEliminar(mensaje.id)}
                   style={{
                     ...buttonStyle,
-                    padding: "6px 14px",
+                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
                     background: "transparent",
                     color: "#a8452f",
                     border: "1px solid #a8452f",
-                    fontSize: "0.75rem",
+                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
                   }}
                 >
                   🗑️ Eliminar
@@ -626,7 +704,7 @@ function MensajesSection({
 }
 
 // ============================================
-// 📊 SECCIÓN DE ANÁLISIS
+// SECCIÓN: ANÁLISIS (gráfico + PDF)
 // ============================================
 const DIAS_CORTOS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
@@ -650,8 +728,8 @@ function GraficoSemana({ porDia }) {
         style={{
           display: "flex",
           alignItems: "flex-end",
-          gap: "1.5rem",
-          height: "150px",
+          gap: "clamp(0.5rem, 1.5vw, 1.5rem)",
+          height: "clamp(100px, 15vw, 150px)",
           padding: "0 4px",
         }}
       >
@@ -671,33 +749,33 @@ function GraficoSemana({ porDia }) {
                 display: "flex",
                 alignItems: "flex-end",
                 gap: "4px",
-                height: "110px",
+                height: "clamp(70px, 11vw, 110px)",
               }}
             >
               <div
                 title={`Visitas: ${d.visitas}`}
                 style={{
-                  width: "12px",
+                  width: "clamp(8px, 1.2vw, 12px)",
                   borderRadius: "3px 3px 0 0",
                   background: "#b78e56",
-                  height: `${Math.max(2, (d.visitas / maxVisitas) * 110)}px`,
+                  height: `${Math.max(2, (d.visitas / maxVisitas) * 100)}%`,
                   transition: "height 0.4s ease",
                 }}
               />
               <div
                 title={`Citas: ${d.citas}`}
                 style={{
-                  width: "12px",
+                  width: "clamp(8px, 1.2vw, 12px)",
                   borderRadius: "3px 3px 0 0",
                   background: "#5c4033",
-                  height: `${Math.max(2, (d.citas / maxCitas) * 110)}px`,
+                  height: `${Math.max(2, (d.citas / maxCitas) * 100)}%`,
                   transition: "height 0.4s ease",
                 }}
               />
             </div>
             <span
               style={{
-                fontSize: "0.68rem",
+                fontSize: "clamp(0.5rem, 0.68vw, 0.68rem)",
                 color: "#a89a80",
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
@@ -709,13 +787,20 @@ function GraficoSemana({ porDia }) {
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: "1.5rem", marginTop: "1.25rem" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "1.5rem",
+          marginTop: "1.25rem",
+          flexWrap: "wrap",
+        }}
+      >
         <span
           style={{
             display: "flex",
             alignItems: "center",
             gap: "6px",
-            fontSize: "0.75rem",
+            fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
             color: "#8a7a5c",
           }}
         >
@@ -734,7 +819,7 @@ function GraficoSemana({ porDia }) {
             display: "flex",
             alignItems: "center",
             gap: "6px",
-            fontSize: "0.75rem",
+            fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
             color: "#8a7a5c",
           }}
         >
@@ -757,7 +842,6 @@ function generarInformePDF(analisis) {
   if (!analisis) return;
 
   const doc = new jsPDF();
-
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
   doc.setTextColor(92, 64, 51);
@@ -770,7 +854,7 @@ function generarInformePDF(analisis) {
   doc.text(
     `Semana del ${formatFechaLarga(analisis.semana.desde)} al ${formatFechaLarga(analisis.semana.hasta)}`,
     14,
-    33,
+    33
   );
 
   doc.setDrawColor(183, 142, 86);
@@ -791,10 +875,7 @@ function generarInformePDF(analisis) {
     ["Reseñas recibidas", analisis.resumen.resenasNuevas],
     ["Reseñas publicadas", analisis.resumen.resenasPublicadas],
     ["Mensajes de contacto recibidos", analisis.resumen.mensajesNuevos],
-    [
-      "Tasa de conversión (citas / visitas)",
-      `${analisis.resumen.tasaConversion}%`,
-    ],
+    ["Tasa de conversión", `${analisis.resumen.tasaConversion}%`],
   ];
 
   doc.setFont("helvetica", "normal");
@@ -840,9 +921,8 @@ function generarInformePDF(analisis) {
   doc.text(
     `Generado el ${new Date().toLocaleDateString()} — Panel de administración`,
     14,
-    285,
+    285
   );
-
   doc.save(`informe-semanal-belleza-arabe-${analisis.semana.desde}.pdf`);
 }
 
@@ -854,23 +934,28 @@ function AnalisisSection({
 }) {
   return (
     <div>
-      {/* Selector de semana + descarga */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: "1rem",
+          gap: "clamp(0.5rem, 1vw, 1rem)",
           marginBottom: "2rem",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "clamp(0.25rem, 0.5vw, 0.5rem)",
+          }}
+        >
           <button
             onClick={() => onCambiarSemana(semanaOffset - 1)}
             style={{
-              width: "30px",
-              height: "30px",
+              width: "clamp(26px, 3vw, 30px)",
+              height: "clamp(26px, 3vw, 30px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -885,9 +970,9 @@ function AnalisisSection({
           </button>
           <span
             style={{
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
               color: "#5c4033",
-              minWidth: "190px",
+              minWidth: "clamp(140px, 20vw, 190px)",
               textAlign: "center",
             }}
           >
@@ -910,8 +995,8 @@ function AnalisisSection({
             onClick={() => onCambiarSemana(semanaOffset + 1)}
             disabled={semanaOffset >= 0}
             style={{
-              width: "30px",
-              height: "30px",
+              width: "clamp(26px, 3vw, 30px)",
+              height: "clamp(26px, 3vw, 30px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -933,14 +1018,14 @@ function AnalisisSection({
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            padding: "10px 20px",
+            padding: "clamp(6px, 0.8vw, 10px) clamp(12px, 1.5vw, 20px)",
             background: "#b78e56",
             color: "#faf6f0",
             border: "none",
             borderRadius: "8px",
             cursor: analisis ? "pointer" : "not-allowed",
             opacity: analisis ? 1 : 0.5,
-            fontSize: "0.85rem",
+            fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
             fontFamily: "'Inter', sans-serif",
             fontWeight: 500,
           }}
@@ -958,12 +1043,11 @@ function AnalisisSection({
 
       {!cargandoAnalisis && analisis && (
         <>
-          {/* Franja de resumen, mismo lenguaje visual que Citas */}
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: "2.25rem",
+              gap: "clamp(0.5rem, 2vw, 2.25rem)",
               marginBottom: "2rem",
               paddingBottom: "1.5rem",
               borderBottom: "1px solid rgba(183,142,86,0.15)",
@@ -999,7 +1083,7 @@ function AnalisisSection({
               <div key={stat.label}>
                 <p
                   style={{
-                    fontSize: "1.9rem",
+                    fontSize: "clamp(1.5rem, 1.9vw, 1.9rem)",
                     fontWeight: 200,
                     color: stat.color,
                     margin: 0,
@@ -1011,7 +1095,7 @@ function AnalisisSection({
                 </p>
                 <p
                   style={{
-                    fontSize: "0.68rem",
+                    fontSize: "clamp(0.55rem, 0.68vw, 0.68rem)",
                     color: "#a89a80",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
@@ -1024,19 +1108,18 @@ function AnalisisSection({
             ))}
           </div>
 
-          {/* Gráfico semanal */}
           <div
             style={{
               background: "#fff",
               borderRadius: "12px",
-              padding: "1.75rem",
+              padding: "clamp(1rem, 1.75vw, 1.75rem)",
               border: "1px solid rgba(183,142,86,0.1)",
               marginBottom: "1.5rem",
             }}
           >
             <h3
               style={{
-                fontSize: "0.85rem",
+                fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                 fontWeight: 500,
                 color: "#5c4033",
                 margin: "0 0 1.25rem",
@@ -1050,7 +1133,7 @@ function AnalisisSection({
           {analisis.resumen.visitas === 0 && (
             <p
               style={{
-                fontSize: "0.8rem",
+                fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                 color: "#a89a80",
                 fontStyle: "italic",
               }}
@@ -1065,6 +1148,9 @@ function AnalisisSection({
   );
 }
 
+// ============================================
+// NAVEGACIÓN DE SECCIONES (responsive)
+// ============================================
 const SECCIONES = [
   { id: "citas", label: "Citas", icon: CalendarDays },
   { id: "resenas", label: "Reseñas", icon: Star },
@@ -1079,8 +1165,9 @@ function SeccionNav({ activa, onChange, counts }) {
       aria-label="Secciones del panel"
       style={{
         display: "flex",
-        gap: "1.75rem",
+        gap: "clamp(0.5rem, 1.75vw, 1.75rem)",
         marginBottom: "2rem",
+        flexWrap: "wrap",
       }}
     >
       {SECCIONES.map(({ id, label, icon: Icon }) => {
@@ -1096,13 +1183,13 @@ function SeccionNav({ activa, onChange, counts }) {
               position: "relative",
               display: "flex",
               alignItems: "center",
-              gap: "8px",
+              gap: "clamp(4px, 0.8vw, 8px)",
               padding: "0 0 12px",
               background: "transparent",
               border: "none",
               cursor: "pointer",
               fontFamily: "'Inter', sans-serif",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
               fontWeight: isActive ? 600 : 500,
               color: isActive ? "#5c4033" : "#a89a80",
               transition: "color 0.25s ease",
@@ -1155,10 +1242,13 @@ function SeccionNav({ activa, onChange, counts }) {
   );
 }
 
+// ============================================
+// ADMIN DASHBOARD PRINCIPAL
+// ============================================
 export default function AdminDashboard() {
   const { getAccessTokenSilently } = useAuth0();
 
-  // Citas
+  // Estados
   const [citas, setCitas] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
@@ -1171,54 +1261,41 @@ export default function AdminDashboard() {
   const [mensaje, setMensaje] = useState("");
   const [accion, setAccion] = useState(null);
 
-  // Reseñas
   const [resenas, setResenas] = useState([]);
   const [cargandoResenas, setCargandoResenas] = useState(false);
   const [seccionActiva, setSeccionActiva] = useState("citas");
 
-  // Mensajes de contacto
   const [mensajes, setMensajes] = useState([]);
   const [cargandoMensajes, setCargandoMensajes] = useState(false);
 
-  // Análisis semanal
   const [analisis, setAnalisis] = useState(null);
   const [cargandoAnalisis, setCargandoAnalisis] = useState(false);
   const [semanaOffset, setSemanaOffset] = useState(0);
 
-  // 👇 NUEVO: Estados para el formulario de respuesta por WhatsApp
   const [mensajeResponder, setMensajeResponder] = useState("");
   const [mensajeActual, setMensajeActual] = useState(null);
   const [modalWhatsApp, setModalWhatsApp] = useState(false);
 
   // ============================================
-  // CARGAR CITAS
+  // FUNCIONES DE CARGA
   // ============================================
   const cargarCitas = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       setCargando(true);
       setError("");
-
       const url = filtroFecha
         ? `${API_URL}/admin/citas?fecha=${filtroFecha}`
         : `${API_URL}/admin/citas`;
-
       const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-
-      if (!res.ok) {
-        throw new Error("Error al cargar citas");
-      }
-
+      if (!res.ok) throw new Error("Error al cargar citas");
       const data = await res.json();
       setCitas(data);
     } catch (err) {
@@ -1228,30 +1305,19 @@ export default function AdminDashboard() {
     }
   }, [getAccessTokenSilently, filtroFecha]);
 
-  // ============================================
-  // CARGAR RESEÑAS
-  // ============================================
   const cargarResenas = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       setCargandoResenas(true);
-
       const res = await fetch(`${API_URL}/admin/resenas`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-
-      if (!res.ok) {
-        throw new Error("Error al cargar reseñas");
-      }
-
+      if (!res.ok) throw new Error("Error al cargar reseñas");
       const data = await res.json();
       setResenas(data);
     } catch (err) {
@@ -1261,30 +1327,19 @@ export default function AdminDashboard() {
     }
   }, [getAccessTokenSilently]);
 
-  // ============================================
-  // CARGAR MENSAJES
-  // ============================================
   const cargarMensajes = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       setCargandoMensajes(true);
-
       const res = await fetch(`${API_URL}/contact/admin`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-
-      if (!res.ok) {
-        throw new Error("Error al cargar mensajes");
-      }
-
+      if (!res.ok) throw new Error("Error al cargar mensajes");
       const data = await res.json();
       setMensajes(data);
     } catch (err) {
@@ -1294,23 +1349,15 @@ export default function AdminDashboard() {
     }
   }, [getAccessTokenSilently]);
 
-  // ============================================
-  // CARGAR ANÁLISIS SEMANAL
-  // ============================================
   const cargarAnalisis = useCallback(async () => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       setCargandoAnalisis(true);
-
       const hoy = new Date();
       hoy.setDate(hoy.getDate() + semanaOffset * 7);
       const desde = hoy.toISOString().split("T")[0];
-
       const res = await fetch(
         `${API_URL}/admin/analytics/semanal?desde=${desde}`,
         {
@@ -1318,11 +1365,9 @@ export default function AdminDashboard() {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        },
+        }
       );
-
       if (!res.ok) throw new Error("Error al cargar el análisis");
-
       const data = await res.json();
       setAnalisis(data);
     } catch (err) {
@@ -1332,28 +1377,16 @@ export default function AdminDashboard() {
     }
   }, [getAccessTokenSilently, semanaOffset]);
 
-  // ============================================
-  // EFECTO PRINCIPAL
-  // ============================================
   useEffect(() => {
     let mounted = true;
-
     const loadData = async () => {
       if (!mounted) return;
-
-      if (seccionActiva === "citas") {
-        await cargarCitas();
-      } else if (seccionActiva === "resenas") {
-        await cargarResenas();
-      } else if (seccionActiva === "mensajes") {
-        await cargarMensajes();
-      } else if (seccionActiva === "analisis") {
-        await cargarAnalisis();
-      }
+      if (seccionActiva === "citas") await cargarCitas();
+      else if (seccionActiva === "resenas") await cargarResenas();
+      else if (seccionActiva === "mensajes") await cargarMensajes();
+      else if (seccionActiva === "analisis") await cargarAnalisis();
     };
-
     loadData();
-
     return () => {
       mounted = false;
     };
@@ -1366,16 +1399,13 @@ export default function AdminDashboard() {
   ]);
 
   // ============================================
-  // ACCIONES DE RESEÑAS
+  // ACCIONES DE RESEÑAS Y MENSAJES
   // ============================================
   const publicarResena = async (id) => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       const res = await fetch(`${API_URL}/admin/resenas/${id}/publicar`, {
         method: "PATCH",
         headers: {
@@ -1383,7 +1413,6 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
       if (!res.ok) throw new Error("Error al publicar");
       await cargarResenas();
     } catch (err) {
@@ -1394,11 +1423,8 @@ export default function AdminDashboard() {
   const rechazarResena = async (id) => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       const res = await fetch(`${API_URL}/admin/resenas/${id}/rechazar`, {
         method: "PATCH",
         headers: {
@@ -1406,7 +1432,6 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
       if (!res.ok) throw new Error("Error al rechazar");
       await cargarResenas();
     } catch (err) {
@@ -1417,11 +1442,8 @@ export default function AdminDashboard() {
   const eliminarResena = async (id) => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       const res = await fetch(`${API_URL}/admin/resenas/${id}`, {
         method: "DELETE",
         headers: {
@@ -1429,7 +1451,6 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
       if (!res.ok) throw new Error("Error al eliminar");
       await cargarResenas();
     } catch (err) {
@@ -1437,17 +1458,11 @@ export default function AdminDashboard() {
     }
   };
 
-  // ============================================
-  // ACCIONES DE MENSAJES
-  // ============================================
   const leerMensaje = async (id) => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       const res = await fetch(`${API_URL}/contact/${id}/leer`, {
         method: "PATCH",
         headers: {
@@ -1455,7 +1470,6 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
       if (!res.ok) throw new Error("Error al marcar como leído");
       await cargarMensajes();
     } catch (err) {
@@ -1466,11 +1480,8 @@ export default function AdminDashboard() {
   const eliminarMensaje = async (id) => {
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       const res = await fetch(`${API_URL}/contact/${id}`, {
         method: "DELETE",
         headers: {
@@ -1478,7 +1489,6 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
       if (!res.ok) throw new Error("Error al eliminar");
       await cargarMensajes();
     } catch (err) {
@@ -1486,9 +1496,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // ============================================
-  // 👇 NUEVO: Formulario de respuesta por WhatsApp
-  // ============================================
   const abrirResponder = (mensaje) => {
     setMensajeActual(mensaje);
     setMensajeResponder(`Hola ${mensaje.nombre}, hemos recibido tu mensaje. `);
@@ -1497,13 +1504,11 @@ export default function AdminDashboard() {
 
   const enviarRespuestaWhatsApp = () => {
     if (!mensajeActual || !mensajeResponder.trim()) return;
-
-    const numeroCompleto = `34${mensajeActual.telefono}`; // Prefijo de España
-    const url = `https://wa.me/${numeroCompleto}?text=${encodeURIComponent(mensajeResponder)}`;
-
+    const numeroCompleto = `34${mensajeActual.telefono}`;
+    const url = `https://wa.me/${numeroCompleto}?text=${encodeURIComponent(
+      mensajeResponder
+    )}`;
     window.open(url, "_blank", "noreferrer");
-
-    // Limpiar y cerrar modal
     setModalWhatsApp(false);
     setMensajeResponder("");
     setMensajeActual(null);
@@ -1513,7 +1518,9 @@ export default function AdminDashboard() {
   // ACCIONES DE CITAS
   // ============================================
   const enviarWhatsApp = (telefono, mensaje) => {
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      mensaje
+    )}`;
     window.open(url, "_blank", "noreferrer");
   };
 
@@ -1531,26 +1538,19 @@ export default function AdminDashboard() {
 
   const confirmarAccion = async () => {
     if (!modalAbierto) return;
-
     if (accion === "cancelar" && !motivo.trim()) {
       alert("❌ El motivo de cancelación es obligatorio.");
       return;
     }
-
     setEliminando(modalAbierto.id);
-
     try {
       const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-        },
+        authorizationParams: { audience: import.meta.env.VITE_AUTH0_AUDIENCE },
       });
-
       const endpoint =
         accion === "aceptar"
           ? `${API_URL}/admin/citas/${modalAbierto.id}/confirmar`
           : `${API_URL}/admin/citas/${modalAbierto.id}/cancelar`;
-
       const res = await fetch(endpoint, {
         method: "PATCH",
         headers: {
@@ -1558,38 +1558,27 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
         },
       });
-
       if (!res.ok) throw new Error("No se pudo realizar la acción");
 
       let mensajeWhatsApp = "";
-
       if (accion === "aceptar") {
         mensajeWhatsApp = `✨ ¡Hola ${modalAbierto.nombre}! Tu cita en Belleza Árabe ha sido CONFIRMADA.
-
 📅 Fecha: ${formatFecha(modalAbierto.fecha)}
 ⏰ Hora: ${modalAbierto.hora}
 💇 Servicio: ${modalAbierto.servicio}
 👤 Personas: ${modalAbierto.personas}
-
 ${mensaje ? `📝 Nota: ${mensaje}` : "¡Te esperamos!"}
-
 ¡Gracias por confiar en Belleza Árabe! 💛`;
-      } else if (accion === "cancelar") {
+      } else {
         mensajeWhatsApp = `❌ Hola ${modalAbierto.nombre}, lamentamos informarte que tu cita en Belleza Árabe ha sido CANCELADA.
-
 📅 Fecha: ${formatFecha(modalAbierto.fecha)}
 ⏰ Hora: ${modalAbierto.hora}
 💇 Servicio: ${modalAbierto.servicio}
-
 📝 Motivo: ${motivo}
-
 Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
       }
-
       enviarWhatsApp(modalAbierto.telefono, mensajeWhatsApp);
-
       setCitas((prev) => prev.filter((c) => c.id !== modalAbierto.id));
-
       setModalAbierto(null);
       setMotivo("");
       setMensaje("");
@@ -1612,11 +1601,10 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
     acc[cita.fecha].push(cita);
     return acc;
   }, {});
-
   const fechasOrdenadas = Object.keys(citasPorFecha).sort();
 
   // ============================================
-  // RENDER
+  // RENDER PRINCIPAL
   // ============================================
   return (
     <div
@@ -1624,11 +1612,16 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
         background: "#faf6f0",
         minHeight: "100vh",
         fontFamily: "'Inter', sans-serif",
-        paddingTop: "140px",
+        paddingTop: "clamp(80px, 14vw, 140px)",
       }}
     >
-      <main style={{ maxWidth: "1100px", margin: "0 auto", padding: "2rem" }}>
-        {/* NAVEGACIÓN ENTRE SECCIONES */}
+      <main
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          padding: "clamp(0.5rem, 2vw, 2rem)",
+        }}
+      >
         <SeccionNav
           activa={seccionActiva}
           onChange={setSeccionActiva}
@@ -1639,24 +1632,27 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
           }}
         />
 
-        {/* SECCIÓN CITAS */}
+        {/* ===== SECCIÓN CITAS ===== */}
         {seccionActiva === "citas" && (
           <>
-            {/* FRANJA DE DATOS + FILTRO — editorial, sin tarjetas */}
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-end",
                 flexWrap: "wrap",
-                gap: "1.5rem",
+                gap: "clamp(0.5rem, 1.5vw, 1.5rem)",
                 marginBottom: "2rem",
                 paddingBottom: "1.5rem",
                 borderBottom: "1px solid rgba(183,142,86,0.15)",
               }}
             >
               <div
-                style={{ display: "flex", gap: "2.25rem", flexWrap: "wrap" }}
+                style={{
+                  display: "flex",
+                  gap: "clamp(1rem, 2.25vw, 2.25rem)",
+                  flexWrap: "wrap",
+                }}
               >
                 {[
                   {
@@ -1667,7 +1663,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   {
                     label: "Hoy",
                     valor: citas.filter(
-                      (c) => c.fecha === new Date().toISOString().split("T")[0],
+                      (c) =>
+                        c.fecha === new Date().toISOString().split("T")[0]
                     ).length,
                     color: "#5c4033",
                   },
@@ -1690,7 +1687,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   >
                     <p
                       style={{
-                        fontSize: "1.9rem",
+                        fontSize: "clamp(1.5rem, 1.9vw, 1.9rem)",
                         fontWeight: 200,
                         color: stat.color,
                         margin: 0,
@@ -1702,7 +1699,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     </p>
                     <p
                       style={{
-                        fontSize: "0.68rem",
+                        fontSize: "clamp(0.55rem, 0.68vw, 0.68rem)",
                         color: "#a89a80",
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
@@ -1716,13 +1713,18 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               </div>
 
               <div
-                style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "clamp(0.3rem, 1vw, 1rem)",
+                  flexWrap: "wrap",
+                }}
               >
                 <div>
                   <label
                     style={{
                       display: "block",
-                      fontSize: "0.68rem",
+                      fontSize: "clamp(0.55rem, 0.68vw, 0.68rem)",
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: "#a89a80",
@@ -1737,7 +1739,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     onChange={(e) => setFiltroFecha(e.target.value)}
                     style={{
                       padding: "4px 2px",
-                      fontSize: "0.85rem",
+                      fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                       fontFamily: "'Inter', sans-serif",
                       color: "#5c4033",
                       background: "transparent",
@@ -1757,7 +1759,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                       color: "#8a7a5c",
                       border: "none",
                       cursor: "pointer",
-                      fontSize: "0.8rem",
+                      fontSize: "clamp(0.65rem, 0.8vw, 0.8rem)",
                       fontFamily: "'Inter', sans-serif",
                       textDecoration: "underline",
                       textUnderlineOffset: "3px",
@@ -1770,8 +1772,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   onClick={cargarCitas}
                   title="Actualizar"
                   style={{
-                    width: "34px",
-                    height: "34px",
+                    width: "clamp(30px, 3.4vw, 34px)",
+                    height: "clamp(30px, 3.4vw, 34px)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1796,7 +1798,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   padding: "1rem 1.25rem",
                   borderRadius: "10px",
                   marginBottom: "1.5rem",
-                  fontSize: "0.9rem",
+                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                 }}
               >
                 ❌ {error}
@@ -1822,7 +1824,9 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     margin: "0 auto 1rem",
                   }}
                 />
-                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                <style>
+                  {`@keyframes spin { to { transform: rotate(360deg); } }`}
+                </style>
                 <p>Cargando citas...</p>
               </div>
             )}
@@ -1831,10 +1835,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                style={{
-                  textAlign: "center",
-                  padding: "5rem 2rem",
-                }}
+                style={{ textAlign: "center", padding: "5rem 2rem" }}
               >
                 <div
                   style={{
@@ -1853,7 +1854,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 </div>
                 <p
                   style={{
-                    fontSize: "1.05rem",
+                    fontSize: "clamp(0.9rem, 1.05vw, 1.05rem)",
                     fontWeight: 500,
                     color: "#5c4033",
                     margin: "0 0 6px",
@@ -1864,7 +1865,13 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     ? `para el ${formatFecha(filtroFecha)}`
                     : "registradas"}
                 </p>
-                <p style={{ fontSize: "0.85rem", color: "#a89a80", margin: 0 }}>
+                <p
+                  style={{
+                    fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
+                    color: "#a89a80",
+                    margin: 0,
+                  }}
+                >
                   Aparecerán aquí en cuanto un cliente reserve.
                 </p>
               </motion.div>
@@ -1881,7 +1888,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 >
                   <h2
                     style={{
-                      fontSize: "0.85rem",
+                      fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                       fontWeight: 500,
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
@@ -1915,18 +1922,23 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                       <div
                         key={cita.id}
                         style={{
-                          padding: "1.25rem 1.5rem",
-                          borderBottom: "1px solid rgba(183,142,86,0.08)",
+                          padding:
+                            "clamp(0.75rem, 1.25vw, 1.25rem) clamp(0.75rem, 1.5vw, 1.5rem)",
+                          borderBottom:
+                            "1px solid rgba(183,142,86,0.08)",
                           display: "grid",
-                          gridTemplateColumns: "80px 1fr 140px 100px 1fr",
-                          gap: "1rem",
+                          gridTemplateColumns:
+                            window.innerWidth < 480
+                              ? "1fr 1fr"
+                              : "80px 1fr 140px 100px 1fr",
+                          gap: "clamp(0.25rem, 1vw, 1rem)",
                           alignItems: "center",
                         }}
                       >
                         <div>
                           <span
                             style={{
-                              fontSize: "1rem",
+                              fontSize: "clamp(0.85rem, 1vw, 1rem)",
                               fontWeight: 600,
                               color: "#5c4033",
                               fontVariantNumeric: "tabular-nums",
@@ -1935,14 +1947,13 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             {cita.hora}
                           </span>
                         </div>
-
                         <div>
                           <p
                             style={{
                               margin: "0 0 4px",
                               fontWeight: 500,
                               color: "#5c4033",
-                              fontSize: "0.95rem",
+                              fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
                               fontFamily: "'Inter', sans-serif",
                             }}
                           >
@@ -1951,7 +1962,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           <p
                             style={{
                               margin: 0,
-                              fontSize: "0.8rem",
+                              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                               color: "#8a7a5c",
                             }}
                           >
@@ -1961,7 +1972,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             <p
                               style={{
                                 margin: "4px 0 0",
-                                fontSize: "0.75rem",
+                                fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
                                 color: "#a8452f",
                                 fontStyle: "italic",
                               }}
@@ -1970,7 +1981,6 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             </p>
                           )}
                         </div>
-
                         <div>
                           <span
                             style={{
@@ -1979,14 +1989,13 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                               background: "rgba(183,142,86,0.08)",
                               color: "#5c4033",
                               borderRadius: "6px",
-                              fontSize: "0.8rem",
+                              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                               fontWeight: 500,
                             }}
                           >
                             {cita.servicio}
                           </span>
                         </div>
-
                         <div style={{ textAlign: "right" }}>
                           {cita.precio && (
                             <p
@@ -1994,7 +2003,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                                 margin: "0 0 2px",
                                 fontWeight: 600,
                                 color: "#b78e56",
-                                fontSize: "0.95rem",
+                                fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
                               }}
                             >
                               {cita.precio * cita.personas}€
@@ -2003,7 +2012,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           <p
                             style={{
                               margin: 0,
-                              fontSize: "0.75rem",
+                              fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
                               color: "#8a7a5c",
                             }}
                           >
@@ -2011,12 +2020,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             {cita.personas === 1 ? "persona" : "personas"}
                           </p>
                         </div>
-
                         <div
                           style={{
                             display: "flex",
                             gap: "0.5rem",
                             justifyContent: "flex-end",
+                            flexWrap: "wrap",
                           }}
                         >
                           <button
@@ -2025,11 +2034,16 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             style={{
                               ...buttonStyle,
                               background:
-                                eliminando === cita.id ? "#c4b49a" : "#4CAF50",
+                                eliminando === cita.id
+                                  ? "#c4b49a"
+                                  : "#4CAF50",
                               color: "#fff",
                               opacity: eliminando === cita.id ? 0.6 : 1,
                               cursor:
                                 eliminando === cita.id ? "wait" : "pointer",
+                              padding:
+                                "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                             }}
                           >
                             ✅ Aceptar
@@ -2040,11 +2054,16 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             style={{
                               ...buttonStyle,
                               background:
-                                eliminando === cita.id ? "#c4b49a" : "#a8452f",
+                                eliminando === cita.id
+                                  ? "#c4b49a"
+                                  : "#a8452f",
                               color: "#fff",
                               opacity: eliminando === cita.id ? 0.6 : 1,
                               cursor:
                                 eliminando === cita.id ? "wait" : "pointer",
+                              padding:
+                                "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
                             }}
                           >
                             ❌ Cancelar
@@ -2058,7 +2077,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
           </>
         )}
 
-        {/* SECCIÓN RESEÑAS */}
+        {/* ===== SECCIÓN RESEÑAS ===== */}
         {seccionActiva === "resenas" && (
           <ResenasSection
             resenas={resenas}
@@ -2069,7 +2088,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
           />
         )}
 
-        {/* SECCIÓN MENSAJES */}
+        {/* ===== SECCIÓN MENSAJES ===== */}
         {seccionActiva === "mensajes" && (
           <MensajesSection
             mensajes={mensajes}
@@ -2080,7 +2099,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
           />
         )}
 
-        {/* SECCIÓN ANÁLISIS */}
+        {/* ===== SECCIÓN ANÁLISIS ===== */}
         {seccionActiva === "analisis" && (
           <AnalisisSection
             analisis={analisis}
@@ -2091,7 +2110,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
         )}
       </main>
 
-      {/* 👇 NUEVO: MODAL DE RESPUESTA POR WHATSAPP */}
+      {/* ===== MODAL WHATSAPP ===== */}
       <AnimatePresence>
         {modalWhatsApp && (
           <motion.div
@@ -2117,16 +2136,21 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   color: "#5c4033",
                   fontFamily: "'Inter', sans-serif",
                   marginBottom: "1rem",
+                  fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
                 }}
               >
                 💬 Responder por WhatsApp
               </h2>
-
-              <p style={{ color: "#8a7a5c", marginBottom: "1.5rem" }}>
+              <p
+                style={{
+                  color: "#8a7a5c",
+                  marginBottom: "1.5rem",
+                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                }}
+              >
                 Escribe tu mensaje para {mensajeActual?.nombre} (
                 {mensajeActual?.telefono})
               </p>
-
               <div style={{ marginBottom: "1.5rem" }}>
                 <label style={labelStyle}>Mensaje</label>
                 <textarea
@@ -2137,12 +2161,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   rows={5}
                 />
               </div>
-
               <div
                 style={{
                   display: "flex",
                   gap: "1rem",
                   justifyContent: "flex-end",
+                  flexWrap: "wrap",
                 }}
               >
                 <button
@@ -2167,10 +2191,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     background: "#25D366",
                     color: "#fff",
                     fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
                   }}
                 >
-                  <MessageCircle size={16} style={{ marginRight: "4px" }} />
-                  Enviar por WhatsApp
+                  <MessageCircle size={16} /> Enviar por WhatsApp
                 </button>
               </div>
             </motion.div>
@@ -2178,7 +2204,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
         )}
       </AnimatePresence>
 
-      {/* MODAL DE CITAS */}
+      {/* ===== MODAL CITAS ===== */}
       <AnimatePresence>
         {modalAbierto && (
           <motion.div
@@ -2205,22 +2231,29 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   color: "#5c4033",
                   fontFamily: "'Inter', sans-serif",
                   marginBottom: "1rem",
+                  fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
                 }}
               >
                 {accion === "aceptar"
                   ? "✅ Confirmar cita"
                   : "❌ Cancelar cita"}
               </h2>
-
-              <p style={{ color: "#8a7a5c", marginBottom: "1.5rem" }}>
+              <p
+                style={{
+                  color: "#8a7a5c",
+                  marginBottom: "1.5rem",
+                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                }}
+              >
                 {accion === "aceptar"
                   ? "La cita será confirmada y el cliente recibirá un mensaje por WhatsApp."
                   : "La cita será cancelada y el cliente recibirá un mensaje por WhatsApp con el motivo."}
               </p>
-
               {accion === "aceptar" && (
                 <div style={{ marginBottom: "1.5rem" }}>
-                  <label style={labelStyle}>Mensaje adicional (opcional)</label>
+                  <label style={labelStyle}>
+                    Mensaje adicional (opcional)
+                  </label>
                   <textarea
                     value={mensaje}
                     onChange={(e) => setMensaje(e.target.value)}
@@ -2230,7 +2263,6 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   />
                 </div>
               )}
-
               {accion === "cancelar" && (
                 <div style={{ marginBottom: "1.5rem" }}>
                   <label style={{ ...labelStyle, color: "#a8452f" }}>
@@ -2253,7 +2285,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     <p
                       style={{
                         color: "#a8452f",
-                        fontSize: "0.8rem",
+                        fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                         marginTop: "4px",
                       }}
                     >
@@ -2262,12 +2294,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   )}
                 </div>
               )}
-
               <div
                 style={{
                   display: "flex",
                   gap: "1rem",
                   justifyContent: "flex-end",
+                  flexWrap: "wrap",
                 }}
               >
                 <button
@@ -2293,7 +2325,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     ...buttonStyle,
                     background: accion === "aceptar" ? "#4CAF50" : "#a8452f",
                     color: "#fff",
-                    opacity: accion === "cancelar" && !motivo.trim() ? 0.5 : 1,
+                    opacity:
+                      accion === "cancelar" && !motivo.trim() ? 0.5 : 1,
                     cursor:
                       accion === "cancelar" && !motivo.trim()
                         ? "not-allowed"

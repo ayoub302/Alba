@@ -44,7 +44,7 @@ export default function SobreNosotros() {
       {/* ---- HERO ---- */}
       <section
         style={{
-          padding: "10rem 1.5rem 6rem",
+          padding: "clamp(6rem, 12vw, 10rem) clamp(1rem, 3vw, 1.5rem) clamp(3rem, 6vw, 6rem)",
           textAlign: "center",
           background: "linear-gradient(180deg, #1a120b 0%, #2d1f16 100%)",
           position: "relative",
@@ -67,7 +67,7 @@ export default function SobreNosotros() {
         >
           <span
             style={{
-              fontSize: "0.75rem",
+              fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
               fontWeight: 500,
               letterSpacing: "0.25em",
               textTransform: "uppercase",
@@ -91,14 +91,15 @@ export default function SobreNosotros() {
           <p
             style={{
               marginTop: "1.5rem",
-              maxWidth: "600px",
+              maxWidth: "min(600px, 90vw)",
               marginLeft: "auto",
               marginRight: "auto",
               color: "rgba(250,246,240,0.7)",
-              fontSize: "1.1rem",
+              fontSize: "clamp(0.95rem, 1.1vw, 1.1rem)",
               lineHeight: 1.8,
               fontFamily: "'Georgia', serif",
               fontWeight: 300,
+              padding: "0 0.5rem",
             }}
           >
             Un espacio donde la tradición se encuentra con la innovación, y cada
@@ -108,8 +109,8 @@ export default function SobreNosotros() {
       </section>
 
       {/* ---- NUESTRA HISTORIA ---- */}
-      <section style={{ padding: "6rem 1.5rem" }}>
-        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <section style={{ padding: "clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 1.5rem)" }}>
+        <div style={{ maxWidth: "min(900px, 100%)", margin: "0 auto" }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +122,7 @@ export default function SobreNosotros() {
                 display: "flex",
                 alignItems: "center",
                 gap: "0.75rem",
-                fontSize: "0.75rem",
+                fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
                 fontWeight: 500,
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
@@ -130,7 +131,7 @@ export default function SobreNosotros() {
               }}
             >
               <span
-                style={{ width: "32px", height: "1px", background: "#b78e56" }}
+                style={{ width: "clamp(24px, 3vw, 32px)", height: "1px", background: "#b78e56" }}
               />
               Nuestra historia
             </div>
@@ -159,7 +160,7 @@ export default function SobreNosotros() {
                 fontWeight: 300,
                 lineHeight: 1.8,
                 fontFamily: "'Georgia', serif",
-                fontSize: "1.05rem",
+                fontSize: "clamp(0.95rem, 1.05vw, 1.05rem)",
               }}
             >
               <p>
@@ -186,18 +187,18 @@ export default function SobreNosotros() {
       </section>
 
       {/* ---- VALORES ---- */}
-      <section style={{ padding: "0 1.5rem 6rem" }}>
+      <section style={{ padding: "0 clamp(1rem, 3vw, 1.5rem) clamp(3rem, 6vw, 6rem)" }}>
         <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ textAlign: "center", marginBottom: "3rem" }}
+            style={{ textAlign: "center", marginBottom: "clamp(2rem, 3vw, 3rem)" }}
           >
             <span
               style={{
-                fontSize: "0.75rem",
+                fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
                 fontWeight: 500,
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
@@ -222,8 +223,8 @@ export default function SobreNosotros() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-              gap: "2rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))",
+              gap: "clamp(1.5rem, 2vw, 2rem)",
             }}
           >
             {[
@@ -252,7 +253,7 @@ export default function SobreNosotros() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 style={{
                   background: "#fff",
-                  padding: "2rem",
+                  padding: "clamp(1.5rem, 2vw, 2rem)",
                   borderRadius: "12px",
                   boxShadow: "0 10px 40px rgba(92,64,51,0.06)",
                   border: "1px solid rgba(183,142,86,0.1)",
@@ -260,7 +261,7 @@ export default function SobreNosotros() {
               >
                 <h3
                   style={{
-                    fontSize: "1.25rem",
+                    fontSize: "clamp(1.1rem, 1.25vw, 1.25rem)",
                     fontWeight: 600,
                     color: "#5c4033",
                     fontFamily: "'Georgia', serif",
@@ -275,6 +276,7 @@ export default function SobreNosotros() {
                     lineHeight: 1.7,
                     fontWeight: 300,
                     fontFamily: "'Georgia', serif",
+                    fontSize: "clamp(0.9rem, 0.95vw, 1rem)",
                   }}
                 >
                   {val.desc}
@@ -286,20 +288,23 @@ export default function SobreNosotros() {
       </section>
 
       {/* ---- EQUIPO DETALLADO ---- */}
-      <section style={{ padding: "0 1.5rem 6rem", background: "#f5ebdc" }}>
-        <div
-          style={{ maxWidth: "1280px", margin: "0 auto", paddingTop: "6rem" }}
-        >
+      <section
+        style={{
+          padding: "clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 1.5rem)",
+          background: "#f5ebdc",
+        }}
+      >
+        <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ textAlign: "center", marginBottom: "3.5rem" }}
+            style={{ textAlign: "center", marginBottom: "clamp(2rem, 3.5vw, 3.5rem)" }}
           >
             <span
               style={{
-                fontSize: "0.75rem",
+                fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
                 fontWeight: 500,
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
@@ -324,8 +329,8 @@ export default function SobreNosotros() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-              gap: "3rem",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
+              gap: "clamp(1.5rem, 3vw, 3rem)",
             }}
           >
             {team.map((member, i) => (
@@ -340,30 +345,39 @@ export default function SobreNosotros() {
                   borderRadius: "16px",
                   overflow: "hidden",
                   boxShadow: "0 20px 60px rgba(92,64,51,0.08)",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                <div style={{ height: "320px", overflow: "hidden" }}>
+                <div
+                  style={{
+                    height: "clamp(220px, 32vw, 320px)",
+                    overflow: "hidden",
+                  }}
+                >
                   <img
                     src={member.image}
-                    alt={member.name}
+                    alt={`${member.name} - ${member.role}`}
+                    loading="lazy"
                     style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
                       transition: "transform 0.5s ease",
+                      display: "block",
                     }}
                     onMouseEnter={(e) => {
-                      e.target.style.transform = "scale(1.05)";
+                      e.currentTarget.style.transform = "scale(1.05)";
                     }}
                     onMouseLeave={(e) => {
-                      e.target.style.transform = "scale(1)";
+                      e.currentTarget.style.transform = "scale(1)";
                     }}
                   />
                 </div>
-                <div style={{ padding: "2rem" }}>
+                <div style={{ padding: "clamp(1.25rem, 2vw, 2rem)", flex: 1 }}>
                   <h3
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
                       fontWeight: 600,
                       color: "#5c4033",
                       fontFamily: "'Georgia', serif",
@@ -374,7 +388,7 @@ export default function SobreNosotros() {
                   </h3>
                   <p
                     style={{
-                      fontSize: "0.85rem",
+                      fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
                       color: "#b78e56",
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
@@ -390,6 +404,7 @@ export default function SobreNosotros() {
                       lineHeight: 1.7,
                       fontWeight: 300,
                       fontFamily: "'Georgia', serif",
+                      fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
                     }}
                   >
                     {member.bio}
@@ -402,7 +417,7 @@ export default function SobreNosotros() {
       </section>
 
       {/* ---- CTA ---- */}
-      <section style={{ padding: "6rem 1.5rem", textAlign: "center" }}>
+      <section style={{ padding: "clamp(3rem, 6vw, 6rem) clamp(1rem, 3vw, 1.5rem)", textAlign: "center" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -426,6 +441,7 @@ export default function SobreNosotros() {
               marginBottom: "2rem",
               fontFamily: "'Georgia', serif",
               fontWeight: 300,
+              fontSize: "clamp(0.9rem, 1vw, 1rem)",
             }}
           >
             Reserva tu cita y vive la experiencia Belleza Árabe.
@@ -433,7 +449,7 @@ export default function SobreNosotros() {
           <div
             style={{
               display: "flex",
-              gap: "1rem",
+              gap: "clamp(0.5rem, 1vw, 1rem)",
               justifyContent: "center",
               flexWrap: "wrap",
             }}
@@ -441,10 +457,10 @@ export default function SobreNosotros() {
             <Link
               to="/reserva"
               style={{
-                padding: "17px 40px",
+                padding: "clamp(12px, 1.5vw, 17px) clamp(24px, 4vw, 40px)",
                 background: "#b78e56",
                 color: "#faf6f0",
-                fontSize: "0.8rem",
+                fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                 fontWeight: 500,
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
@@ -453,14 +469,16 @@ export default function SobreNosotros() {
                 transition: "all 0.3s ease",
                 border: "2px solid #b78e56",
                 display: "inline-block",
+                minWidth: "clamp(120px, 15vw, 160px)",
+                textAlign: "center",
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = "transparent";
-                e.target.style.color = "#b78e56";
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "#b78e56";
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = "#b78e56";
-                e.target.style.color = "#faf6f0";
+                e.currentTarget.style.background = "#b78e56";
+                e.currentTarget.style.color = "#faf6f0";
               }}
             >
               Reservar Cita
@@ -468,11 +486,11 @@ export default function SobreNosotros() {
             <Link
               to="/"
               style={{
-                padding: "17px 40px",
+                padding: "clamp(12px, 1.5vw, 17px) clamp(24px, 4vw, 40px)",
                 background: "transparent",
                 border: "2px solid rgba(92,64,51,0.3)",
                 color: "#5c4033",
-                fontSize: "0.8rem",
+                fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                 fontWeight: 500,
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
@@ -480,12 +498,14 @@ export default function SobreNosotros() {
                 borderRadius: "999px",
                 transition: "all 0.3s ease",
                 display: "inline-block",
+                minWidth: "clamp(120px, 15vw, 160px)",
+                textAlign: "center",
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = "rgba(92,64,51,0.05)";
+                e.currentTarget.style.background = "rgba(92,64,51,0.05)";
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = "transparent";
+                e.currentTarget.style.background = "transparent";
               }}
             >
               Volver al inicio

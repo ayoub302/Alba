@@ -51,7 +51,7 @@ export default function Services() {
     <section
       id="servicios"
       style={{
-        padding: "8rem 1.5rem",
+        padding: "clamp(4rem, 8vw, 8rem) clamp(1rem, 3vw, 1.5rem)",
         background: "#0a0a0a",
         position: "relative",
         overflow: "hidden",
@@ -63,8 +63,8 @@ export default function Services() {
           position: "absolute",
           top: "-20%",
           left: "-10%",
-          width: "500px",
-          height: "500px",
+          width: "clamp(200px, 50vw, 500px)",
+          height: "clamp(200px, 50vw, 500px)",
           background:
             "radial-gradient(circle, rgba(212,167,116,0.08) 0%, transparent 70%)",
           borderRadius: "50%",
@@ -76,8 +76,8 @@ export default function Services() {
           position: "absolute",
           bottom: "-10%",
           right: "-5%",
-          width: "600px",
-          height: "600px",
+          width: "clamp(200px, 60vw, 600px)",
+          height: "clamp(200px, 60vw, 600px)",
           background:
             "radial-gradient(circle, rgba(212,167,116,0.05) 0%, transparent 70%)",
           borderRadius: "50%",
@@ -98,14 +98,18 @@ export default function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          style={{ marginBottom: "5rem", textAlign: "center" }}
+          style={{
+            marginBottom: "clamp(2.5rem, 5vw, 5rem)",
+            textAlign: "center",
+            padding: "0 0.5rem",
+          }}
         >
           <div
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "0.75rem",
-              fontSize: "0.8rem",
+              gap: "clamp(0.4rem, 0.75vw, 0.75rem)",
+              fontSize: "clamp(0.6rem, 0.8vw, 0.8rem)",
               fontWeight: 500,
               letterSpacing: "0.25em",
               textTransform: "uppercase",
@@ -114,17 +118,25 @@ export default function Services() {
             }}
           >
             <span
-              style={{ width: "40px", height: "1px", background: "#d4a574" }}
+              style={{
+                width: "clamp(24px, 4vw, 40px)",
+                height: "1px",
+                background: "#d4a574",
+              }}
             />
             Nuestros servicios
             <span
-              style={{ width: "40px", height: "1px", background: "#d4a574" }}
+              style={{
+                width: "clamp(24px, 4vw, 40px)",
+                height: "1px",
+                background: "#d4a574",
+              }}
             />
           </div>
 
           <h2
             style={{
-              fontSize: "clamp(2.8rem, 5.5vw, 4rem)",
+              fontSize: "clamp(2.2rem, 5.5vw, 4rem)",
               fontWeight: 300,
               color: "#f5f0e8",
               lineHeight: 1.1,
@@ -139,13 +151,14 @@ export default function Services() {
           <p
             style={{
               marginTop: "1.25rem",
-              maxWidth: "28rem",
+              maxWidth: "min(28rem, 90vw)",
               margin: "1.25rem auto 0",
               color: "#8a8278",
-              fontSize: "1.05rem",
+              fontSize: "clamp(0.9rem, 1.05vw, 1.05rem)",
               fontWeight: 400,
               fontFamily: "'Inter', 'Helvetica Neue', sans-serif",
               lineHeight: 1.7,
+              padding: "0 0.5rem",
             }}
           >
             Cada tratamiento es una experiencia. Tecnología capilar con
@@ -156,8 +169,8 @@ export default function Services() {
         <div
           style={{
             display: "grid",
-            gap: "1.5rem",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "clamp(1rem, 1.5vw, 1.5rem)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
           }}
         >
           {services.map((service, i) => (
@@ -175,6 +188,7 @@ export default function Services() {
                 transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
                 cursor: "pointer",
                 position: "relative",
+                maxWidth: "100%",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "rgba(212,167,116,0.3)";
@@ -192,7 +206,7 @@ export default function Services() {
               <div
                 style={{
                   position: "relative",
-                  height: "280px",
+                  height: "clamp(180px, 28vw, 280px)",
                   overflow: "hidden",
                 }}
               >
@@ -214,6 +228,7 @@ export default function Services() {
                     e.target.style.transform = "scale(1)";
                     e.target.style.filter = "brightness(0.85)";
                   }}
+                  loading="lazy"
                 />
 
                 {/* Overlay gradiente */}
@@ -231,12 +246,12 @@ export default function Services() {
                   <span
                     style={{
                       position: "absolute",
-                      top: "1.25rem",
-                      left: "1.25rem",
-                      padding: "6px 16px",
+                      top: "clamp(0.75rem, 1.25vw, 1.25rem)",
+                      left: "clamp(0.75rem, 1.25vw, 1.25rem)",
+                      padding: "clamp(4px, 0.6vw, 6px) clamp(10px, 1.5vw, 16px)",
                       background: "rgba(212,167,116,0.15)",
                       color: "#d4a574",
-                      fontSize: "0.7rem",
+                      fontSize: "clamp(0.55rem, 0.7vw, 0.7rem)",
                       fontWeight: 600,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
@@ -253,10 +268,10 @@ export default function Services() {
                 <div
                   style={{
                     position: "absolute",
-                    bottom: "1.25rem",
-                    right: "1.25rem",
-                    width: "44px",
-                    height: "44px",
+                    bottom: "clamp(0.75rem, 1.25vw, 1.25rem)",
+                    right: "clamp(0.75rem, 1.25vw, 1.25rem)",
+                    width: "clamp(36px, 4.4vw, 44px)",
+                    height: "clamp(36px, 4.4vw, 44px)",
                     borderRadius: "12px",
                     background: "rgba(212,167,116,0.12)",
                     border: "1px solid rgba(212,167,116,0.2)",
@@ -272,18 +287,19 @@ export default function Services() {
               </div>
 
               {/* Contenido */}
-              <div style={{ padding: "2rem" }}>
+              <div style={{ padding: "clamp(1rem, 2vw, 2rem)" }}>
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                     marginBottom: "0.75rem",
+                    gap: "0.5rem",
                   }}
                 >
                   <h3
                     style={{
-                      fontSize: "1.35rem",
+                      fontSize: "clamp(1.1rem, 1.35vw, 1.35rem)",
                       fontWeight: 500,
                       color: "#f5f0e8",
                       fontFamily: "'Inter', 'Helvetica Neue', sans-serif",
@@ -295,7 +311,10 @@ export default function Services() {
                   <ArrowUpRight
                     size={18}
                     color="#8a8278"
-                    style={{ transition: "all 0.3s ease" }}
+                    style={{
+                      transition: "all 0.3s ease",
+                      flexShrink: 0,
+                    }}
                     className="arrow-icon"
                   />
                 </div>
@@ -303,7 +322,7 @@ export default function Services() {
                 <p
                   style={{
                     color: "#6b6560",
-                    fontSize: "0.95rem",
+                    fontSize: "clamp(0.8rem, 0.95vw, 0.95rem)",
                     fontWeight: 400,
                     lineHeight: 1.7,
                     fontFamily: "'Inter', 'Helvetica Neue', sans-serif",
@@ -330,10 +349,11 @@ export default function Services() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .arrow-icon {
           opacity: 0;
           transform: translate(-4px, 4px);
+          transition: all 0.3s ease;
         }
         div:hover .arrow-icon {
           opacity: 1;
@@ -342,6 +362,12 @@ export default function Services() {
         }
         div:hover .service-line {
           width: 80% !important;
+        }
+        @media (max-width: 480px) {
+          .arrow-icon {
+            opacity: 1 !important;
+            transform: translate(0, 0) !important;
+          }
         }
       `}</style>
     </section>

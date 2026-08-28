@@ -10,8 +10,10 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 
-// ✅ CORREGIDO - Usa variable de entorno
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+
+const clamp = (min, viewportWidth, max) =>
+  Math.min(Math.max(min, (window.innerWidth * viewportWidth) / 100), max);
 
 // ✅ Reseñas de muestra (SIEMPRE van a estar)
 const reviewsMuestra = [
@@ -47,7 +49,6 @@ export default function Reviews() {
 
   const MAX_CHARS = 250;
 
-  // Función para cargar las reseñas de la API y combinarlas con las muestras
   const cargarResenas = useCallback(async () => {
     setCargando(true);
     try {
@@ -57,7 +58,6 @@ export default function Reviews() {
       }
       const data = await response.json();
 
-      // Combinamos los 3 fijos + los que vienen de la base de datos
       const nombresMuestra = reviewsMuestra.map((r) => r.author);
       const nuevasResenas = data.filter(
         (r) => !nombresMuestra.includes(r.nombre),
@@ -84,7 +84,6 @@ export default function Reviews() {
     };
   }, [cargarResenas]);
 
-  // 👇 Funciones de las flechas
   const siguienteResena = () => {
     setIndiceActual((prev) => (prev + 1) % resenas.length);
   };
@@ -171,22 +170,25 @@ export default function Reviews() {
   return (
     <section
       id="resenas"
-      style={{ padding: "8rem 1.5rem", background: "#f5ebdc" }}
+      style={{
+        padding: "clamp(4rem, 8vw, 8rem) clamp(1rem, 3vw, 1.5rem)",
+        background: "#f5ebdc",
+      }}
     >
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          style={{ marginBottom: "4rem", textAlign: "center" }}
+          style={{ marginBottom: "clamp(2rem, 4vw, 4rem)", textAlign: "center" }}
         >
           <div
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "0.75rem",
-              fontSize: "0.75rem",
+              gap: "clamp(0.4rem, 0.75vw, 0.75rem)",
+              fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
               fontWeight: 500,
               letterSpacing: "0.2em",
               textTransform: "uppercase",
@@ -194,16 +196,24 @@ export default function Reviews() {
             }}
           >
             <span
-              style={{ width: "32px", height: "1px", background: "#b78e56" }}
+              style={{
+                width: "clamp(20px, 3vw, 32px)",
+                height: "1px",
+                background: "#b78e56",
+              }}
             />
             Voces reales
             <span
-              style={{ width: "32px", height: "1px", background: "#b78e56" }}
+              style={{
+                width: "clamp(20px, 3vw, 32px)",
+                height: "1px",
+                background: "#b78e56",
+              }}
             />
           </div>
           <h2
             style={{
-              fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
               fontWeight: 300,
               color: "#5c4033",
               marginTop: "1rem",
@@ -235,27 +245,30 @@ export default function Reviews() {
 
         {!cargando && resenas.length > 0 && (
           <>
-            {/* 👇 CARRUSEL CON FLECHAS */}
+            {/* CARRUSEL CON FLECHAS */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "2rem",
+                gap: "clamp(0.5rem, 2vw, 2rem)",
                 marginBottom: "2rem",
+                padding: "0 0.25rem",
               }}
             >
-              {/* Botón Izquierda */}
               <button
                 onClick={anteriorResena}
                 style={{
                   background: "none",
                   border: "1px solid rgba(183,142,86,0.3)",
                   borderRadius: "50%",
-                  padding: "0.75rem",
+                  padding: "clamp(0.4rem, 0.7vw, 0.75rem)",
                   cursor: "pointer",
                   color: "#b78e56",
                   transition: "all 0.3s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
                 onMouseEnter={(e) =>
                   (e.target.style.background = "rgba(183,142,86,0.1)")
@@ -264,7 +277,7 @@ export default function Reviews() {
                   (e.target.style.background = "transparent")
                 }
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={clamp(18, 2.4, 24)} />
               </button>
 
               {/* Tarjeta Actual */}
@@ -275,15 +288,15 @@ export default function Reviews() {
                 transition={{ duration: 0.4 }}
                 style={{
                   background: "#faf6f0",
-                  padding: "2rem",
+                  padding: "clamp(1rem, 2vw, 2rem)",
                   borderRadius: "8px",
-                  maxWidth: "600px",
+                  maxWidth: "min(600px, 90vw)",
                   width: "100%",
                   boxShadow: "0 4px 15px rgba(92,64,51,0.05)",
                 }}
               >
                 <Quote
-                  size={32}
+                  size={clamp(24, 3.2, 32)}
                   color="#d4c4a8"
                   style={{ marginBottom: "1rem" }}
                 />
@@ -294,6 +307,7 @@ export default function Reviews() {
                     lineHeight: 1.7,
                     fontStyle: "italic",
                     fontFamily: "'Inter', sans-serif",
+                    fontSize: "clamp(0.85rem, 1vw, 1rem)",
                   }}
                 >
                   "{resenaActual.text || resenaActual.mensaje}"
@@ -306,31 +320,34 @@ export default function Reviews() {
                     display: "flex",
                     alignItems: "center",
                     gap: "1rem",
+                    flexWrap: "wrap",
                   }}
                 >
                   <div
                     style={{
-                      width: "48px",
-                      height: "48px",
+                      width: "clamp(36px, 4.8vw, 48px)",
+                      height: "clamp(36px, 4.8vw, 48px)",
                       borderRadius: "9999px",
                       background: "rgba(183,142,86,0.15)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.125rem",
+                      fontSize: "clamp(0.9rem, 1.1vw, 1.125rem)",
                       fontWeight: 600,
                       color: "#5c4033",
                       fontFamily: "'Inter', sans-serif",
+                      flexShrink: 0,
                     }}
                   >
                     {(resenaActual.author || resenaActual.nombre || "?")[0]}
                   </div>
-                  <div>
+                  <div style={{ flex: 1, minWidth: "120px" }}>
                     <p
                       style={{
                         fontWeight: 500,
                         color: "#5c4033",
                         fontFamily: "'Inter', sans-serif",
+                        fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
                       }}
                     >
                       {resenaActual.author || resenaActual.nombre}
@@ -339,14 +356,14 @@ export default function Reviews() {
                       style={{
                         display: "flex",
                         color: "#b78e56",
-                        fontSize: "0.875rem",
+                        fontSize: "clamp(0.7rem, 0.85vw, 0.875rem)",
                         marginTop: "2px",
                       }}
                     >
                       {[...Array(5)].map((_, j) => (
                         <Star
                           key={j}
-                          size={12}
+                          size={clamp(10, 1.2, 12)}
                           fill={
                             j < (resenaActual.rating || 5) ? "#b78e56" : "none"
                           }
@@ -358,17 +375,19 @@ export default function Reviews() {
                 </div>
               </motion.div>
 
-              {/* Botón Derecha */}
               <button
                 onClick={siguienteResena}
                 style={{
                   background: "none",
                   border: "1px solid rgba(183,142,86,0.3)",
                   borderRadius: "50%",
-                  padding: "0.75rem",
+                  padding: "clamp(0.4rem, 0.7vw, 0.75rem)",
                   cursor: "pointer",
                   color: "#b78e56",
                   transition: "all 0.3s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
                 onMouseEnter={(e) =>
                   (e.target.style.background = "rgba(183,142,86,0.1)")
@@ -377,7 +396,7 @@ export default function Reviews() {
                   (e.target.style.background = "transparent")
                 }
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={clamp(18, 2.4, 24)} />
               </button>
             </div>
 
@@ -386,8 +405,9 @@ export default function Reviews() {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                gap: "0.5rem",
-                marginBottom: "3rem",
+                gap: "clamp(0.3rem, 0.5vw, 0.5rem)",
+                marginBottom: "clamp(1.5rem, 3vw, 3rem)",
+                flexWrap: "wrap",
               }}
             >
               {resenas.map((_, i) => (
@@ -395,8 +415,8 @@ export default function Reviews() {
                   key={i}
                   onClick={() => setIndiceActual(i)}
                   style={{
-                    width: "10px",
-                    height: "10px",
+                    width: "clamp(8px, 1vw, 10px)",
+                    height: "clamp(8px, 1vw, 10px)",
                     borderRadius: "50%",
                     background:
                       i === indiceActual ? "#b78e56" : "rgba(183,142,86,0.3)",
@@ -417,12 +437,12 @@ export default function Reviews() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               style={{
-                padding: "1rem 2.5rem",
+                padding: "clamp(0.75rem, 1vw, 1rem) clamp(1.5rem, 2.5vw, 2.5rem)",
                 background: "#b78e56",
                 color: "#faf6f0",
                 border: "none",
                 borderRadius: "999px",
-                fontSize: "1rem",
+                fontSize: "clamp(0.85rem, 1vw, 1rem)",
                 fontWeight: 600,
                 letterSpacing: "0.05em",
                 cursor: "pointer",
@@ -431,9 +451,11 @@ export default function Reviews() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.5rem",
+                width: window.innerWidth < 480 ? "100%" : "auto",
+                justifyContent: "center",
               }}
             >
-              <Send size={18} />
+              <Send size={clamp(16, 1.8, 18)} />
               Añade tu comentario
             </motion.button>
           </div>
@@ -449,11 +471,11 @@ export default function Reviews() {
               style={{
                 marginTop: "3rem",
                 background: "#fff",
-                padding: "2.5rem",
+                padding: "clamp(1.5rem, 2.5vw, 2.5rem)",
                 borderRadius: "16px",
                 boxShadow: "0 20px 60px rgba(92,64,51,0.08)",
                 border: "1px solid rgba(183,142,86,0.15)",
-                maxWidth: "600px",
+                maxWidth: "min(600px, 95vw)",
                 marginLeft: "auto",
                 marginRight: "auto",
                 overflow: "hidden",
@@ -469,7 +491,7 @@ export default function Reviews() {
               >
                 <h3
                   style={{
-                    fontSize: "1.8rem",
+                    fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)",
                     fontWeight: 600,
                     color: "#5c4033",
                     fontFamily: "'Georgia', serif",
@@ -496,7 +518,7 @@ export default function Reviews() {
                     (e.target.style.background = "transparent")
                   }
                 >
-                  <X size={24} />
+                  <X size={clamp(20, 2.4, 24)} />
                 </button>
               </div>
 
@@ -505,13 +527,14 @@ export default function Reviews() {
                   style={{
                     background: "#ffe5e5",
                     color: "#d32f2f",
-                    padding: "0.75rem 1rem",
+                    padding: "clamp(0.5rem, 0.75vw, 0.75rem) clamp(0.75rem, 1vw, 1rem)",
                     borderRadius: "8px",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
                     marginBottom: "1.25rem",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                    flexWrap: "wrap",
                   }}
                 >
                   <AlertCircle size={18} />
@@ -524,13 +547,14 @@ export default function Reviews() {
                   style={{
                     background: "#e6f7e6",
                     color: "#2e7d32",
-                    padding: "0.75rem 1rem",
+                    padding: "clamp(0.5rem, 0.75vw, 0.75rem) clamp(0.75rem, 1vw, 1rem)",
                     borderRadius: "8px",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
                     marginBottom: "1.25rem",
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                    flexWrap: "wrap",
                   }}
                 >
                   <Send size={18} />
@@ -546,6 +570,7 @@ export default function Reviews() {
                     color: "#5c4033",
                     fontWeight: 500,
                     fontFamily: "'Georgia', serif",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                   }}
                 >
                   Nombre
@@ -557,15 +582,16 @@ export default function Reviews() {
                   placeholder="Tu nombre"
                   style={{
                     width: "100%",
-                    padding: "0.75rem 1rem",
+                    padding: "clamp(0.5rem, 0.75vw, 0.75rem) clamp(0.75rem, 1vw, 1rem)",
                     marginBottom: "1.25rem",
                     border: "1px solid rgba(183,142,86,0.3)",
                     borderRadius: "8px",
-                    fontSize: "1rem",
+                    fontSize: "clamp(0.9rem, 1vw, 1rem)",
                     fontFamily: "'Inter', sans-serif",
                     outline: "none",
                     transition: "border-color 0.3s ease",
                     background: "#faf6f0",
+                    boxSizing: "border-box",
                   }}
                   onFocus={(e) => (e.target.style.borderColor = "#b78e56")}
                   onBlur={(e) =>
@@ -580,6 +606,7 @@ export default function Reviews() {
                     color: "#5c4033",
                     fontWeight: 500,
                     fontFamily: "'Georgia', serif",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                   }}
                 >
                   Mensaje
@@ -590,19 +617,20 @@ export default function Reviews() {
                     setMessage(e.target.value.slice(0, MAX_CHARS))
                   }
                   placeholder="Escribe tu experiencia (máx. 250 caracteres)"
-                  rows="4"
+                  rows={4}
                   style={{
                     width: "100%",
-                    padding: "0.75rem 1rem",
+                    padding: "clamp(0.5rem, 0.75vw, 0.75rem) clamp(0.75rem, 1vw, 1rem)",
                     marginBottom: "0.5rem",
                     border: "1px solid rgba(183,142,86,0.3)",
                     borderRadius: "8px",
-                    fontSize: "1rem",
+                    fontSize: "clamp(0.9rem, 1vw, 1rem)",
                     fontFamily: "'Inter', sans-serif",
                     outline: "none",
                     transition: "border-color 0.3s ease",
                     background: "#faf6f0",
                     resize: "vertical",
+                    boxSizing: "border-box",
                   }}
                   onFocus={(e) => (e.target.style.borderColor = "#b78e56")}
                   onBlur={(e) =>
@@ -612,7 +640,7 @@ export default function Reviews() {
                 <div
                   style={{
                     textAlign: "right",
-                    fontSize: "0.85rem",
+                    fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                     color: message.length >= MAX_CHARS ? "#d32f2f" : "#8a7a5c",
                     marginBottom: "1.25rem",
                   }}
@@ -627,6 +655,7 @@ export default function Reviews() {
                     color: "#5c4033",
                     fontWeight: 500,
                     fontFamily: "'Georgia', serif",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                   }}
                 >
                   Valoración
@@ -634,8 +663,9 @@ export default function Reviews() {
                 <div
                   style={{
                     display: "flex",
-                    gap: "0.25rem",
+                    gap: "clamp(0.1rem, 0.25vw, 0.25rem)",
                     marginBottom: "1.5rem",
+                    flexWrap: "wrap",
                   }}
                 >
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -654,7 +684,7 @@ export default function Reviews() {
                       }}
                     >
                       <Star
-                        size={32}
+                        size={clamp(24, 3.2, 32)}
                         color="#b78e56"
                         fill={
                           (hoverRating || rating) >= star
@@ -672,12 +702,12 @@ export default function Reviews() {
                   disabled={enviando}
                   style={{
                     width: "100%",
-                    padding: "1rem",
+                    padding: "clamp(0.75rem, 1vw, 1rem)",
                     background: enviando ? "#c4b49a" : "#b78e56",
                     color: "#faf6f0",
                     border: "none",
                     borderRadius: "8px",
-                    fontSize: "1rem",
+                    fontSize: "clamp(0.9rem, 1vw, 1rem)",
                     fontWeight: 600,
                     letterSpacing: "0.05em",
                     cursor: enviando ? "wait" : "pointer",
@@ -688,6 +718,7 @@ export default function Reviews() {
                     justifyContent: "center",
                     gap: "0.5rem",
                     opacity: enviando ? 0.7 : 1,
+                    boxSizing: "border-box",
                   }}
                   onMouseEnter={(e) => {
                     if (!enviando) e.target.style.background = "#a0784a";
@@ -696,7 +727,7 @@ export default function Reviews() {
                     if (!enviando) e.target.style.background = "#b78e56";
                   }}
                 >
-                  <Send size={18} />
+                  <Send size={clamp(16, 1.8, 18)} />
                   {enviando ? "Enviando..." : "Enviar comentario"}
                 </button>
               </form>

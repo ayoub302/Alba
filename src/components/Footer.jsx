@@ -1,13 +1,12 @@
 import { Phone } from "lucide-react";
-import { Link } from "react-router-dom"; // 👈 AÑADIDO
+import { Link } from "react-router-dom";
 
 const WHATSAPP = "https://wa.me/34688766728";
 const TIKTOK = "https://www.tiktok.com/@peluqueriaalba";
 const INSTAGRAM = "https://www.instagram.com/peluqueria_alba_quipuzkoa/";
 const FACEBOOK = "https://www.facebook.com/profile.php?id=100091501124434";
 
-// Iconos de redes dibujados a medida (mismo trazo fino), evita depender de
-// exports de marca que lucide-react puede no incluir según la versión.
+// Iconos de redes dibujados a medida
 function InstagramIcon({ size = 18 }) {
   return (
     <svg
@@ -73,7 +72,7 @@ const legalLinks = [
   { href: "/aviso-legal", label: "Aviso legal" },
 ];
 
-// Cenefa de estrellas de ocho puntas (motivo geométrico árabe), como patrón SVG repetido
+// Cenefa de estrellas de ocho puntas (motivo geométrico árabe)
 const starPattern =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23c9a06c' stroke-width='0.9' opacity='0.55'%3E%3Cpath d='M20 4 L23 14 L33 11 L26 19 L33 27 L23 24 L20 34 L17 24 L7 27 L14 19 L7 11 L17 14 Z'/%3E%3C/g%3E%3C/svg%3E";
 
@@ -90,7 +89,7 @@ export default function Footer() {
       {/* cenefa geométrica superior */}
       <div
         style={{
-          height: "26px",
+          height: "clamp(18px, 2.5vw, 26px)",
           backgroundImage: `url("${starPattern}")`,
           backgroundRepeat: "repeat-x",
           backgroundSize: "40px 40px",
@@ -103,21 +102,26 @@ export default function Footer() {
       <div
         style={{
           position: "relative",
-          padding: "4.5rem 1.5rem 2.5rem",
+          padding: "clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 3vw, 2.5rem)",
           maxWidth: "1280px",
           margin: "0 auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "1.75rem",
+          gap: "clamp(1rem, 2vw, 1.75rem)",
         }}
       >
         {/* ---- ARCO MORISCO CON EL LOGO DENTRO ---- */}
-        <div style={{ position: "relative", width: "220px" }}>
+        <div
+          style={{
+            position: "relative",
+            width: "clamp(140px, 25vw, 220px)",
+          }}
+        >
           <svg
             viewBox="0 0 220 190"
-            width="220"
-            height="190"
+            width="100%"
+            height="auto"
             style={{ display: "block" }}
           >
             <path
@@ -134,14 +138,13 @@ export default function Footer() {
               strokeWidth="1"
               opacity="0.35"
             />
-            {/* remate en la punta del arco */}
             <circle cx="110" cy="8" r="3" fill="#c9a06c" opacity="0.9" />
           </svg>
 
           <div
             style={{
               position: "absolute",
-              top: "68px",
+              top: "clamp(40px, 8vw, 68px)",
               left: 0,
               right: 0,
               display: "flex",
@@ -151,7 +154,7 @@ export default function Footer() {
           >
             <span
               style={{
-                fontSize: "1.7rem",
+                fontSize: "clamp(1.1rem, 2.5vw, 1.7rem)",
                 fontWeight: 400,
                 fontStyle: "italic",
                 letterSpacing: "0.08em",
@@ -164,7 +167,7 @@ export default function Footer() {
             </span>
             <span
               style={{
-                fontSize: "1.7rem",
+                fontSize: "clamp(1.1rem, 2.5vw, 1.7rem)",
                 fontWeight: 400,
                 fontStyle: "italic",
                 letterSpacing: "0.08em",
@@ -180,12 +183,13 @@ export default function Footer() {
 
         <span
           style={{
-            fontSize: "10px",
+            fontSize: "clamp(8px, 1vw, 10px)",
             color: "#a3835f",
             letterSpacing: "0.26em",
             textTransform: "uppercase",
             fontWeight: 600,
             marginTop: "-0.5rem",
+            textAlign: "center",
           }}
         >
           Belleza con esencia árabe
@@ -197,7 +201,7 @@ export default function Footer() {
             display: "flex",
             alignItems: "center",
             gap: "0.65rem",
-            width: "160px",
+            width: "clamp(100px, 20vw, 160px)",
           }}
         >
           <span
@@ -209,8 +213,8 @@ export default function Footer() {
           />
           <span
             style={{
-              width: "7px",
-              height: "7px",
+              width: "clamp(5px, 0.8vw, 7px)",
+              height: "clamp(5px, 0.8vw, 7px)",
               background: "#c9a06c",
               transform: "rotate(45deg)",
               opacity: 0.75,
@@ -228,28 +232,37 @@ export default function Footer() {
         <p
           style={{
             textAlign: "center",
-            fontSize: "0.95rem",
+            fontSize: "clamp(0.8rem, 1vw, 0.95rem)",
             color: "#cdb896",
             fontWeight: 300,
             fontFamily: "'Georgia', serif",
             fontStyle: "italic",
-            maxWidth: "26rem",
+            maxWidth: "clamp(280px, 60vw, 26rem)",
             lineHeight: 1.7,
+            padding: "0 0.5rem",
           }}
         >
           Salón exclusivo para mujeres en Errenteria, Gipuzkoa.
         </p>
 
         {/* ---- BOTÓN WHATSAPP + REDES SOCIALES ---- */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.9rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "clamp(0.5rem, 1vw, 0.9rem)",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
           <a
             href={WHATSAPP}
             target="_blank"
             rel="noreferrer"
             aria-label="WhatsApp"
             style={{
-              width: "50px",
-              height: "56px",
+              width: "clamp(40px, 5vw, 50px)",
+              height: "clamp(44px, 5.5vw, 56px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -270,7 +283,7 @@ export default function Footer() {
               e.currentTarget.style.borderColor = "rgba(201,160,108,0.45)";
             }}
           >
-            <Phone size={18} strokeWidth={1.6} />
+            <Phone size="clamp(15px, 2vw, 18px)" strokeWidth={1.6} />
           </a>
 
           {socialLinks.map(({ href, label, Icon }) => (
@@ -281,8 +294,8 @@ export default function Footer() {
               rel="noreferrer"
               aria-label={label}
               style={{
-                width: "46px",
-                height: "46px",
+                width: "clamp(38px, 4.5vw, 46px)",
+                height: "clamp(38px, 4.5vw, 46px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -303,35 +316,41 @@ export default function Footer() {
                 e.currentTarget.style.borderColor = "rgba(201,160,108,0.45)";
               }}
             >
-              <Icon size={17} strokeWidth={1.6} />
+              <Icon size="clamp(14px, 1.8vw, 17px)" strokeWidth={1.6} />
             </a>
           ))}
         </div>
 
-        {/* ---- ENLACES LEGALES (AHORA CON LINK) ---- */}
+        {/* ---- ENLACES LEGALES ---- */}
         <div
           style={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
-            gap: "0.5rem 1.5rem",
+            gap: "clamp(0.3rem, 0.8vw, 0.5rem) clamp(0.8rem, 1.5vw, 1.5rem)",
             marginTop: "0.25rem",
+            padding: "0 0.5rem",
           }}
         >
           {legalLinks.map((link, i) => (
             <span
               key={link.label}
-              style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "clamp(0.8rem, 1.5vw, 1.5rem)",
+              }}
             >
               <Link
                 to={link.href}
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
                   color: "#a3835f",
                   letterSpacing: "0.04em",
                   textDecoration: "none",
                   borderBottom: "1px solid transparent",
                   transition: "color 0.25s ease, border-color 0.25s ease",
+                  whiteSpace: "nowrap",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = "#e2cba4";
@@ -346,7 +365,10 @@ export default function Footer() {
               </Link>
               {i < legalLinks.length - 1 && (
                 <span
-                  style={{ color: "rgba(163,131,95,0.4)", fontSize: "0.75rem" }}
+                  style={{
+                    color: "rgba(163,131,95,0.4)",
+                    fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
+                  }}
                 >
                   ·
                 </span>
@@ -357,10 +379,12 @@ export default function Footer() {
 
         <p
           style={{
-            fontSize: "0.72rem",
+            fontSize: "clamp(0.55rem, 0.7vw, 0.72rem)",
             color: "#7c9088",
             letterSpacing: "0.05em",
             marginTop: "0.25rem",
+            textAlign: "center",
+            padding: "0 0.5rem",
           }}
         >
           © 2026 Peluquería Alba · Errenteria, Gipuzkoa · Todos los derechos

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 const navLeft = [
   { label: "Inicio", href: "#inicio" },
@@ -30,17 +31,17 @@ export function Header() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
           scrolled
             ? "bg-black/90 backdrop-blur-xl border-b border-[#c9a961]/15 py-3"
-            : "bg-gradient-to-b from-black/40 to-transparent py-5"
+            : "bg-gradient-to-b from-black/40 to-transparent py-4 md:py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-          {/* Navegación izquierda */}
-          <nav className="hidden lg:flex items-center justify-end gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-[1fr_auto_1fr] items-center gap-2 md:gap-4">
+          {/* Navegación izquierda - Desktop */}
+          <nav className="hidden lg:flex items-center justify-end gap-6 xl:gap-8">
             {navLeft.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="relative py-2 text-[13px] font-light tracking-[0.12em] text-gray-300 hover:text-[#e8d5a0] transition-colors duration-300 group uppercase"
+                className="relative py-2 text-[11px] xl:text-[13px] font-light tracking-[0.12em] text-gray-300 hover:text-[#e8d5a0] transition-colors duration-300 group uppercase whitespace-nowrap"
               >
                 {link.label}
                 <span className="absolute -bottom-0.5 left-1/2 w-0 h-[1px] bg-[#c9a961] transition-all duration-300 ease-out group-hover:w-full group-hover:left-0" />
@@ -55,7 +56,9 @@ export function Header() {
           >
             <div
               className={`relative flex items-center justify-center transition-all duration-500 ${
-                scrolled ? "w-12 h-12" : "w-16 h-16"
+                scrolled
+                  ? "w-10 h-10 md:w-12 md:h-12"
+                  : "w-12 h-12 md:w-16 md:h-16"
               }`}
             >
               {/* anillo exterior */}
@@ -81,7 +84,6 @@ export function Header() {
                   strokeWidth="0.5"
                   opacity="0.35"
                 />
-                {/* marcas tipo brújula/pétalo — motivo botánico sutil */}
                 {[0, 60, 120, 180, 240, 300].map((deg) => (
                   <line
                     key={deg}
@@ -99,7 +101,7 @@ export function Header() {
               {/* monograma */}
               <span
                 className={`font-serif text-[#e8d5a0] leading-none transition-all duration-500 ${
-                  scrolled ? "text-xl" : "text-2xl"
+                  scrolled ? "text-base md:text-xl" : "text-xl md:text-2xl"
                 }`}
                 style={{ letterSpacing: "0.02em" }}
               >
@@ -110,26 +112,26 @@ export function Header() {
               className={`flex flex-col items-center overflow-hidden transition-all duration-500 ${
                 scrolled
                   ? "max-h-0 opacity-0 mt-0"
-                  : "max-h-12 opacity-100 mt-1.5"
+                  : "max-h-12 opacity-100 mt-1 md:mt-1.5"
               }`}
             >
-              <span className="font-serif text-lg font-medium tracking-[0.3em] text-[#e8d5a0] uppercase whitespace-nowrap">
+              <span className="font-serif text-base md:text-lg font-medium tracking-[0.3em] text-[#e8d5a0] uppercase whitespace-nowrap">
                 Alba
               </span>
-              <span className="font-sans text-[9px] tracking-[0.35em] text-gray-500 uppercase whitespace-nowrap">
+              <span className="font-sans text-[8px] md:text-[9px] tracking-[0.35em] text-gray-500 uppercase whitespace-nowrap">
                 Estética &amp; Belleza
               </span>
             </div>
           </a>
 
-          {/* Navegación derecha + CTA */}
-          <div className="hidden lg:flex items-center justify-start gap-8">
-            <nav className="flex items-center gap-8">
+          {/* Navegación derecha + CTA - Desktop */}
+          <div className="hidden lg:flex items-center justify-start gap-4 xl:gap-8">
+            <nav className="flex items-center gap-4 xl:gap-8">
               {navRight.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="relative py-2 text-[13px] font-light tracking-[0.12em] text-gray-300 hover:text-[#e8d5a0] transition-colors duration-300 group uppercase"
+                  className="relative py-2 text-[11px] xl:text-[13px] font-light tracking-[0.12em] text-gray-300 hover:text-[#e8d5a0] transition-colors duration-300 group uppercase whitespace-nowrap"
                 >
                   {link.label}
                   <span className="absolute -bottom-0.5 left-1/2 w-0 h-[1px] bg-[#c9a961] transition-all duration-300 ease-out group-hover:w-full group-hover:left-0" />
@@ -138,7 +140,7 @@ export function Header() {
             </nav>
             <Link
               to="/reserva"
-              className="relative px-7 py-2.5 bg-transparent border border-[#c9a961] text-[#e8d5a0] font-medium text-xs uppercase tracking-[0.15em] overflow-hidden group transition-colors duration-300 hover:text-black"
+              className="relative px-5 xl:px-7 py-2 xl:py-2.5 bg-transparent border border-[#c9a961] text-[#e8d5a0] font-medium text-[10px] xl:text-xs uppercase tracking-[0.15em] overflow-hidden group transition-colors duration-300 hover:text-black whitespace-nowrap"
             >
               <span className="absolute inset-0 bg-[#c9a961] scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100" />
               <span className="relative">Reservar Cita</span>
@@ -151,31 +153,33 @@ export function Header() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Abrir menú"
           >
-            <i
-              className={`fas ${mobileOpen ? "fa-times" : "fa-bars"} text-xl`}
-            ></i>
+            {mobileOpen ? (
+              <X className="w-5 h-5 md:w-6 md:h-6" />
+            ) : (
+              <Menu className="w-5 h-5 md:w-6 md:h-6" />
+            )}
           </button>
 
-          {/* espaciador para mantener el logo centrado en mobile (el botón ocupa la col derecha) */}
+          {/* espaciador para mantener el logo centrado en mobile */}
           <div className="hidden" />
         </div>
       </header>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 right-0 z-40 bg-black/97 backdrop-blur-xl border-b border-[#c9a961]/15 transition-all duration-300 pt-24 ${
+        className={`fixed top-0 left-0 right-0 z-40 bg-black/97 backdrop-blur-xl border-b border-[#c9a961]/15 transition-all duration-300 pt-20 md:pt-24 ${
           mobileOpen
-            ? "opacity-100 translate-y-0"
+            ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-4 pointer-events-none"
         }`}
       >
-        <div className="p-6 space-y-1">
+        <div className="p-4 md:p-6 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
           {allLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="block py-3 px-4 text-sm font-light tracking-wider text-gray-300 hover:text-[#e8d5a0] hover:bg-white/5 border-l-2 border-transparent hover:border-[#c9a961] transition-all uppercase"
+              className="block py-3 px-4 text-sm md:text-base font-light tracking-wider text-gray-300 hover:text-[#e8d5a0] hover:bg-white/5 border-l-2 border-transparent hover:border-[#c9a961] transition-all uppercase"
             >
               {link.label}
             </a>
@@ -183,7 +187,7 @@ export function Header() {
           <Link
             to="/reserva"
             onClick={() => setMobileOpen(false)}
-            className="block mt-4 py-3 px-4 bg-[#c9a961] text-black font-medium text-sm text-center uppercase tracking-wider hover:bg-[#e8d5a0] transition-colors"
+            className="block mt-4 py-3 px-4 bg-[#c9a961] text-black font-medium text-sm md:text-base text-center uppercase tracking-wider hover:bg-[#e8d5a0] transition-colors"
           >
             Reservar Cita
           </Link>

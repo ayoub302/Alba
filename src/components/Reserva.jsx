@@ -13,7 +13,6 @@ import {
 // ============================================
 // CONFIGURACIÓN
 // ============================================
-// ✅ CORREGIDO - Usa variable de entorno
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 const SERVICIOS = [
@@ -37,12 +36,12 @@ const HORARIOS = [
 ];
 
 // ============================================
-// ESTILOS
+// ESTILOS - RESPONSIVE
 // ============================================
 const inputStyle = {
   width: "100%",
-  padding: "14px 16px",
-  fontSize: "0.95rem",
+  padding: "clamp(10px, 1.2vw, 14px) clamp(12px, 1.5vw, 16px)",
+  fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
   fontFamily: "'Georgia', serif",
   color: "#5c4033",
   background: "#fff",
@@ -50,11 +49,12 @@ const inputStyle = {
   borderRadius: "8px",
   outline: "none",
   transition: "border-color 0.25s ease, box-shadow 0.25s ease",
+  boxSizing: "border-box",
 };
 
 const labelStyle = {
   display: "block",
-  fontSize: "0.75rem",
+  fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
   fontWeight: 500,
   letterSpacing: "0.12em",
   textTransform: "uppercase",
@@ -64,13 +64,13 @@ const labelStyle = {
 
 function Field({ label, children, hint }) {
   return (
-    <div style={{ marginBottom: "1.5rem" }}>
+    <div style={{ marginBottom: "clamp(1rem, 1.5vw, 1.5rem)" }}>
       <label style={labelStyle}>{label}</label>
       {children}
       {hint && (
         <p
           style={{
-            fontSize: "0.75rem",
+            fontSize: "clamp(0.65rem, 0.7vw, 0.75rem)",
             color: "#8a7a5c",
             marginTop: "6px",
             fontFamily: "'Georgia', serif",
@@ -120,20 +120,32 @@ function SelectorPais({ paisSeleccionado, onChange }) {
           ...inputStyle,
           display: "flex",
           alignItems: "center",
-          gap: "10px",
+          gap: "clamp(6px, 0.8vw, 10px)",
           cursor: "pointer",
           textAlign: "left",
         }}
       >
-        <span style={{ fontSize: "1.2rem" }}>{pais.bandera}</span>
+        <span style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)" }}>
+          {pais.bandera}
+        </span>
         <span style={{ fontWeight: 500, color: "#5c4033" }}>
           {pais.prefijo}
         </span>
-        <span style={{ color: "#8a7a5c", fontSize: "0.85rem" }}>
+        <span
+          style={{
+            color: "#8a7a5c",
+            fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
+            display: window.innerWidth < 480 ? "none" : "inline",
+          }}
+        >
           {pais.nombre}
         </span>
         <span
-          style={{ marginLeft: "auto", fontSize: "0.7rem", color: "#8a7a5c" }}
+          style={{
+            marginLeft: "auto",
+            fontSize: "0.7rem",
+            color: "#8a7a5c",
+          }}
         >
           ▼
         </span>
@@ -151,7 +163,7 @@ function SelectorPais({ paisSeleccionado, onChange }) {
             borderRadius: "8px",
             boxShadow: "0 10px 40px rgba(92,64,51,0.12)",
             zIndex: 100,
-            maxHeight: "280px",
+            maxHeight: "clamp(200px, 40vh, 280px)",
             overflow: "hidden",
             display: "flex",
             flexDirection: "column",
@@ -163,17 +175,22 @@ function SelectorPais({ paisSeleccionado, onChange }) {
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             style={{
-              padding: "10px 14px",
+              padding: "clamp(8px, 1vw, 10px) clamp(10px, 1.2vw, 14px)",
               border: "none",
               borderBottom: "1px solid rgba(183,142,86,0.2)",
               outline: "none",
               fontFamily: "'Georgia', serif",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               color: "#5c4033",
             }}
             autoFocus
           />
-          <div style={{ overflowY: "auto", maxHeight: "220px" }}>
+          <div
+            style={{
+              overflowY: "auto",
+              maxHeight: "clamp(160px, 30vh, 220px)",
+            }}
+          >
             {filtrados.map((p) => (
               <button
                 key={p.codigo}
@@ -185,10 +202,10 @@ function SelectorPais({ paisSeleccionado, onChange }) {
                 }}
                 style={{
                   width: "100%",
-                  padding: "10px 14px",
+                  padding: "clamp(8px, 1vw, 10px) clamp(10px, 1.2vw, 14px)",
                   display: "flex",
                   alignItems: "center",
-                  gap: "10px",
+                  gap: "clamp(6px, 0.8vw, 10px)",
                   border: "none",
                   background:
                     p.codigo === paisSeleccionado
@@ -197,7 +214,7 @@ function SelectorPais({ paisSeleccionado, onChange }) {
                   cursor: "pointer",
                   textAlign: "left",
                   fontFamily: "'Georgia', serif",
-                  fontSize: "0.9rem",
+                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                   color: "#5c4033",
                   transition: "background 0.15s ease",
                 }}
@@ -212,11 +229,18 @@ function SelectorPais({ paisSeleccionado, onChange }) {
                   }
                 }}
               >
-                <span style={{ fontSize: "1.1rem" }}>{p.bandera}</span>
-                <span style={{ fontWeight: 500, minWidth: "45px" }}>
+                <span style={{ fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)" }}>
+                  {p.bandera}
+                </span>
+                <span style={{ fontWeight: 500, minWidth: "clamp(35px, 4vw, 45px)" }}>
                   {p.prefijo}
                 </span>
-                <span style={{ color: "#8a7a5c", fontSize: "0.85rem" }}>
+                <span
+                  style={{
+                    color: "#8a7a5c",
+                    fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
+                  }}
+                >
                   {p.nombre}
                 </span>
               </button>
@@ -224,7 +248,7 @@ function SelectorPais({ paisSeleccionado, onChange }) {
             {filtrados.length === 0 && (
               <p
                 style={{
-                  padding: "12px",
+                  padding: "clamp(8px, 1vw, 12px)",
                   textAlign: "center",
                   color: "#8a7a5c",
                   fontSize: "0.85rem",
@@ -241,7 +265,7 @@ function SelectorPais({ paisSeleccionado, onChange }) {
 }
 
 // ============================================
-// MODAL DE ÉXITO - CON MENSAJE PARA CLIENTES
+// MODAL DE ÉXITO - RESPONSIVE
 // ============================================
 function ModalExito({ visible, onClose, citaData }) {
   if (!visible) return null;
@@ -257,7 +281,7 @@ function ModalExito({ visible, onClose, citaData }) {
         alignItems: "center",
         justifyContent: "center",
         zIndex: 1000,
-        padding: "1rem",
+        padding: "clamp(0.75rem, 2vw, 1.5rem)",
       }}
       onClick={onClose}
     >
@@ -265,18 +289,22 @@ function ModalExito({ visible, onClose, citaData }) {
         style={{
           background: "#fff",
           borderRadius: "16px",
-          maxWidth: "500px",
+          maxWidth: "min(500px, 95vw)",
           width: "100%",
-          padding: "2.5rem 2rem",
+          padding: "clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2rem)",
           boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
           textAlign: "center",
+          maxHeight: "90vh",
+          overflowY: "auto",
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>💌</div>
+        <div style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginBottom: "1rem" }}>
+          💌
+        </div>
         <h2
           style={{
-            fontSize: "1.5rem",
+            fontSize: "clamp(1.2rem, 2vw, 1.5rem)",
             fontFamily: "'Georgia', serif",
             color: "#5c4033",
             marginBottom: "0.5rem",
@@ -288,7 +316,7 @@ function ModalExito({ visible, onClose, citaData }) {
           style={{
             color: "#8a7a5c",
             fontFamily: "'Georgia', serif",
-            fontSize: "0.95rem",
+            fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
             lineHeight: 1.8,
             marginBottom: "1.5rem",
           }}
@@ -299,7 +327,7 @@ function ModalExito({ visible, onClose, citaData }) {
           tu cita y resolver cualquier duda.
           <br />
           <br />
-          <span style={{ fontSize: "0.85rem", color: "#b78e56" }}>
+          <span style={{ fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)", color: "#b78e56" }}>
             Revisa tu correo y WhatsApp, que ahí te escribiremos.
           </span>
         </p>
@@ -309,26 +337,18 @@ function ModalExito({ visible, onClose, citaData }) {
             style={{
               background: "#faf6f0",
               borderRadius: "8px",
-              padding: "1rem",
+              padding: "clamp(0.75rem, 1.5vw, 1rem)",
               textAlign: "left",
               marginBottom: "1.5rem",
-              fontSize: "0.9rem",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
               fontFamily: "'Georgia', serif",
               color: "#5c4033",
             }}
           >
-            <p>
-              <strong>Servicio:</strong> {citaData.servicio}
-            </p>
-            <p>
-              <strong>Fecha:</strong> {citaData.fecha}
-            </p>
-            <p>
-              <strong>Hora:</strong> {citaData.hora}
-            </p>
-            <p>
-              <strong>Personas:</strong> {citaData.personas}
-            </p>
+            <p><strong>Servicio:</strong> {citaData.servicio}</p>
+            <p><strong>Fecha:</strong> {citaData.fecha}</p>
+            <p><strong>Hora:</strong> {citaData.hora}</p>
+            <p><strong>Personas:</strong> {citaData.personas}</p>
             {citaData.precio && (
               <p>
                 <strong>Precio orientativo:</strong>{" "}
@@ -341,17 +361,19 @@ function ModalExito({ visible, onClose, citaData }) {
         <button
           onClick={onClose}
           style={{
-            padding: "12px 40px",
+            padding: "clamp(10px, 1.2vw, 12px) clamp(24px, 4vw, 40px)",
             background: "#b78e56",
             color: "#faf6f0",
             border: "none",
             borderRadius: "999px",
-            fontSize: "0.85rem",
+            fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
             fontWeight: 500,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
             cursor: "pointer",
             transition: "background 0.3s ease",
+            width: "100%",
+            maxWidth: "200px",
           }}
           onMouseEnter={(e) => {
             e.target.style.background = "#a07d4a";
@@ -470,7 +492,6 @@ export default function Reserva() {
     setError("");
     setExito(false);
 
-    // Validaciones
     if (!form.nombre.trim()) {
       setError("Por favor, introduce tu nombre.");
       return;
@@ -529,7 +550,6 @@ export default function Reserva() {
       setExito(true);
       setError("");
 
-      // Resetear formulario
       setForm({
         nombre: "",
         telefono: "",
@@ -553,7 +573,7 @@ export default function Reserva() {
   };
 
   // ============================================
-  // RENDER
+  // RENDER - RESPONSIVE
   // ============================================
   return (
     <div style={{ background: "#faf6f0", minHeight: "100vh" }}>
@@ -566,7 +586,7 @@ export default function Reserva() {
       {/* HERO */}
       <section
         style={{
-          padding: "10rem 1.5rem 5rem",
+          padding: "clamp(6rem, 12vw, 10rem) clamp(1rem, 3vw, 1.5rem) clamp(3rem, 6vw, 5rem)",
           textAlign: "center",
           background: "linear-gradient(180deg, #1a120b 0%, #2d1f16 100%)",
           position: "relative",
@@ -589,7 +609,7 @@ export default function Reserva() {
         >
           <span
             style={{
-              fontSize: "0.75rem",
+              fontSize: "clamp(0.6rem, 0.75vw, 0.75rem)",
               fontWeight: 500,
               letterSpacing: "0.25em",
               textTransform: "uppercase",
@@ -600,7 +620,7 @@ export default function Reserva() {
           </span>
           <h1
             style={{
-              fontSize: "clamp(2.5rem, 6vw, 4rem)",
+              fontSize: "clamp(2rem, 6vw, 4rem)",
               fontWeight: 300,
               color: "#faf6f0",
               marginTop: "1rem",
@@ -616,14 +636,15 @@ export default function Reserva() {
           <p
             style={{
               marginTop: "1.5rem",
-              maxWidth: "560px",
+              maxWidth: "min(560px, 90vw)",
               marginLeft: "auto",
               marginRight: "auto",
               color: "rgba(250,246,240,0.7)",
-              fontSize: "1.05rem",
+              fontSize: "clamp(0.9rem, 1.05vw, 1.05rem)",
               lineHeight: 1.8,
               fontFamily: "'Georgia', serif",
               fontWeight: 300,
+              padding: "0 0.5rem",
             }}
           >
             Completa el formulario y te enviaremos la confirmación en menos de
@@ -633,18 +654,18 @@ export default function Reserva() {
       </section>
 
       {/* FORMULARIO */}
-      <section style={{ padding: "5rem 1.5rem 6rem" }}>
+      <section style={{ padding: "clamp(2rem, 5vw, 5rem) clamp(1rem, 3vw, 1.5rem) clamp(3rem, 6vw, 6rem)" }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           style={{
-            maxWidth: "640px",
+            maxWidth: "min(640px, 100%)",
             margin: "0 auto",
             background: "#fff",
             borderRadius: "16px",
-            padding: "3rem 2.5rem",
+            padding: "clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem)",
             boxShadow: "0 20px 60px rgba(92,64,51,0.08)",
             border: "1px solid rgba(183,142,86,0.1)",
           }}
@@ -675,7 +696,7 @@ export default function Reserva() {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "160px 1fr",
+                  gridTemplateColumns: window.innerWidth < 480 ? "1fr" : "160px 1fr",
                   gap: "0.75rem",
                 }}
               >
@@ -720,7 +741,7 @@ export default function Reserva() {
               {form.precio && (
                 <p
                   style={{
-                    fontSize: "0.85rem",
+                    fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                     color: "#b78e56",
                     marginTop: "8px",
                     fontFamily: "'Georgia', serif",
@@ -742,7 +763,12 @@ export default function Reserva() {
             {/* PERSONAS */}
             <Field label="Número de personas *" hint="Mínimo 1, máximo 10">
               <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "clamp(8px, 1.2vw, 12px)",
+                  flexWrap: "wrap",
+                }}
               >
                 <button
                   type="button"
@@ -753,13 +779,13 @@ export default function Reserva() {
                     }))
                   }
                   style={{
-                    width: "40px",
-                    height: "40px",
+                    width: "clamp(34px, 4vw, 40px)",
+                    height: "clamp(34px, 4vw, 40px)",
                     borderRadius: "8px",
                     border: "1px solid rgba(183,142,86,0.3)",
                     background: "#fff",
                     cursor: "pointer",
-                    fontSize: "1.2rem",
+                    fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
                     color: "#5c4033",
                     display: "flex",
                     alignItems: "center",
@@ -778,7 +804,7 @@ export default function Reserva() {
                   onBlur={handleBlur}
                   style={{
                     ...inputStyle,
-                    width: "80px",
+                    width: "clamp(60px, 8vw, 80px)",
                     textAlign: "center",
                     fontVariantNumeric: "tabular-nums",
                   }}
@@ -792,13 +818,13 @@ export default function Reserva() {
                     }))
                   }
                   style={{
-                    width: "40px",
-                    height: "40px",
+                    width: "clamp(34px, 4vw, 40px)",
+                    height: "clamp(34px, 4vw, 40px)",
                     borderRadius: "8px",
                     border: "1px solid rgba(183,142,86,0.3)",
                     background: "#fff",
                     cursor: "pointer",
-                    fontSize: "1.2rem",
+                    fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
                     color: "#5c4033",
                     display: "flex",
                     alignItems: "center",
@@ -809,7 +835,7 @@ export default function Reserva() {
                 </button>
                 <span
                   style={{
-                    fontSize: "0.85rem",
+                    fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                     color: "#8a7a5c",
                     fontFamily: "'Georgia', serif",
                   }}
@@ -825,7 +851,7 @@ export default function Reserva() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gridTemplateColumns: window.innerWidth < 480 ? "1fr" : "1fr 1fr",
                 gap: "0 1.5rem",
               }}
             >
@@ -866,7 +892,7 @@ export default function Reserva() {
                 {form.fecha && !cargandoHoras && (
                   <p
                     style={{
-                      fontSize: "0.75rem",
+                      fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
                       color: "#8a7a5c",
                       marginTop: "6px",
                       fontFamily: "'Georgia', serif",
@@ -897,7 +923,7 @@ export default function Reserva() {
               <p
                 style={{
                   color: "#a8452f",
-                  fontSize: "0.85rem",
+                  fontSize: "clamp(0.8rem, 0.85vw, 0.85rem)",
                   marginBottom: "1.25rem",
                   fontFamily: "'Georgia', serif",
                 }}
@@ -911,10 +937,10 @@ export default function Reserva() {
               disabled={cargando}
               style={{
                 width: "100%",
-                padding: "17px 40px",
+                padding: "clamp(14px, 1.5vw, 17px) clamp(24px, 4vw, 40px)",
                 background: cargando ? "#c4b49a" : "#b78e56",
                 color: "#faf6f0",
-                fontSize: "0.85rem",
+                fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
                 fontWeight: 500,
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
@@ -944,7 +970,7 @@ export default function Reserva() {
               style={{
                 textAlign: "center",
                 marginTop: "1rem",
-                fontSize: "0.75rem",
+                fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
                 color: "#8a7a5c",
                 fontFamily: "'Georgia', serif",
               }}
@@ -955,11 +981,11 @@ export default function Reserva() {
           </form>
         </motion.div>
 
-        <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+        <div style={{ textAlign: "center", marginTop: "clamp(1.5rem, 2.5vw, 2.5rem)" }}>
           <Link
             to="/"
             style={{
-              fontSize: "0.8rem",
+              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
               fontWeight: 500,
               letterSpacing: "0.15em",
               textTransform: "uppercase",

@@ -15,8 +15,7 @@ const getStoredConsent = () => {
 };
 
 export default function CookieBanner() {
-  // Inicialización perezosa: lee localStorage UNA sola vez al montar el componente.
-  // Esto evita el error de "setState dentro de useEffect".
+  // Inicialización perezosa
   const [showBanner, setShowBanner] = useState(() => {
     return !getStoredConsent();
   });
@@ -24,7 +23,6 @@ export default function CookieBanner() {
   const [showPreferences, setShowPreferences] = useState(false);
 
   const [categories, setCategories] = useState(() => {
-    // Si ya hay consentimiento guardado, cargamos sus categorías
     const stored = getStoredConsent();
     if (stored) {
       try {
@@ -35,11 +33,9 @@ export default function CookieBanner() {
           marketing: parsed.marketing || false,
         };
       } catch {
-        // Si está corrupto, mostramos banner
         return { essential: true, analytics: false, marketing: false };
       }
     }
-    // Si no hay consentimiento, valores por defecto
     return { essential: true, analytics: false, marketing: false };
   });
 
@@ -63,7 +59,7 @@ export default function CookieBanner() {
   };
 
   const toggleCategory = (key) => {
-    if (key === "essential") return; // No se puede desactivar
+    if (key === "essential") return;
     setCategories((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
@@ -85,7 +81,7 @@ export default function CookieBanner() {
               zIndex: 1000,
               background: "#1a120b",
               color: "#faf6f0",
-              padding: "1.5rem",
+              padding: "clamp(1rem, 2vw, 1.5rem) clamp(0.75rem, 2vw, 1.5rem)",
               boxShadow: "0 -4px 20px rgba(0,0,0,0.3)",
               fontFamily: "'Georgia', serif",
             }}
@@ -96,13 +92,13 @@ export default function CookieBanner() {
                 margin: "0 auto",
                 display: "flex",
                 flexDirection: "column",
-                gap: "1rem",
+                gap: "clamp(0.75rem, 1.5vw, 1rem)",
               }}
             >
               <p
                 style={{
                   margin: 0,
-                  fontSize: "0.95rem",
+                  fontSize: "clamp(0.8rem, 1vw, 0.95rem)",
                   lineHeight: 1.6,
                   textAlign: "center",
                 }}
@@ -121,7 +117,7 @@ export default function CookieBanner() {
               <div
                 style={{
                   display: "flex",
-                  gap: "0.75rem",
+                  gap: "clamp(0.5rem, 1vw, 0.75rem)",
                   justifyContent: "center",
                   flexWrap: "wrap",
                 }}
@@ -129,17 +125,17 @@ export default function CookieBanner() {
                 <button
                   onClick={handleAcceptAll}
                   style={{
-                    padding: "10px 24px",
+                    padding: "clamp(8px, 1vw, 10px) clamp(16px, 2vw, 24px)",
                     background: "#b78e56",
                     color: "#faf6f0",
                     border: "2px solid #b78e56",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontSize: "0.875rem",
+                    fontSize: "clamp(0.7rem, 0.85vw, 0.875rem)",
                     fontWeight: "600",
                     textTransform: "uppercase",
                     transition: "all 0.3s ease",
-                    minWidth: "140px",
+                    minWidth: "clamp(100px, 12vw, 140px)",
                   }}
                   onMouseEnter={(e) =>
                     (e.target.style.background = "transparent")
@@ -151,17 +147,17 @@ export default function CookieBanner() {
                 <button
                   onClick={handleRejectAll}
                   style={{
-                    padding: "10px 24px",
+                    padding: "clamp(8px, 1vw, 10px) clamp(16px, 2vw, 24px)",
                     background: "transparent",
                     color: "#faf6f0",
                     border: "2px solid rgba(250,246,240,0.6)",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontSize: "0.875rem",
+                    fontSize: "clamp(0.7rem, 0.85vw, 0.875rem)",
                     fontWeight: "600",
                     textTransform: "uppercase",
                     transition: "all 0.3s ease",
-                    minWidth: "140px",
+                    minWidth: "clamp(100px, 12vw, 140px)",
                   }}
                   onMouseEnter={(e) =>
                     (e.target.style.background = "rgba(250,246,240,0.15)")
@@ -175,17 +171,17 @@ export default function CookieBanner() {
                 <button
                   onClick={() => setShowPreferences(true)}
                   style={{
-                    padding: "10px 24px",
+                    padding: "clamp(8px, 1vw, 10px) clamp(16px, 2vw, 24px)",
                     background: "transparent",
                     color: "#e8cfa0",
                     border: "2px solid #e8cfa0",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontSize: "0.875rem",
+                    fontSize: "clamp(0.7rem, 0.85vw, 0.875rem)",
                     fontWeight: "600",
                     textTransform: "uppercase",
                     transition: "all 0.3s ease",
-                    minWidth: "140px",
+                    minWidth: "clamp(100px, 12vw, 140px)",
                   }}
                   onMouseEnter={(e) =>
                     (e.target.style.background = "rgba(232,207,160,0.1)")
@@ -220,7 +216,7 @@ export default function CookieBanner() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: "1rem",
+              padding: "clamp(0.75rem, 2vw, 1.5rem)",
             }}
             onClick={() => setShowPreferences(false)}
           >
@@ -233,11 +229,13 @@ export default function CookieBanner() {
                 background: "#1a120b",
                 color: "#faf6f0",
                 borderRadius: "16px",
-                maxWidth: "600px",
+                maxWidth: "clamp(340px, 90vw, 600px)",
                 width: "100%",
-                padding: "2rem",
+                padding: "clamp(1.25rem, 3vw, 2rem)",
                 boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
                 fontFamily: "'Georgia', serif",
+                maxHeight: "90vh",
+                overflowY: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -249,7 +247,13 @@ export default function CookieBanner() {
                   marginBottom: "1.5rem",
                 }}
               >
-                <h3 style={{ margin: 0, fontSize: "1.5rem", color: "#e8cfa0" }}>
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: "clamp(1.2rem, 2vw, 1.5rem)",
+                    color: "#e8cfa0",
+                  }}
+                >
                   Preferencias de cookies
                 </h3>
                 <button
@@ -259,6 +263,7 @@ export default function CookieBanner() {
                     border: "none",
                     cursor: "pointer",
                     color: "#faf6f0",
+                    padding: "4px",
                   }}
                 >
                   <X size={24} />
@@ -267,7 +272,7 @@ export default function CookieBanner() {
 
               <p
                 style={{
-                  fontSize: "0.9rem",
+                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
                   lineHeight: 1.6,
                   marginBottom: "1.5rem",
                   color: "#cdb896",
@@ -294,23 +299,36 @@ export default function CookieBanner() {
                     alignItems: "center",
                     paddingBottom: "0.75rem",
                     borderBottom: "1px solid rgba(250,246,240,0.1)",
+                    gap: "0.5rem",
                   }}
                 >
                   <div>
-                    <p style={{ margin: 0, fontWeight: "600" }}>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: "600",
+                        fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+                      }}
+                    >
                       Cookies esenciales
                     </p>
                     <p
                       style={{
                         margin: "0.25rem 0 0",
-                        fontSize: "0.8rem",
+                        fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                         color: "#cdb896",
                       }}
                     >
                       Necesarias para la navegación básica. Siempre activas.
                     </p>
                   </div>
-                  <span style={{ fontSize: "0.85rem", color: "#b78e56" }}>
+                  <span
+                    style={{
+                      fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
+                      color: "#b78e56",
+                      flexShrink: 0,
+                    }}
+                  >
                     Siempre
                   </span>
                 </div>
@@ -323,14 +341,23 @@ export default function CookieBanner() {
                     alignItems: "center",
                     paddingBottom: "0.75rem",
                     borderBottom: "1px solid rgba(250,246,240,0.1)",
+                    gap: "0.5rem",
                   }}
                 >
                   <div>
-                    <p style={{ margin: 0, fontWeight: "600" }}>Analíticas</p>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: "600",
+                        fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+                      }}
+                    >
+                      Analíticas
+                    </p>
                     <p
                       style={{
                         margin: "0.25rem 0 0",
-                        fontSize: "0.8rem",
+                        fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                         color: "#cdb896",
                       }}
                     >
@@ -340,24 +367,27 @@ export default function CookieBanner() {
                   <button
                     onClick={() => toggleCategory("analytics")}
                     style={{
-                      width: "44px",
-                      height: "24px",
+                      width: "clamp(38px, 4vw, 44px)",
+                      height: "clamp(20px, 2vw, 24px)",
                       borderRadius: "999px",
                       border: "none",
                       background: categories.analytics ? "#b78e56" : "#4a4a4a",
                       position: "relative",
                       cursor: "pointer",
                       transition: "background 0.3s",
+                      flexShrink: 0,
                     }}
                     aria-pressed={categories.analytics}
                   >
                     <span
                       style={{
                         position: "absolute",
-                        top: "2px",
-                        left: categories.analytics ? "22px" : "2px",
-                        width: "20px",
-                        height: "20px",
+                        top: "clamp(1px, 0.15vw, 2px)",
+                        left: categories.analytics
+                          ? "clamp(18px, 2vw, 22px)"
+                          : "clamp(1px, 0.15vw, 2px)",
+                        width: "clamp(16px, 1.8vw, 20px)",
+                        height: "clamp(16px, 1.8vw, 20px)",
                         borderRadius: "50%",
                         background: "#fff",
                         transition: "left 0.3s",
@@ -373,14 +403,23 @@ export default function CookieBanner() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     paddingBottom: "0.75rem",
+                    gap: "0.5rem",
                   }}
                 >
                   <div>
-                    <p style={{ margin: 0, fontWeight: "600" }}>Marketing</p>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontWeight: "600",
+                        fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+                      }}
+                    >
+                      Marketing
+                    </p>
                     <p
                       style={{
                         margin: "0.25rem 0 0",
-                        fontSize: "0.8rem",
+                        fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                         color: "#cdb896",
                       }}
                     >
@@ -390,24 +429,27 @@ export default function CookieBanner() {
                   <button
                     onClick={() => toggleCategory("marketing")}
                     style={{
-                      width: "44px",
-                      height: "24px",
+                      width: "clamp(38px, 4vw, 44px)",
+                      height: "clamp(20px, 2vw, 24px)",
                       borderRadius: "999px",
                       border: "none",
                       background: categories.marketing ? "#b78e56" : "#4a4a4a",
                       position: "relative",
                       cursor: "pointer",
                       transition: "background 0.3s",
+                      flexShrink: 0,
                     }}
                     aria-pressed={categories.marketing}
                   >
                     <span
                       style={{
                         position: "absolute",
-                        top: "2px",
-                        left: categories.marketing ? "22px" : "2px",
-                        width: "20px",
-                        height: "20px",
+                        top: "clamp(1px, 0.15vw, 2px)",
+                        left: categories.marketing
+                          ? "clamp(18px, 2vw, 22px)"
+                          : "clamp(1px, 0.15vw, 2px)",
+                        width: "clamp(16px, 1.8vw, 20px)",
+                        height: "clamp(16px, 1.8vw, 20px)",
                         borderRadius: "50%",
                         background: "#fff",
                         transition: "left 0.3s",
@@ -421,7 +463,7 @@ export default function CookieBanner() {
               <div
                 style={{
                   display: "flex",
-                  gap: "1rem",
+                  gap: "clamp(0.5rem, 1vw, 1rem)",
                   marginTop: "2rem",
                   justifyContent: "flex-end",
                   flexWrap: "wrap",
@@ -433,12 +475,13 @@ export default function CookieBanner() {
                     background: "transparent",
                     color: "#faf6f0",
                     border: "2px solid rgba(250,246,240,0.6)",
-                    padding: "10px 20px",
+                    padding: "clamp(8px, 1vw, 10px) clamp(14px, 1.5vw, 20px)",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontSize: "0.8rem",
+                    fontSize: "clamp(0.65rem, 0.75vw, 0.8rem)",
                     fontWeight: "600",
                     textTransform: "uppercase",
+                    transition: "all 0.3s ease",
                   }}
                 >
                   Rechazar todo
@@ -449,12 +492,13 @@ export default function CookieBanner() {
                     background: "transparent",
                     color: "#e8cfa0",
                     border: "2px solid #e8cfa0",
-                    padding: "10px 20px",
+                    padding: "clamp(8px, 1vw, 10px) clamp(14px, 1.5vw, 20px)",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontSize: "0.8rem",
+                    fontSize: "clamp(0.65rem, 0.75vw, 0.8rem)",
                     fontWeight: "600",
                     textTransform: "uppercase",
+                    transition: "all 0.3s ease",
                   }}
                 >
                   Aceptar todo
@@ -465,12 +509,13 @@ export default function CookieBanner() {
                     background: "#b78e56",
                     color: "#faf6f0",
                     border: "2px solid #b78e56",
-                    padding: "10px 20px",
+                    padding: "clamp(8px, 1vw, 10px) clamp(14px, 1.5vw, 20px)",
                     borderRadius: "999px",
                     cursor: "pointer",
-                    fontSize: "0.8rem",
+                    fontSize: "clamp(0.65rem, 0.75vw, 0.8rem)",
                     fontWeight: "600",
                     textTransform: "uppercase",
+                    transition: "all 0.3s ease",
                   }}
                 >
                   Guardar mis opciones
