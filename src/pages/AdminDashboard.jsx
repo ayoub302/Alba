@@ -13,7 +13,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  LogOut,
 } from "lucide-react";
 import jsPDF from "jspdf";
 
@@ -1229,7 +1228,7 @@ function SeccionNav({ activa, onChange, counts }) {
 // ADMIN DASHBOARD PRINCIPAL
 // ============================================
 export default function AdminDashboard() {
-  const { getAccessTokenSilently, user, logout } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();
 
   // Estados
   const [citas, setCitas] = useState([]);
@@ -1587,7 +1586,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
   const fechasOrdenadas = Object.keys(citasPorFecha).sort();
 
   // ============================================
-  // RENDER PRINCIPAL
+  // RENDER PRINCIPAL (sin perfil duplicado)
   // ============================================
   return (
     <div
@@ -1605,104 +1604,6 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
           padding: "clamp(0.8rem, 2.5vw, 2.5rem)",
         }}
       >
-        {/* ================================================ */}
-        {/* PERFIL DE USUARIO (JUSTO ENCIMA DE LAS PESTAÑAS) */}
-        {/* ================================================ */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: window.innerWidth < 600 ? "column" : "row",
-            alignItems: window.innerWidth < 600 ? "stretch" : "center",
-            gap: "clamp(1rem, 2vw, 2.5rem)",
-            marginBottom: "2.5rem",
-            padding: "clamp(1.5rem, 2.5vw, 2.5rem)",
-            background: "#fff",
-            borderRadius: "18px",
-            boxShadow: "0 8px 30px rgba(92,64,51,0.06)",
-            border: "1px solid rgba(183,142,86,0.1)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "clamp(1rem, 1.8vw, 2rem)",
-              flex: 1,
-            }}
-          >
-            <div
-              style={{
-                width: "clamp(60px, 7vw, 80px)",
-                height: "clamp(60px, 7vw, 80px)",
-                borderRadius: "50%",
-                background: "linear-gradient(135deg, #b78e56, #e8cfa0)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "clamp(1.8rem, 2.5vw, 2.5rem)",
-                fontWeight: 800,
-                color: "#fff",
-                flexShrink: 0,
-              }}
-            >
-              {(user?.name || user?.email || "U")[0].toUpperCase()}
-            </div>
-            <div>
-              <p
-                style={{
-                  fontSize: "clamp(1.2rem, 1.6vw, 1.8rem)",
-                  fontWeight: 800,
-                  color: "#5c4033",
-                  margin: 0,
-                }}
-              >
-                {user?.name || "Usuario"}
-              </p>
-              <p
-                style={{
-                  fontSize: "clamp(0.95rem, 1.1vw, 1.2rem)",
-                  color: "#8a7a5c",
-                  margin: "6px 0 0",
-                }}
-              >
-                {user?.email || ""}
-              </p>
-            </div>
-          </div>
-          <button
-            onClick={() =>
-              logout({ logoutParams: { returnTo: window.location.origin } })
-            }
-            style={{
-              ...buttonStyle,
-              background: "transparent",
-              color: "#a8452f",
-              border: "2px solid #a8452f",
-              padding: "clamp(12px, 1.5vw, 18px) clamp(24px, 3vw, 40px)",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "10px",
-              fontSize: "clamp(0.95rem, 1.1vw, 1.2rem)",
-              fontWeight: 700,
-              borderRadius: "60px",
-              justifyContent: "center",
-              whiteSpace: "nowrap",
-              alignSelf: window.innerWidth < 600 ? "center" : "auto",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#a8452f";
-              e.currentTarget.style.color = "#fff";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = "#a8452f";
-            }}
-          >
-            <LogOut size={20} />
-            Cerrar sesión
-          </button>
-        </div>
-
         {/* ================================================ */}
         {/* NAVEGACIÓN DE SECCIONES (pestañas)              */}
         {/* ================================================ */}

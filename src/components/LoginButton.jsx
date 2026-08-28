@@ -17,15 +17,16 @@ export default function LoginButton() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "clamp(0.3rem, 0.8vw, 0.75rem)",
-            padding: "clamp(6px, 0.8vw, 10px) clamp(10px, 1.5vw, 18px)",
+            justifyContent: "center",
+            gap: "clamp(0.2rem, 0.5vw, 0.5rem)",
+            padding: "clamp(4px, 0.6vw, 8px) clamp(6px, 0.8vw, 10px)",
             background: "rgba(183,142,86,0.15)",
             color: "#b78e56",
             border: "1px solid rgba(183,142,86,0.3)",
             borderRadius: "999px",
             cursor: "pointer",
-            fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
-            fontWeight: 500,
+            fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+            fontWeight: 600,
             transition: "all 0.3s ease",
             fontFamily: "'Inter', sans-serif",
             whiteSpace: "nowrap",
@@ -42,55 +43,27 @@ export default function LoginButton() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "clamp(24px, 2.5vw, 32px)",
-              height: "clamp(24px, 2.5vw, 32px)",
+              width: "clamp(28px, 3vw, 36px)",
+              height: "clamp(28px, 3vw, 36px)",
               borderRadius: "50%",
               background: "#b78e56",
               color: "#fff",
-              fontSize: "clamp(0.6rem, 0.8vw, 0.8rem)",
-              fontWeight: 600,
+              fontSize: "clamp(0.8rem, 1vw, 1rem)",
+              fontWeight: 700,
               flexShrink: 0,
             }}
           >
             {(user?.name || user?.email || "U")[0].toUpperCase()}
           </span>
-          <span
-            style={{
-              maxWidth: "clamp(80px, 15vw, 150px)",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              color: "#5c4033",
-            }}
-          >
-            {user?.name || user?.email || "Usuario"}
-          </span>
-          <svg
-            width="clamp(12px, 1.2vw, 16px)"
-            height="clamp(12px, 1.2vw, 16px)"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s ease",
-            }}
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
         </button>
 
-        {/* Dropdown */}
+        {/* Dropdown mejorado (se despliega hacia la izquierda en móvil) */}
         {isOpen && (
           <div
             style={{
               position: "absolute",
               top: "calc(100% + 8px)",
-              right: 0,
-              minWidth: "clamp(180px, 20vw, 240px)",
+              minWidth: "clamp(200px, 40vw, 280px)",
               background: "#fff",
               borderRadius: "12px",
               boxShadow: "0 10px 40px rgba(0,0,0,0.12)",
@@ -98,6 +71,10 @@ export default function LoginButton() {
               padding: "0.5rem",
               zIndex: 100,
               animation: "slideDown 0.2s ease",
+              // En móviles, si no cabe a la derecha, se despliega a la izquierda
+              right: window.innerWidth < 600 ? "auto" : "0",
+              left: window.innerWidth < 600 ? "auto" : "auto",
+              transform: window.innerWidth < 600 ? "translateX(-20px)" : "none",
             }}
           >
             <style>
@@ -221,20 +198,20 @@ export default function LoginButton() {
     <button
       onClick={() => loginWithRedirect()}
       style={{
-        padding: "clamp(8px, 0.8vw, 10px) clamp(16px, 2vw, 24px)",
+        padding: "clamp(6px, 0.6vw, 8px) clamp(12px, 1.5vw, 18px)",
         background: "#b78e56",
         color: "#faf6f0",
         border: "2px solid #b78e56",
         borderRadius: "999px",
         cursor: "pointer",
-        fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
+        fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
         fontWeight: 600,
         letterSpacing: "0.05em",
         transition: "all 0.3s ease",
         fontFamily: "'Inter', sans-serif",
         display: "flex",
         alignItems: "center",
-        gap: "0.5rem",
+        gap: "0.3rem",
         whiteSpace: "nowrap",
       }}
       onMouseEnter={(e) => {
@@ -246,7 +223,7 @@ export default function LoginButton() {
         e.currentTarget.style.color = "#faf6f0";
       }}
     >
-      <User size={16} />
+      <User size={18} />
       Admin
     </button>
   );
