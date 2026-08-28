@@ -3,7 +3,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import process from "node:process";
-import { PrismaClient } from "@prisma/client";
+import pkg from "@prisma/client";
+const { PrismaClient } = pkg;
 import { PrismaPg } from "@prisma/adapter-pg";
 import { auth } from "express-oauth2-jwt-bearer";
 import contactRouter from "./routes/contact.js";
@@ -37,7 +38,11 @@ const jwtCheck = auth({
 // ============================================
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://alba-pied-eight.vercel.app",
+      "https://alba.onrender.com",
+    ],
     credentials: true,
   }),
 );

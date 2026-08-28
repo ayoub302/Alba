@@ -8,11 +8,13 @@ const router = express.Router();
 // Modelo principal: se puede sobreescribir con la variable de entorno OPENROUTER_MODEL
 // Lista completa y actualizada siempre en: https://openrouter.ai/models?max_price=0
 const MODELO_PRINCIPAL =
-  process.env.OPENROUTER_MODEL || "dots-studio/dots-3-note-preview:free";
+  process.env.OPENROUTER_MODEL || "google/gemini-2.0-flash-001";
 
 const MODELOS_FALLBACK = [
-  "nvidia/nemotron-3.5-lightning:free",
-  "liquid/lfm-2.5-2.6b:free",
+  "mistralai/mistral-7b-instruct",
+  "meta-llama/llama-3.2-3b-instruct",
+  "qwen/qwen-2.5-7b-instruct",
+  "deepseek/deepseek-chat",
 ];
 
 async function buscarConocimiento(pregunta) {
@@ -38,7 +40,7 @@ async function llamarOpenRouter(modelo, contexto, historial, message) {
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:5173",
+        "HTTP-Referer": "https://alba-pied-eight.vercel.app",
         "X-Title": "Alba Estética",
       },
       body: JSON.stringify({
@@ -83,24 +85,20 @@ router.post("/chat", async (req, res) => {
       contexto += `- ${k.pregunta || k.subtitulo}: ${k.respuesta}\n`;
     });
 
-    // Intenta con el modelo principal, y si falla (proveedor caído, modelo retirado, etc.)
-    // prueba con los de respaldo antes de rendirse.
+    // Intenta con el modelo principal, y si falla prueba con los de respaldo
     const modelosAProbar = [MODELO_PRINCIPAL, ...MODELOS_FALLBACK];
     let data;
     let ultimoError;
 
     for (const modelo of modelosAProbar) {
       try {
+        console.log(`🔄 Intentando con modelo: ${modelo}`);
         data = await llamarOpenRouter(modelo, contexto, historial, message);
-        break; // funcionó, salimos del bucle
+        console.log(`✅ Modelo funcionó: ${modelo}`);
+        break;
       } catch (err) {
-        console.error(
-          `❌ Error con modelo "${modelo}":`,
-          err.data || err.message,
-        );
+        console.error(`❌ Error con modelo "${modelo}":`, err.message);
         ultimoError = err;
-        // Si el error es por modelo no disponible, probamos el siguiente.
-        // Si es otro tipo de error (ej. clave inválida), seguimos probando igual por robustez.
       }
     }
 
@@ -108,8 +106,6 @@ router.post("/chat", async (req, res) => {
       throw ultimoError || new Error("Ningún modelo de OpenRouter respondió");
     }
 
-    // Algunos modelos gratuitos "razonan" y a veces el texto final queda vacío en
-    // `content` pero presente en `reasoning`. Probamos ambos antes de rendirnos.
     const respuesta =
       data.choices?.[0]?.message?.content ||
       data.choices?.[0]?.message?.reasoning ||
