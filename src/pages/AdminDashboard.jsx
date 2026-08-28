@@ -16,7 +16,8 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 
-const API_URL = "http://localhost:4000/api";
+// ✅ CORREGIDO - Usa variable de entorno
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 const WHATSAPP_NUMBER = "34688766728";
 
 const labelStyle = {
