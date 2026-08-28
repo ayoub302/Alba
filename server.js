@@ -34,18 +34,51 @@ const jwtCheck = auth({
 });
 
 // ============================================
-// MIDDLEWARE
+// MIDDLEWARE - CORS MEJORADO
 // ============================================
-app.use(
-  cors({
-    origin: [
+
+// ✅ CORS con opciones completas para producción
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Permitir solicitudes sin origen (como herramientas de línea de comandos)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
       "http://localhost:5173",
+      "http://localhost:4000",
       "https://alba-pied-eight.vercel.app",
-      "https://alba.onrender.com",
-    ],
-    credentials: true,
-  }),
-);
+      "https://alba.onrender.com"
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("❌ Origen bloqueado por CORS:", origin);
+      callback(null, false);
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+  exposedHeaders: ["Content-Length", "X-Knowledge-Base"],
+  maxAge: 86400, // 24 horas
+};
+
+app.use(cors(corsOptions));
+
+// ✅ Middleware adicional para asegurar CORS en todas las respuestas
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept");
+  res.header("Access-Control-Allow-Credentials", "true");
+  
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(express.json());
 
 // ============================================
