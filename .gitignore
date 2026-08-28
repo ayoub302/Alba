@@ -1,0 +1,89 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencias
+node_modules
+dist
+dist-ssr
+*.local
+
+# ============================================
+# 🔒 ARCHIVOS SENSIBLES (IMPORTANTE)
+# ============================================
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Service account keys (Google Cloud)
+*.key.json
+service-account.json
+*-service-account.json
+*.pem
+*.crt
+
+# OpenRouter keys
+.openrouter/
+
+# ============================================
+# PRISMA
+# ============================================
+
+# Base de datos local
+*.db
+*.sqlite
+*.sqlite3
+prisma/*.db
+prisma/*.sqlite
+prisma/*.sqlite3
+
+# Migraciones (opcional, depende de ti)
+# prisma/migrations/
+
+# ============================================
+# EDITOR Y SISTEMA
+# ============================================
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ============================================
+# OTROS
+# ============================================
+
+# Archivos de cobertura
+coverage/
+.nyc_output/
+
+# Archivos temporales
+tmp/
+temp/
+*.tmp
+
+# Builds
+build/
+out/
+*.min.js
+*.min.css
+
+# Archivos de sistema
+Thumbs.db
+*.exe
+*.dll
+*.so
+*.dylib

@@ -1,0 +1,132 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// TABLAS EXISTENTES
+// ============================================
+
+model Cita {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  telefono  String
+  pais      String   @default("ES")
+  prefijo   String   @default("+34")
+  servicio  String
+  precio    Float?
+  personas  Int      @default(1)
+  fecha     String
+  hora      String
+  notas     String?
+  estado    String   @default("pendiente") // pendiente, confirmada, cancelada
+  creado    DateTime @default(now())
+
+  @@unique([fecha, hora])
+  @@index([fecha])
+  @@index([estado])
+}
+
+model Resena {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  mensaje   String
+  rating    Int      // 1-5 estrellas
+  estado    String   @default("pendiente") // pendiente, publicada, rechazada
+  creado    DateTime @default(now())
+  publicado DateTime?
+
+  @@index([estado])
+  @@index([creado])
+}
+
+model Mensaje {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  telefono  String
+  mensaje   String
+  estado    String   @default("pendiente") // pendiente, leido
+  creado    DateTime @default(now())
+
+  @@index([estado])
+  @@index([creado])
+}
+
+model Visita {
+  id      Int      @id @default(autoincrement())
+  ruta    String   @default("/")
+  creado  DateTime @default(now())
+
+  @@index([creado])
+}
+
+// ============================================
+// TABLAS NUEVAS PARA IA Y CONOCIMIENTO
+// ============================================
+
+// ✅ BASE DE CONOCIMIENTO PARA LA IA (RAG)
+model Conocimiento {
+  id        Int      @id @default(autoincrement())
+  categoria String   // servicios, productos, consejos, preguntas_frecuentes
+  subtitulo String?  // cortes, tintes, tratamientos, cabello_rizado, etc.
+  pregunta  String?  // Para FAQs (opcional)
+  respuesta String   @db.Text // La respuesta/ información
+  keywords  String?  // Palabras clave separadas por espacio para búsqueda
+  prioridad Int      @default(0) // Mayor = más relevante en resultados
+  activo    Boolean  @default(true)
+  creado    DateTime @default(now())
+  actualizado DateTime @updatedAt
+
+  @@index([categoria])
+  @@index([activo])
+  @@index([prioridad])
+}
+
+// ✅ HISTORIAL DE CONVERSACIONES CON LA IA
+model Conversacion {
+  id          String   @id @default(cuid()) // ID único generado
+  sessionId   String   // ID de sesión del navegador
+  clienteId   String?  // Para identificar clientes recurrentes (opcional)
+  mensajes    Json     // Array de objetos: {role, content, timestamp}
+  resumen     String?  // Resumen automático de la conversación
+  estado      String   @default("activa") // activa, cerrada, archivada
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([sessionId])
+  @@index([clienteId])
+  @@index([estado])
+  @@index([createdAt])
+}
+
+// ✅ ANÁLISIS DE PREGUNTAS FRECUENTES (para mejorar el sistema)
+model PreguntaFrecuente {
+  id          Int      @id @default(autoincrement())
+  pregunta    String   @db.Text
+  categoria   String   // servicios, productos, precios, horarios, etc.
+  vecesPreguntada Int  @default(1)
+  ultimaVez   DateTime @default(now())
+  respuestaSugerida String? @db.Text // Mejor respuesta según IA
+  activo      Boolean  @default(true)
+
+  @@index([categoria])
+  @@index([vecesPreguntada])
+}
+
+// ✅ FEEDBACK DEL USUARIO SOBRE LA IA
+model FeedbackIA {
+  id            Int      @id @default(autoincrement())
+  conversacionId String? // Referencia a la conversación
+  mensajeId     String?  // ID del mensaje específico
+  util          Boolean? // ¿Fue útil la respuesta?
+  comentario    String?  // Comentario adicional
+  createdAt     DateTime @default(now())
+
+  @@index([conversacionId])
+  @@index([createdAt])
+}

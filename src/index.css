@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* ===== ESTILO VERO STUDIO ===== */
+  ::selection {
+    background: #000;
+    color: #fff;
+  }
+
+  /* Scrollbar minimalista */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f5f5f5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #000;
+    border-radius: 2px;
+  }
+
+  /* Enlaces */
+  a {
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+}
+
+@layer utilities {
+  /* Utilidades de Vero Studio */
+  .tracking-verro {
+    letter-spacing: 0.2em;
+  }
+
+  .leading-verro {
+    line-height: 0.85;
+  }
+
+  .text-verro-hero {
+    font-size: clamp(3rem, 11vw, 9rem);
+  }
+
+  /* Tipografías árabes */
+  .font-arabic {
+    font-family: 'Amiri', serif;
+  }
+
+  /* CORREGIDO: Inter primero para que las tildes funcionen, Reem Kufi como respaldo */
+  .font-display {
+    font-family: 'Inter', 'Reem Kufi', sans-serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-info-grid { grid-template-columns: 1fr !important; }
+}
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(92,64,51,0.08) !important;
+  border-color: rgba(183,142,86,0.25) !important;
+}
