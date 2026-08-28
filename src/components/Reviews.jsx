@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 
-const API_URL = "http://localhost:4000/api";
+// ✅ CORREGIDO - Usa variable de entorno
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 // ✅ Reseñas de muestra (SIEMPRE van a estar)
 const reviewsMuestra = [

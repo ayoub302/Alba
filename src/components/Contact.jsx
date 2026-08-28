@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-// 👇 NUEVO: Ruta de la API
-const API_URL = "http://localhost:4000/api";
+// 👇 CORREGIDO - Usa variable de entorno
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 const contactItems = [
   {
@@ -36,7 +36,6 @@ export default function Contact() {
   const [form, setForm] = useState({ nombre: "", telefono: "", mensaje: "" });
   const [enviado, setEnviado] = useState(false);
   const [error, setError] = useState("");
-  // 👇 NUEVO: Estado para el botón
   const [enviando, setEnviando] = useState(false);
 
   const handleChange = (e) => {
@@ -44,11 +43,9 @@ export default function Contact() {
     setError("");
   };
 
-  // 👇 AHORA ES ASYNC Y HACE FETCH REAL
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación: teléfono de 9 dígitos
     const phoneRegex = /^\d{9}$/;
     if (!phoneRegex.test(form.telefono)) {
       setError(
@@ -58,7 +55,6 @@ export default function Contact() {
       return;
     }
 
-    // Validación campos obligatorios
     if (!form.nombre || !form.telefono || !form.mensaje) {
       setError("Todos los campos son obligatorios.");
       setEnviado(false);
@@ -88,7 +84,6 @@ export default function Contact() {
 
       await response.json();
 
-      // Limpiar y mostrar éxito
       setForm({ nombre: "", telefono: "", mensaje: "" });
       setError("");
       setEnviado(true);
@@ -308,7 +303,6 @@ export default function Contact() {
               />
             </div>
 
-            {/* ---- MENSAJE DE ERROR (estilo alineado con el de éxito) ---- */}
             <AnimatePresence>
               {error && (
                 <motion.div
@@ -410,7 +404,6 @@ export default function Contact() {
             </button>
           </form>
 
-          {/* ---- MENSAJE DE ÉXITO ---- */}
           <AnimatePresence>
             {enviado && (
               <motion.div
@@ -495,7 +488,6 @@ export default function Contact() {
                 overflow: "hidden",
               }}
             >
-              {/* textura fina diagonal */}
               <div
                 style={{
                   position: "absolute",
@@ -505,7 +497,6 @@ export default function Contact() {
                   pointerEvents: "none",
                 }}
               />
-              {/* anillos decorativos */}
               <div
                 style={{
                   position: "absolute",
@@ -572,7 +563,6 @@ export default function Contact() {
                   Te esperamos
                 </h3>
 
-                {/* Dirección y teléfono */}
                 <div
                   style={{
                     display: "flex",
@@ -638,7 +628,6 @@ export default function Contact() {
                   ))}
                 </div>
 
-                {/* divisor con florón */}
                 <div
                   style={{
                     display: "flex",
@@ -672,7 +661,6 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Horario día a día */}
                 <div
                   style={{
                     display: "flex",
