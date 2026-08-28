@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  LogOut,
 } from "lucide-react";
 import jsPDF from "jspdf";
 
@@ -23,40 +24,40 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 const WHATSAPP_NUMBER = "34688766728";
 
 // ============================================
-// ESTILOS RESPONSIVE CON CLAMP
+// ESTILOS RESPONSIVE CON CLAMP (más grandes en móvil)
 // ============================================
 const labelStyle = {
   display: "block",
-  fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
-  fontWeight: 500,
-  letterSpacing: "0.12em",
+  fontSize: "clamp(0.8rem, 1vw, 0.9rem)",
+  fontWeight: 600,
+  letterSpacing: "0.08em",
   textTransform: "uppercase",
-  color: "#8a7a5c",
+  color: "#5c4033",
   marginBottom: "0.5rem",
 };
 
 const textareaStyle = {
   width: "100%",
-  padding: "clamp(8px, 1vw, 12px) clamp(10px, 1.2vw, 14px)",
-  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+  padding: "clamp(12px, 1.5vw, 16px) clamp(14px, 1.8vw, 20px)",
+  fontSize: "clamp(0.95rem, 1.1vw, 1.05rem)",
   fontFamily: "'Inter', sans-serif",
   color: "#5c4033",
   background: "#fff",
-  border: "1px solid rgba(183,142,86,0.3)",
-  borderRadius: "8px",
+  border: "1px solid rgba(183,142,86,0.4)",
+  borderRadius: "10px",
   outline: "none",
   resize: "vertical",
-  minHeight: "clamp(60px, 8vw, 80px)",
+  minHeight: "clamp(80px, 10vw, 100px)",
   boxSizing: "border-box",
 };
 
 const buttonStyle = {
-  padding: "clamp(6px, 0.8vw, 10px) clamp(12px, 1.5vw, 24px)",
+  padding: "clamp(10px, 1.2vw, 14px) clamp(16px, 2vw, 28px)",
   border: "none",
-  borderRadius: "8px",
+  borderRadius: "10px",
   cursor: "pointer",
-  fontSize: "clamp(0.65rem, 0.75vw, 0.85rem)",
-  fontWeight: 500,
+  fontSize: "clamp(0.85rem, 1vw, 1rem)",
+  fontWeight: 600,
   fontFamily: "'Inter', sans-serif",
   transition: "all 0.3s ease",
   whiteSpace: "nowrap",
@@ -65,22 +66,22 @@ const buttonStyle = {
 const modalOverlayStyle = {
   position: "fixed",
   inset: 0,
-  background: "rgba(0,0,0,0.5)",
-  backdropFilter: "blur(4px)",
+  background: "rgba(0,0,0,0.6)",
+  backdropFilter: "blur(6px)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   zIndex: 1000,
-  padding: "clamp(0.5rem, 2vw, 1rem)",
+  padding: "clamp(0.8rem, 3vw, 1.5rem)",
 };
 
 const modalContentStyle = {
   background: "#fff",
-  borderRadius: "16px",
-  maxWidth: "min(500px, 95vw)",
+  borderRadius: "20px",
+  maxWidth: "min(550px, 95vw)",
   width: "100%",
-  padding: "clamp(1rem, 2vw, 2rem)",
-  boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+  padding: "clamp(1.5rem, 3vw, 2.5rem)",
+  boxShadow: "0 30px 80px rgba(0,0,0,0.35)",
   maxHeight: "90vh",
   overflowY: "auto",
 };
@@ -97,6 +98,7 @@ function ResenaCard({
   showEliminar = false,
 }) {
   const [eliminando, setEliminando] = useState(false);
+  const isMobile = window.innerWidth < 600;
 
   const handleEliminar = async () => {
     if (!window.confirm("¿Seguro que quieres eliminar esta reseña?")) return;
@@ -105,21 +107,19 @@ function ResenaCard({
     setEliminando(false);
   };
 
-  const isMobile = window.innerWidth < 480;
-
   return (
     <div
       style={{
         background: "#fff",
-        borderRadius: "8px",
-        padding: "clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.2vw, 1.25rem)",
-        marginBottom: "0.75rem",
-        border: "1px solid rgba(183,142,86,0.1)",
+        borderRadius: "12px",
+        padding: "clamp(1rem, 1.5vw, 1.5rem) clamp(1rem, 1.8vw, 2rem)",
+        marginBottom: "1rem",
+        border: "1px solid rgba(183,142,86,0.15)",
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         justifyContent: "space-between",
         alignItems: isMobile ? "stretch" : "flex-start",
-        gap: "clamp(0.5rem, 1vw, 1rem)",
+        gap: "clamp(0.75rem, 1.5vw, 1.5rem)",
       }}
     >
       <div style={{ flex: 1 }}>
@@ -127,16 +127,16 @@ function ResenaCard({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "clamp(0.4rem, 0.75vw, 0.75rem)",
+            gap: "clamp(0.6rem, 1vw, 1rem)",
             flexWrap: "wrap",
             marginBottom: "4px",
           }}
         >
           <span
             style={{
-              fontWeight: 600,
+              fontWeight: 700,
               color: "#5c4033",
-              fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
               fontFamily: "'Inter', sans-serif",
             }}
           >
@@ -144,7 +144,7 @@ function ResenaCard({
           </span>
           <span
             style={{
-              fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
+              fontSize: "clamp(0.9rem, 1vw, 1rem)",
               color: "#b78e56",
             }}
           >
@@ -152,7 +152,7 @@ function ResenaCard({
           </span>
           <span
             style={{
-              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
               color: "#8a7a5c",
             }}
           >
@@ -161,10 +161,11 @@ function ResenaCard({
         </div>
         <p
           style={{
-            margin: "4px 0 0",
+            margin: "6px 0 0",
             color: "#6b5b45",
-            fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+            fontSize: "clamp(0.95rem, 1.05vw, 1.05rem)",
             fontFamily: "'Inter', sans-serif",
+            lineHeight: 1.6,
           }}
         >
           {resena.mensaje}
@@ -172,9 +173,9 @@ function ResenaCard({
         {resena.estado === "publicada" && resena.publicado && (
           <p
             style={{
-              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
               color: "#4CAF50",
-              margin: "4px 0 0",
+              margin: "6px 0 0",
             }}
           >
             ✅ Publicada el {new Date(resena.publicado).toLocaleDateString()}
@@ -183,9 +184,9 @@ function ResenaCard({
         {resena.estado === "rechazada" && (
           <p
             style={{
-              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
               color: "#a8452f",
-              margin: "4px 0 0",
+              margin: "6px 0 0",
             }}
           >
             ❌ Rechazada
@@ -197,7 +198,7 @@ function ResenaCard({
         <div
           style={{
             display: "flex",
-            gap: "0.5rem",
+            gap: "0.75rem",
             flexShrink: 0,
             flexWrap: "wrap",
           }}
@@ -206,10 +207,10 @@ function ResenaCard({
             onClick={() => onPublicar(resena.id)}
             style={{
               ...buttonStyle,
-              padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+              padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
               background: "#4CAF50",
               color: "#fff",
-              fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
             }}
           >
             ✅ Publicar
@@ -218,10 +219,10 @@ function ResenaCard({
             onClick={() => onRechazar(resena.id)}
             style={{
               ...buttonStyle,
-              padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+              padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
               background: "#e67e22",
               color: "#fff",
-              fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+              fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
             }}
           >
             Rechazar
@@ -235,11 +236,11 @@ function ResenaCard({
           disabled={eliminando}
           style={{
             ...buttonStyle,
-            padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+            padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
             background: "transparent",
             color: "#a8452f",
-            border: "1px solid #a8452f",
-            fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+            border: "1.5px solid #a8452f",
+            fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
           }}
         >
           {eliminando ? "..." : "🗑️ Eliminar"}
@@ -262,7 +263,9 @@ function ResenasSection({
   if (cargandoResenas) {
     return (
       <div style={{ textAlign: "center", padding: "3rem", color: "#8a7a5c" }}>
-        <p>Cargando reseñas...</p>
+        <p style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)" }}>
+          Cargando reseñas...
+        </p>
       </div>
     );
   }
@@ -273,14 +276,13 @@ function ResenasSection({
 
   return (
     <div>
-      {/* Estadísticas */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(100%, 120px), 1fr))",
-          gap: "clamp(0.5rem, 1vw, 1rem)",
-          marginBottom: "1.5rem",
+            "repeat(auto-fit, minmax(min(100%, 150px), 1fr))",
+          gap: "clamp(0.75rem, 1.5vw, 1.5rem)",
+          marginBottom: "2rem",
         }}
       >
         {[
@@ -292,23 +294,23 @@ function ResenasSection({
             key={stat.label}
             style={{
               background: "#fff",
-              borderRadius: "8px",
-              padding: "clamp(0.5rem, 1vw, 1rem)",
-              border: "1px solid rgba(183,142,86,0.1)",
+              borderRadius: "12px",
+              padding: "clamp(0.75rem, 1.2vw, 1.5rem)",
+              border: "1px solid rgba(183,142,86,0.12)",
             }}
           >
             <p
               style={{
-                fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+                fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                 color: "#8a7a5c",
-                margin: "0 0 4px",
+                margin: "0 0 6px",
               }}
             >
               {stat.label}
             </p>
             <p
               style={{
-                fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                fontSize: "clamp(1.5rem, 2vw, 2rem)",
                 fontWeight: 300,
                 color: stat.color,
                 margin: 0,
@@ -320,14 +322,13 @@ function ResenasSection({
         ))}
       </div>
 
-      {/* Pendientes */}
       {pendientes.length > 0 && (
-        <div style={{ marginBottom: "2rem" }}>
+        <div style={{ marginBottom: "2.5rem" }}>
           <h3
             style={{
               color: "#e67e22",
-              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
-              marginBottom: "0.75rem",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginBottom: "1rem",
             }}
           >
             📝 Pendientes de moderar
@@ -344,14 +345,13 @@ function ResenasSection({
         </div>
       )}
 
-      {/* Publicadas */}
       {publicadas.length > 0 && (
-        <div style={{ marginBottom: "2rem" }}>
+        <div style={{ marginBottom: "2.5rem" }}>
           <h3
             style={{
               color: "#4CAF50",
-              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
-              marginBottom: "0.75rem",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginBottom: "1rem",
             }}
           >
             ✅ Publicadas
@@ -369,14 +369,13 @@ function ResenasSection({
         </div>
       )}
 
-      {/* Rechazadas */}
       {rechazadas.length > 0 && (
         <div>
           <h3
             style={{
               color: "#a8452f",
-              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
-              marginBottom: "0.75rem",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginBottom: "1rem",
             }}
           >
             ❌ Rechazadas
@@ -397,7 +396,9 @@ function ResenasSection({
 
       {resenas.length === 0 && (
         <div style={{ textAlign: "center", padding: "2rem", color: "#8a7a5c" }}>
-          <p>No hay reseñas registradas.</p>
+          <p style={{ fontSize: "clamp(0.95rem, 1.1vw, 1.1rem)" }}>
+            No hay reseñas registradas.
+          </p>
         </div>
       )}
     </div>
@@ -417,25 +418,26 @@ function MensajesSection({
   if (cargandoMensajes) {
     return (
       <div style={{ textAlign: "center", padding: "3rem", color: "#8a7a5c" }}>
-        <p>Cargando mensajes...</p>
+        <p style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)" }}>
+          Cargando mensajes...
+        </p>
       </div>
     );
   }
 
   const pendientes = mensajes.filter((m) => m.estado === "pendiente");
   const leidos = mensajes.filter((m) => m.estado === "leido");
-  const isMobile = window.innerWidth < 480;
+  const isMobile = window.innerWidth < 600;
 
   return (
     <div>
-      {/* Estadísticas */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(100%, 120px), 1fr))",
-          gap: "clamp(0.5rem, 1vw, 1rem)",
-          marginBottom: "1.5rem",
+            "repeat(auto-fit, minmax(min(100%, 150px), 1fr))",
+          gap: "clamp(0.75rem, 1.5vw, 1.5rem)",
+          marginBottom: "2rem",
         }}
       >
         {[
@@ -446,23 +448,23 @@ function MensajesSection({
             key={stat.label}
             style={{
               background: "#fff",
-              borderRadius: "8px",
-              padding: "clamp(0.5rem, 1vw, 1rem)",
-              border: "1px solid rgba(183,142,86,0.1)",
+              borderRadius: "12px",
+              padding: "clamp(0.75rem, 1.2vw, 1.5rem)",
+              border: "1px solid rgba(183,142,86,0.12)",
             }}
           >
             <p
               style={{
-                fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+                fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                 color: "#8a7a5c",
-                margin: "0 0 4px",
+                margin: "0 0 6px",
               }}
             >
               {stat.label}
             </p>
             <p
               style={{
-                fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                fontSize: "clamp(1.5rem, 2vw, 2rem)",
                 fontWeight: 300,
                 color: stat.color,
                 margin: 0,
@@ -474,14 +476,13 @@ function MensajesSection({
         ))}
       </div>
 
-      {/* Pendientes */}
       {pendientes.length > 0 && (
-        <div style={{ marginBottom: "2rem" }}>
+        <div style={{ marginBottom: "2.5rem" }}>
           <h3
             style={{
               color: "#e67e22",
-              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
-              marginBottom: "0.75rem",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginBottom: "1rem",
             }}
           >
             📩 Pendientes
@@ -491,45 +492,44 @@ function MensajesSection({
               key={mensaje.id}
               style={{
                 background: "#fff",
-                borderRadius: "8px",
-                padding:
-                  "clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.2vw, 1.25rem)",
-                marginBottom: "0.75rem",
-                border: "1px solid rgba(183,142,86,0.1)",
+                borderRadius: "12px",
+                padding: "clamp(1rem, 1.5vw, 1.5rem) clamp(1rem, 1.8vw, 2rem)",
+                marginBottom: "1rem",
+                border: "1px solid rgba(183,142,86,0.12)",
                 display: "flex",
                 flexDirection: isMobile ? "column" : "row",
                 justifyContent: "space-between",
                 alignItems: isMobile ? "stretch" : "flex-start",
-                gap: "clamp(0.5rem, 1vw, 1rem)",
+                gap: "clamp(0.75rem, 1.5vw, 1.5rem)",
               }}
             >
               <div style={{ flex: 1 }}>
                 <p
                   style={{
-                    fontWeight: 600,
+                    fontWeight: 700,
                     color: "#5c4033",
-                    fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
+                    fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
                     fontFamily: "'Inter', sans-serif",
-                    margin: "0 0 4px",
+                    margin: "0 0 6px",
                   }}
                 >
                   {mensaje.nombre} • {mensaje.telefono}
                 </p>
                 <p
                   style={{
-                    margin: "4px 0 0",
+                    margin: "0 0 6px",
                     color: "#6b5b45",
-                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                    fontSize: "clamp(0.95rem, 1.05vw, 1.05rem)",
                     fontFamily: "'Inter', sans-serif",
+                    lineHeight: 1.6,
                   }}
                 >
                   {mensaje.mensaje}
                 </p>
                 <p
                   style={{
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+                    fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                     color: "#8a7a5c",
-                    margin: "4px 0 0",
                   }}
                 >
                   {new Date(mensaje.creado).toLocaleDateString()}
@@ -538,7 +538,7 @@ function MensajesSection({
               <div
                 style={{
                   display: "flex",
-                  gap: "0.5rem",
+                  gap: "0.75rem",
                   flexShrink: 0,
                   flexWrap: "wrap",
                 }}
@@ -547,26 +547,23 @@ function MensajesSection({
                   onClick={() => onResponder(mensaje)}
                   style={{
                     ...buttonStyle,
-                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                    padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
                     background: "#25D366",
                     color: "#fff",
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                   }}
                 >
-                  <MessageCircle
-                    size={14}
-                    style={{ marginRight: "4px" }}
-                  />{" "}
+                  <MessageCircle size={16} style={{ marginRight: "6px" }} />{" "}
                   Responder
                 </button>
                 <button
                   onClick={() => onLeer(mensaje.id)}
                   style={{
                     ...buttonStyle,
-                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                    padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
                     background: "#4CAF50",
                     color: "#fff",
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                   }}
                 >
                   ✅ Leído
@@ -575,11 +572,11 @@ function MensajesSection({
                   onClick={() => onEliminar(mensaje.id)}
                   style={{
                     ...buttonStyle,
-                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                    padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
                     background: "transparent",
                     color: "#a8452f",
-                    border: "1px solid #a8452f",
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+                    border: "1.5px solid #a8452f",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                   }}
                 >
                   🗑️ Eliminar
@@ -590,14 +587,13 @@ function MensajesSection({
         </div>
       )}
 
-      {/* Leídos */}
       {leidos.length > 0 && (
         <div>
           <h3
             style={{
               color: "#4CAF50",
-              fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
-              marginBottom: "0.75rem",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginBottom: "1rem",
             }}
           >
             ✅ Leídos
@@ -607,45 +603,44 @@ function MensajesSection({
               key={mensaje.id}
               style={{
                 background: "#fff",
-                borderRadius: "8px",
-                padding:
-                  "clamp(0.75rem, 1vw, 1rem) clamp(0.75rem, 1.2vw, 1.25rem)",
-                marginBottom: "0.75rem",
-                border: "1px solid rgba(183,142,86,0.1)",
+                borderRadius: "12px",
+                padding: "clamp(1rem, 1.5vw, 1.5rem) clamp(1rem, 1.8vw, 2rem)",
+                marginBottom: "1rem",
+                border: "1px solid rgba(183,142,86,0.12)",
                 display: "flex",
                 flexDirection: isMobile ? "column" : "row",
                 justifyContent: "space-between",
                 alignItems: isMobile ? "stretch" : "flex-start",
-                gap: "clamp(0.5rem, 1vw, 1rem)",
+                gap: "clamp(0.75rem, 1.5vw, 1.5rem)",
               }}
             >
               <div style={{ flex: 1 }}>
                 <p
                   style={{
-                    fontWeight: 600,
+                    fontWeight: 700,
                     color: "#5c4033",
-                    fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
+                    fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
                     fontFamily: "'Inter', sans-serif",
-                    margin: "0 0 4px",
+                    margin: "0 0 6px",
                   }}
                 >
                   {mensaje.nombre} • {mensaje.telefono}
                 </p>
                 <p
                   style={{
-                    margin: "4px 0 0",
+                    margin: "0 0 6px",
                     color: "#6b5b45",
-                    fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                    fontSize: "clamp(0.95rem, 1.05vw, 1.05rem)",
                     fontFamily: "'Inter', sans-serif",
+                    lineHeight: 1.6,
                   }}
                 >
                   {mensaje.mensaje}
                 </p>
                 <p
                   style={{
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+                    fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
                     color: "#8a7a5c",
-                    margin: "4px 0 0",
                   }}
                 >
                   {new Date(mensaje.creado).toLocaleDateString()}
@@ -654,7 +649,7 @@ function MensajesSection({
               <div
                 style={{
                   display: "flex",
-                  gap: "0.5rem",
+                  gap: "0.75rem",
                   flexShrink: 0,
                   flexWrap: "wrap",
                 }}
@@ -663,27 +658,24 @@ function MensajesSection({
                   onClick={() => onResponder(mensaje)}
                   style={{
                     ...buttonStyle,
-                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                    padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
                     background: "#25D366",
                     color: "#fff",
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                   }}
                 >
-                  <MessageCircle
-                    size={14}
-                    style={{ marginRight: "4px" }}
-                  />{" "}
+                  <MessageCircle size={16} style={{ marginRight: "6px" }} />{" "}
                   Responder
                 </button>
                 <button
                   onClick={() => onEliminar(mensaje.id)}
                   style={{
                     ...buttonStyle,
-                    padding: "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
+                    padding: "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
                     background: "transparent",
                     color: "#a8452f",
-                    border: "1px solid #a8452f",
-                    fontSize: "clamp(0.6rem, 0.7vw, 0.75rem)",
+                    border: "1.5px solid #a8452f",
+                    fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                   }}
                 >
                   🗑️ Eliminar
@@ -696,7 +688,9 @@ function MensajesSection({
 
       {mensajes.length === 0 && (
         <div style={{ textAlign: "center", padding: "2rem", color: "#8a7a5c" }}>
-          <p>No hay mensajes registrados.</p>
+          <p style={{ fontSize: "clamp(0.95rem, 1.1vw, 1.1rem)" }}>
+            No hay mensajes registrados.
+          </p>
         </div>
       )}
     </div>
@@ -728,8 +722,8 @@ function GraficoSemana({ porDia }) {
         style={{
           display: "flex",
           alignItems: "flex-end",
-          gap: "clamp(0.5rem, 1.5vw, 1.5rem)",
-          height: "clamp(100px, 15vw, 150px)",
+          gap: "clamp(0.8rem, 2vw, 2rem)",
+          height: "clamp(130px, 20vw, 180px)",
           padding: "0 4px",
         }}
       >
@@ -741,44 +735,45 @@ function GraficoSemana({ porDia }) {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "8px",
+              gap: "10px",
             }}
           >
             <div
               style={{
                 display: "flex",
                 alignItems: "flex-end",
-                gap: "4px",
-                height: "clamp(70px, 11vw, 110px)",
+                gap: "6px",
+                height: "clamp(90px, 14vw, 140px)",
               }}
             >
               <div
                 title={`Visitas: ${d.visitas}`}
                 style={{
-                  width: "clamp(8px, 1.2vw, 12px)",
-                  borderRadius: "3px 3px 0 0",
+                  width: "clamp(12px, 1.8vw, 18px)",
+                  borderRadius: "4px 4px 0 0",
                   background: "#b78e56",
-                  height: `${Math.max(2, (d.visitas / maxVisitas) * 100)}%`,
+                  height: `${Math.max(3, (d.visitas / maxVisitas) * 100)}%`,
                   transition: "height 0.4s ease",
                 }}
               />
               <div
                 title={`Citas: ${d.citas}`}
                 style={{
-                  width: "clamp(8px, 1.2vw, 12px)",
-                  borderRadius: "3px 3px 0 0",
+                  width: "clamp(12px, 1.8vw, 18px)",
+                  borderRadius: "4px 4px 0 0",
                   background: "#5c4033",
-                  height: `${Math.max(2, (d.citas / maxCitas) * 100)}%`,
+                  height: `${Math.max(3, (d.citas / maxCitas) * 100)}%`,
                   transition: "height 0.4s ease",
                 }}
               />
             </div>
             <span
               style={{
-                fontSize: "clamp(0.5rem, 0.68vw, 0.68rem)",
+                fontSize: "clamp(0.7rem, 0.9vw, 0.9rem)",
                 color: "#a89a80",
                 textTransform: "uppercase",
                 letterSpacing: "0.05em",
+                fontWeight: 600,
               }}
             >
               {DIAS_CORTOS[i]}
@@ -790,8 +785,8 @@ function GraficoSemana({ porDia }) {
       <div
         style={{
           display: "flex",
-          gap: "1.5rem",
-          marginTop: "1.25rem",
+          gap: "2rem",
+          marginTop: "1.5rem",
           flexWrap: "wrap",
         }}
       >
@@ -799,15 +794,15 @@ function GraficoSemana({ porDia }) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "6px",
-            fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
+            gap: "8px",
+            fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
             color: "#8a7a5c",
           }}
         >
           <span
             style={{
-              width: "8px",
-              height: "8px",
+              width: "12px",
+              height: "12px",
               borderRadius: "50%",
               background: "#b78e56",
             }}
@@ -818,15 +813,15 @@ function GraficoSemana({ porDia }) {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "6px",
-            fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
+            gap: "8px",
+            fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
             color: "#8a7a5c",
           }}
         >
           <span
             style={{
-              width: "8px",
-              height: "8px",
+              width: "12px",
+              height: "12px",
               borderRadius: "50%",
               background: "#5c4033",
             }}
@@ -854,7 +849,7 @@ function generarInformePDF(analisis) {
   doc.text(
     `Semana del ${formatFechaLarga(analisis.semana.desde)} al ${formatFechaLarga(analisis.semana.hasta)}`,
     14,
-    33
+    33,
   );
 
   doc.setDrawColor(183, 142, 86);
@@ -921,7 +916,7 @@ function generarInformePDF(analisis) {
   doc.text(
     `Generado el ${new Date().toLocaleDateString()} — Panel de administración`,
     14,
-    285
+    285,
   );
   doc.save(`informe-semanal-belleza-arabe-${analisis.semana.desde}.pdf`);
 }
@@ -940,7 +935,7 @@ function AnalisisSection({
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
-          gap: "clamp(0.5rem, 1vw, 1rem)",
+          gap: "clamp(0.75rem, 1.5vw, 1.5rem)",
           marginBottom: "2rem",
         }}
       >
@@ -948,32 +943,33 @@ function AnalisisSection({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "clamp(0.25rem, 0.5vw, 0.5rem)",
+            gap: "clamp(0.5rem, 1vw, 1rem)",
           }}
         >
           <button
             onClick={() => onCambiarSemana(semanaOffset - 1)}
             style={{
-              width: "clamp(26px, 3vw, 30px)",
-              height: "clamp(26px, 3vw, 30px)",
+              width: "clamp(34px, 4vw, 42px)",
+              height: "clamp(34px, 4vw, 42px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               background: "transparent",
-              border: "1px solid rgba(183,142,86,0.3)",
+              border: "1.5px solid rgba(183,142,86,0.4)",
               borderRadius: "50%",
               color: "#5c4033",
               cursor: "pointer",
             }}
           >
-            <ChevronLeft size={15} />
+            <ChevronLeft size={20} />
           </button>
           <span
             style={{
-              fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
+              fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)",
               color: "#5c4033",
-              minWidth: "clamp(140px, 20vw, 190px)",
+              minWidth: "clamp(160px, 25vw, 220px)",
               textAlign: "center",
+              fontWeight: 600,
             }}
           >
             {analisis
@@ -983,8 +979,8 @@ function AnalisisSection({
               <span
                 style={{
                   color: "#b78e56",
-                  fontSize: "0.7rem",
-                  marginLeft: "6px",
+                  fontSize: "0.8rem",
+                  marginLeft: "8px",
                 }}
               >
                 · esta semana
@@ -995,19 +991,19 @@ function AnalisisSection({
             onClick={() => onCambiarSemana(semanaOffset + 1)}
             disabled={semanaOffset >= 0}
             style={{
-              width: "clamp(26px, 3vw, 30px)",
-              height: "clamp(26px, 3vw, 30px)",
+              width: "clamp(34px, 4vw, 42px)",
+              height: "clamp(34px, 4vw, 42px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               background: "transparent",
-              border: "1px solid rgba(183,142,86,0.3)",
+              border: "1.5px solid rgba(183,142,86,0.4)",
               borderRadius: "50%",
               color: semanaOffset >= 0 ? "#d8cdb8" : "#5c4033",
               cursor: semanaOffset >= 0 ? "not-allowed" : "pointer",
             }}
           >
-            <ChevronRight size={15} />
+            <ChevronRight size={20} />
           </button>
         </div>
 
@@ -1017,27 +1013,29 @@ function AnalisisSection({
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "8px",
-            padding: "clamp(6px, 0.8vw, 10px) clamp(12px, 1.5vw, 20px)",
+            gap: "10px",
+            padding: "clamp(10px, 1.2vw, 14px) clamp(18px, 2.2vw, 28px)",
             background: "#b78e56",
             color: "#faf6f0",
             border: "none",
-            borderRadius: "8px",
+            borderRadius: "10px",
             cursor: analisis ? "pointer" : "not-allowed",
             opacity: analisis ? 1 : 0.5,
-            fontSize: "clamp(0.7rem, 0.85vw, 0.85rem)",
+            fontSize: "clamp(0.85rem, 1vw, 1rem)",
             fontFamily: "'Inter', sans-serif",
-            fontWeight: 500,
+            fontWeight: 600,
           }}
         >
-          <Download size={15} />
+          <Download size={18} />
           Descargar informe PDF
         </button>
       </div>
 
       {cargandoAnalisis && (
         <div style={{ textAlign: "center", padding: "3rem", color: "#8a7a5c" }}>
-          <p>Calculando análisis...</p>
+          <p style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)" }}>
+            Calculando análisis...
+          </p>
         </div>
       )}
 
@@ -1047,7 +1045,7 @@ function AnalisisSection({
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: "clamp(0.5rem, 2vw, 2.25rem)",
+              gap: "clamp(1rem, 2.5vw, 3rem)",
               marginBottom: "2rem",
               paddingBottom: "1.5rem",
               borderBottom: "1px solid rgba(183,142,86,0.15)",
@@ -1083,11 +1081,11 @@ function AnalisisSection({
               <div key={stat.label}>
                 <p
                   style={{
-                    fontSize: "clamp(1.5rem, 1.9vw, 1.9rem)",
+                    fontSize: "clamp(2rem, 2.5vw, 2.5rem)",
                     fontWeight: 200,
                     color: stat.color,
                     margin: 0,
-                    lineHeight: 1,
+                    lineHeight: 1.1,
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
@@ -1095,11 +1093,12 @@ function AnalisisSection({
                 </p>
                 <p
                   style={{
-                    fontSize: "clamp(0.55rem, 0.68vw, 0.68rem)",
+                    fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
                     color: "#a89a80",
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     margin: "4px 0 0",
+                    fontWeight: 600,
                   }}
                 >
                   {stat.label}
@@ -1111,18 +1110,18 @@ function AnalisisSection({
           <div
             style={{
               background: "#fff",
-              borderRadius: "12px",
-              padding: "clamp(1rem, 1.75vw, 1.75rem)",
+              borderRadius: "16px",
+              padding: "clamp(1.5rem, 2vw, 2.5rem)",
               border: "1px solid rgba(183,142,86,0.1)",
               marginBottom: "1.5rem",
             }}
           >
             <h3
               style={{
-                fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
-                fontWeight: 500,
+                fontSize: "clamp(1rem, 1.1vw, 1.2rem)",
+                fontWeight: 600,
                 color: "#5c4033",
-                margin: "0 0 1.25rem",
+                margin: "0 0 1.5rem",
               }}
             >
               Visitas y citas por día
@@ -1133,7 +1132,7 @@ function AnalisisSection({
           {analisis.resumen.visitas === 0 && (
             <p
               style={{
-                fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
+                fontSize: "clamp(0.85rem, 1vw, 1rem)",
                 color: "#a89a80",
                 fontStyle: "italic",
               }}
@@ -1149,7 +1148,7 @@ function AnalisisSection({
 }
 
 // ============================================
-// NAVEGACIÓN DE SECCIONES (responsive)
+// NAVEGACIÓN DE SECCIONES (responsive y más grande en móvil)
 // ============================================
 const SECCIONES = [
   { id: "citas", label: "Citas", icon: CalendarDays },
@@ -1165,9 +1164,10 @@ function SeccionNav({ activa, onChange, counts }) {
       aria-label="Secciones del panel"
       style={{
         display: "flex",
-        gap: "clamp(0.5rem, 1.75vw, 1.75rem)",
-        marginBottom: "2rem",
+        gap: "clamp(0.75rem, 2vw, 2.5rem)",
+        marginBottom: "2.5rem",
         flexWrap: "wrap",
+        justifyContent: "flex-start",
       }}
     >
       {SECCIONES.map(({ id, label, icon: Icon }) => {
@@ -1183,61 +1183,42 @@ function SeccionNav({ activa, onChange, counts }) {
               position: "relative",
               display: "flex",
               alignItems: "center",
-              gap: "clamp(4px, 0.8vw, 8px)",
-              padding: "0 0 12px",
-              background: "transparent",
-              border: "none",
+              gap: "clamp(6px, 1vw, 12px)",
+              padding: "clamp(10px, 1.2vw, 16px) clamp(14px, 2vw, 24px)",
+              background: isActive ? "#b78e56" : "transparent",
+              border: isActive ? "none" : "1.5px solid rgba(183,142,86,0.3)",
+              borderRadius: "50px",
               cursor: "pointer",
               fontFamily: "'Inter', sans-serif",
-              fontSize: "clamp(0.75rem, 0.9vw, 0.9rem)",
-              fontWeight: isActive ? 600 : 500,
-              color: isActive ? "#5c4033" : "#a89a80",
-              transition: "color 0.25s ease",
+              fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)",
+              fontWeight: isActive ? 700 : 500,
+              color: isActive ? "#fff" : "#5c4033",
+              transition: "all 0.25s ease",
+              boxShadow: isActive ? "0 6px 20px rgba(183,142,86,0.3)" : "none",
             }}
           >
-            <Icon size={16} strokeWidth={isActive ? 2.25 : 1.75} />
+            <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
             {label}
             {!!count && (
               <span
                 style={{
-                  fontSize: "0.7rem",
-                  fontWeight: 600,
-                  color: isActive ? "#fff" : "#8a7a5c",
-                  background: isActive ? "#b78e56" : "rgba(183,142,86,0.12)",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  color: isActive ? "#fff" : "#b78e56",
+                  background: isActive
+                    ? "rgba(255,255,255,0.25)"
+                    : "rgba(183,142,86,0.15)",
                   borderRadius: "999px",
-                  padding: "1px 7px",
-                  lineHeight: 1.5,
+                  padding: "2px 10px",
+                  lineHeight: 1.4,
                 }}
               >
                 {count}
               </span>
             )}
-            {isActive && (
-              <motion.div
-                layoutId="secciones-indicador"
-                transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: "2px",
-                  background: "#b78e56",
-                  borderRadius: "2px",
-                }}
-              />
-            )}
           </button>
         );
       })}
-      <div
-        style={{
-          flex: 1,
-          alignSelf: "flex-end",
-          borderBottom: "1px solid rgba(183,142,86,0.15)",
-          marginBottom: "12px",
-        }}
-      />
     </div>
   );
 }
@@ -1246,7 +1227,7 @@ function SeccionNav({ activa, onChange, counts }) {
 // ADMIN DASHBOARD PRINCIPAL
 // ============================================
 export default function AdminDashboard() {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user, logout } = useAuth0();
 
   // Estados
   const [citas, setCitas] = useState([]);
@@ -1365,7 +1346,7 @@ export default function AdminDashboard() {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       if (!res.ok) throw new Error("Error al cargar el análisis");
       const data = await res.json();
@@ -1506,7 +1487,7 @@ export default function AdminDashboard() {
     if (!mensajeActual || !mensajeResponder.trim()) return;
     const numeroCompleto = `34${mensajeActual.telefono}`;
     const url = `https://wa.me/${numeroCompleto}?text=${encodeURIComponent(
-      mensajeResponder
+      mensajeResponder,
     )}`;
     window.open(url, "_blank", "noreferrer");
     setModalWhatsApp(false);
@@ -1519,7 +1500,7 @@ export default function AdminDashboard() {
   // ============================================
   const enviarWhatsApp = (telefono, mensaje) => {
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-      mensaje
+      mensaje,
     )}`;
     window.open(url, "_blank", "noreferrer");
   };
@@ -1617,11 +1598,111 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
     >
       <main
         style={{
-          maxWidth: "1100px",
+          maxWidth: "1200px",
           margin: "0 auto",
-          padding: "clamp(0.5rem, 2vw, 2rem)",
+          padding: "clamp(0.8rem, 2.5vw, 2.5rem)",
         }}
       >
+        {/* ================================================ */}
+        {/* PERFIL DE USUARIO (más abajo, justo encima de tabs) */}
+        {/* ================================================ */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: window.innerWidth < 600 ? "column" : "row",
+            alignItems: window.innerWidth < 600 ? "stretch" : "center",
+            gap: "clamp(0.8rem, 2vw, 2rem)",
+            marginBottom: "2.5rem",
+            padding: "clamp(1.2rem, 2vw, 2rem)",
+            background: "#fff",
+            borderRadius: "16px",
+            boxShadow: "0 6px 24px rgba(92,64,51,0.06)",
+            border: "1px solid rgba(183,142,86,0.1)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "clamp(0.8rem, 1.5vw, 1.5rem)",
+              flex: 1,
+            }}
+          >
+            <div
+              style={{
+                width: "clamp(50px, 6vw, 70px)",
+                height: "clamp(50px, 6vw, 70px)",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #b78e56, #e8cfa0)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "clamp(1.4rem, 2vw, 2rem)",
+                fontWeight: 700,
+                color: "#fff",
+                flexShrink: 0,
+              }}
+            >
+              {(user?.name || user?.email || "U")[0].toUpperCase()}
+            </div>
+            <div>
+              <p
+                style={{
+                  fontSize: "clamp(1.1rem, 1.4vw, 1.6rem)",
+                  fontWeight: 700,
+                  color: "#5c4033",
+                  margin: 0,
+                }}
+              >
+                {user?.name || "Usuario"}
+              </p>
+              <p
+                style={{
+                  fontSize: "clamp(0.85rem, 0.95vw, 1rem)",
+                  color: "#8a7a5c",
+                  margin: "4px 0 0",
+                }}
+              >
+                {user?.email || ""}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() =>
+              logout({ logoutParams: { returnTo: window.location.origin } })
+            }
+            style={{
+              ...buttonStyle,
+              background: "transparent",
+              color: "#a8452f",
+              border: "1.5px solid #a8452f",
+              padding: "clamp(10px, 1.2vw, 14px) clamp(20px, 2.5vw, 34px)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
+              fontWeight: 600,
+              borderRadius: "50px",
+              justifyContent: "center",
+              whiteSpace: "nowrap",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#a8452f";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = "#a8452f";
+            }}
+          >
+            <LogOut size={18} />
+            Cerrar sesión
+          </button>
+        </div>
+
+        {/* ================================================ */}
+        {/* NAVEGACIÓN DE SECCIONES (más grande en móvil)   */}
+        {/* ================================================ */}
         <SeccionNav
           activa={seccionActiva}
           onChange={setSeccionActiva}
@@ -1641,7 +1722,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 justifyContent: "space-between",
                 alignItems: "flex-end",
                 flexWrap: "wrap",
-                gap: "clamp(0.5rem, 1.5vw, 1.5rem)",
+                gap: "clamp(0.8rem, 1.5vw, 1.5rem)",
                 marginBottom: "2rem",
                 paddingBottom: "1.5rem",
                 borderBottom: "1px solid rgba(183,142,86,0.15)",
@@ -1650,7 +1731,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               <div
                 style={{
                   display: "flex",
-                  gap: "clamp(1rem, 2.25vw, 2.25rem)",
+                  gap: "clamp(1.5rem, 2.5vw, 3rem)",
                   flexWrap: "wrap",
                 }}
               >
@@ -1663,8 +1744,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   {
                     label: "Hoy",
                     valor: citas.filter(
-                      (c) =>
-                        c.fecha === new Date().toISOString().split("T")[0]
+                      (c) => c.fecha === new Date().toISOString().split("T")[0],
                     ).length,
                     color: "#5c4033",
                   },
@@ -1687,11 +1767,11 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   >
                     <p
                       style={{
-                        fontSize: "clamp(1.5rem, 1.9vw, 1.9rem)",
+                        fontSize: "clamp(1.8rem, 2.2vw, 2.2rem)",
                         fontWeight: 200,
                         color: stat.color,
                         margin: 0,
-                        lineHeight: 1,
+                        lineHeight: 1.1,
                         fontVariantNumeric: "tabular-nums",
                       }}
                     >
@@ -1699,11 +1779,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     </p>
                     <p
                       style={{
-                        fontSize: "clamp(0.55rem, 0.68vw, 0.68rem)",
+                        fontSize: "clamp(0.65rem, 0.8vw, 0.85rem)",
                         color: "#a89a80",
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
                         margin: "4px 0 0",
+                        fontWeight: 600,
                       }}
                     >
                       {stat.label}
@@ -1716,7 +1797,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "clamp(0.3rem, 1vw, 1rem)",
+                  gap: "clamp(0.5rem, 1vw, 1rem)",
                   flexWrap: "wrap",
                 }}
               >
@@ -1724,11 +1805,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   <label
                     style={{
                       display: "block",
-                      fontSize: "clamp(0.55rem, 0.68vw, 0.68rem)",
+                      fontSize: "clamp(0.7rem, 0.8vw, 0.85rem)",
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: "#a89a80",
                       marginBottom: "4px",
+                      fontWeight: 600,
                     }}
                   >
                     Fecha
@@ -1738,14 +1820,15 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     value={filtroFecha}
                     onChange={(e) => setFiltroFecha(e.target.value)}
                     style={{
-                      padding: "4px 2px",
-                      fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
+                      padding: "6px 8px",
+                      fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
                       fontFamily: "'Inter', sans-serif",
                       color: "#5c4033",
                       background: "transparent",
                       border: "none",
-                      borderBottom: "1px solid rgba(183,142,86,0.4)",
+                      borderBottom: "2px solid rgba(183,142,86,0.4)",
                       outline: "none",
+                      fontWeight: 500,
                     }}
                   />
                 </div>
@@ -1759,10 +1842,11 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                       color: "#8a7a5c",
                       border: "none",
                       cursor: "pointer",
-                      fontSize: "clamp(0.65rem, 0.8vw, 0.8rem)",
+                      fontSize: "clamp(0.8rem, 0.9vw, 1rem)",
                       fontFamily: "'Inter', sans-serif",
                       textDecoration: "underline",
-                      textUnderlineOffset: "3px",
+                      textUnderlineOffset: "4px",
+                      fontWeight: 500,
                     }}
                   >
                     Hoy
@@ -1772,8 +1856,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   onClick={cargarCitas}
                   title="Actualizar"
                   style={{
-                    width: "clamp(30px, 3.4vw, 34px)",
-                    height: "clamp(30px, 3.4vw, 34px)",
+                    width: "clamp(38px, 4vw, 46px)",
+                    height: "clamp(38px, 4vw, 46px)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1784,7 +1868,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     cursor: "pointer",
                   }}
                 >
-                  <RefreshCw size={14} />
+                  <RefreshCw size={18} />
                 </button>
               </div>
             </div>
@@ -1793,12 +1877,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               <div
                 style={{
                   background: "rgba(168,69,47,0.08)",
-                  border: "1px solid rgba(168,69,47,0.2)",
+                  border: "1px solid rgba(168,69,47,0.25)",
                   color: "#a8452f",
-                  padding: "1rem 1.25rem",
-                  borderRadius: "10px",
+                  padding: "1rem 1.5rem",
+                  borderRadius: "12px",
                   marginBottom: "1.5rem",
-                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                  fontSize: "clamp(0.9rem, 1vw, 1.05rem)",
                 }}
               >
                 ❌ {error}
@@ -1809,25 +1893,27 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               <div
                 style={{
                   textAlign: "center",
-                  padding: "3rem",
+                  padding: "4rem",
                   color: "#8a7a5c",
                 }}
               >
                 <div
                   style={{
-                    width: "32px",
-                    height: "32px",
-                    border: "3px solid rgba(183,142,86,0.2)",
+                    width: "40px",
+                    height: "40px",
+                    border: "4px solid rgba(183,142,86,0.2)",
                     borderTopColor: "#b78e56",
                     borderRadius: "50%",
                     animation: "spin 1s linear infinite",
-                    margin: "0 auto 1rem",
+                    margin: "0 auto 1.5rem",
                   }}
                 />
                 <style>
                   {`@keyframes spin { to { transform: rotate(360deg); } }`}
                 </style>
-                <p>Cargando citas...</p>
+                <p style={{ fontSize: "clamp(1rem, 1.2vw, 1.2rem)" }}>
+                  Cargando citas...
+                </p>
               </div>
             )}
 
@@ -1839,25 +1925,25 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               >
                 <div
                   style={{
-                    width: "56px",
-                    height: "56px",
-                    margin: "0 auto 1.25rem",
+                    width: "70px",
+                    height: "70px",
+                    margin: "0 auto 1.5rem",
                     borderRadius: "50%",
-                    border: "1px dashed rgba(183,142,86,0.35)",
+                    border: "2px dashed rgba(183,142,86,0.35)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     color: "#b78e56",
                   }}
                 >
-                  <CalendarX size={22} strokeWidth={1.5} />
+                  <CalendarX size={30} strokeWidth={1.5} />
                 </div>
                 <p
                   style={{
-                    fontSize: "clamp(0.9rem, 1.05vw, 1.05rem)",
-                    fontWeight: 500,
+                    fontSize: "clamp(1.1rem, 1.3vw, 1.3rem)",
+                    fontWeight: 600,
                     color: "#5c4033",
-                    margin: "0 0 6px",
+                    margin: "0 0 8px",
                   }}
                 >
                   No hay citas{" "}
@@ -1867,7 +1953,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 </p>
                 <p
                   style={{
-                    fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
+                    fontSize: "clamp(0.9rem, 1vw, 1.05rem)",
                     color: "#a89a80",
                     margin: 0,
                   }}
@@ -1884,16 +1970,16 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   key={fecha}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  style={{ marginBottom: "1.5rem" }}
+                  style={{ marginBottom: "2rem" }}
                 >
                   <h2
                     style={{
-                      fontSize: "clamp(0.75rem, 0.85vw, 0.85rem)",
-                      fontWeight: 500,
-                      letterSpacing: "0.15em",
+                      fontSize: "clamp(0.9rem, 1.1vw, 1.1rem)",
+                      fontWeight: 700,
+                      letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: "#b78e56",
-                      margin: "0 0 0.75rem",
+                      margin: "0 0 1rem",
                       paddingLeft: "4px",
                     }}
                   >
@@ -1901,8 +1987,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     <span
                       style={{
                         color: "#8a7a5c",
-                        fontWeight: 400,
-                        marginLeft: "8px",
+                        fontWeight: 500,
+                        marginLeft: "10px",
                       }}
                     >
                       ({citasPorFecha[fecha].length} cita
@@ -1913,7 +1999,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                   <div
                     style={{
                       background: "#fff",
-                      borderRadius: "12px",
+                      borderRadius: "16px",
                       border: "1px solid rgba(183,142,86,0.1)",
                       overflow: "hidden",
                     }}
@@ -1923,23 +2009,22 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                         key={cita.id}
                         style={{
                           padding:
-                            "clamp(0.75rem, 1.25vw, 1.25rem) clamp(0.75rem, 1.5vw, 1.5rem)",
-                          borderBottom:
-                            "1px solid rgba(183,142,86,0.08)",
+                            "clamp(1rem, 1.5vw, 1.5rem) clamp(1rem, 2vw, 2rem)",
+                          borderBottom: "1px solid rgba(183,142,86,0.08)",
                           display: "grid",
                           gridTemplateColumns:
-                            window.innerWidth < 480
+                            window.innerWidth < 600
                               ? "1fr 1fr"
-                              : "80px 1fr 140px 100px 1fr",
-                          gap: "clamp(0.25rem, 1vw, 1rem)",
+                              : "90px 1fr 150px 120px 1fr",
+                          gap: "clamp(0.5rem, 1.2vw, 1.5rem)",
                           alignItems: "center",
                         }}
                       >
                         <div>
                           <span
                             style={{
-                              fontSize: "clamp(0.85rem, 1vw, 1rem)",
-                              fontWeight: 600,
+                              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+                              fontWeight: 700,
                               color: "#5c4033",
                               fontVariantNumeric: "tabular-nums",
                             }}
@@ -1951,9 +2036,9 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           <p
                             style={{
                               margin: "0 0 4px",
-                              fontWeight: 500,
+                              fontWeight: 600,
                               color: "#5c4033",
-                              fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
+                              fontSize: "clamp(0.95rem, 1.1vw, 1.15rem)",
                               fontFamily: "'Inter', sans-serif",
                             }}
                           >
@@ -1962,7 +2047,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           <p
                             style={{
                               margin: 0,
-                              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
+                              fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                               color: "#8a7a5c",
                             }}
                           >
@@ -1971,8 +2056,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           {cita.notas && (
                             <p
                               style={{
-                                margin: "4px 0 0",
-                                fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
+                                margin: "6px 0 0",
+                                fontSize: "clamp(0.75rem, 0.85vw, 0.9rem)",
                                 color: "#a8452f",
                                 fontStyle: "italic",
                               }}
@@ -1985,12 +2070,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           <span
                             style={{
                               display: "inline-block",
-                              padding: "4px 10px",
-                              background: "rgba(183,142,86,0.08)",
+                              padding: "6px 14px",
+                              background: "rgba(183,142,86,0.1)",
                               color: "#5c4033",
-                              borderRadius: "6px",
-                              fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
-                              fontWeight: 500,
+                              borderRadius: "8px",
+                              fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
+                              fontWeight: 600,
                             }}
                           >
                             {cita.servicio}
@@ -2001,9 +2086,9 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             <p
                               style={{
                                 margin: "0 0 2px",
-                                fontWeight: 600,
+                                fontWeight: 700,
                                 color: "#b78e56",
-                                fontSize: "clamp(0.85rem, 0.95vw, 0.95rem)",
+                                fontSize: "clamp(0.95rem, 1.1vw, 1.15rem)",
                               }}
                             >
                               {cita.precio * cita.personas}€
@@ -2012,7 +2097,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                           <p
                             style={{
                               margin: 0,
-                              fontSize: "clamp(0.65rem, 0.75vw, 0.75rem)",
+                              fontSize: "clamp(0.75rem, 0.85vw, 0.9rem)",
                               color: "#8a7a5c",
                             }}
                           >
@@ -2023,7 +2108,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                         <div
                           style={{
                             display: "flex",
-                            gap: "0.5rem",
+                            gap: "0.75rem",
                             justifyContent: "flex-end",
                             flexWrap: "wrap",
                           }}
@@ -2034,16 +2119,14 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             style={{
                               ...buttonStyle,
                               background:
-                                eliminando === cita.id
-                                  ? "#c4b49a"
-                                  : "#4CAF50",
+                                eliminando === cita.id ? "#c4b49a" : "#4CAF50",
                               color: "#fff",
                               opacity: eliminando === cita.id ? 0.6 : 1,
                               cursor:
                                 eliminando === cita.id ? "wait" : "pointer",
                               padding:
-                                "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
-                              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+                                "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
+                              fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                             }}
                           >
                             ✅ Aceptar
@@ -2054,16 +2137,14 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                             style={{
                               ...buttonStyle,
                               background:
-                                eliminando === cita.id
-                                  ? "#c4b49a"
-                                  : "#a8452f",
+                                eliminando === cita.id ? "#c4b49a" : "#a8452f",
                               color: "#fff",
                               opacity: eliminando === cita.id ? 0.6 : 1,
                               cursor:
                                 eliminando === cita.id ? "wait" : "pointer",
                               padding:
-                                "clamp(4px, 0.6vw, 6px) clamp(8px, 1vw, 14px)",
-                              fontSize: "clamp(0.6rem, 0.7vw, 0.7rem)",
+                                "clamp(8px, 1vw, 12px) clamp(14px, 1.8vw, 22px)",
+                              fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
                             }}
                           >
                             ❌ Cancelar
@@ -2135,8 +2216,9 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 style={{
                   color: "#5c4033",
                   fontFamily: "'Inter', sans-serif",
-                  marginBottom: "1rem",
-                  fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                  marginBottom: "1.2rem",
+                  fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)",
+                  fontWeight: 700,
                 }}
               >
                 💬 Responder por WhatsApp
@@ -2145,7 +2227,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 style={{
                   color: "#8a7a5c",
                   marginBottom: "1.5rem",
-                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                  fontSize: "clamp(0.95rem, 1.05vw, 1.1rem)",
                 }}
               >
                 Escribe tu mensaje para {mensajeActual?.nombre} (
@@ -2179,7 +2261,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     ...buttonStyle,
                     background: "transparent",
                     color: "#5c4033",
-                    border: "1px solid rgba(183,142,86,0.3)",
+                    border: "1.5px solid rgba(183,142,86,0.3)",
                   }}
                 >
                   Cancelar
@@ -2193,10 +2275,11 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     fontWeight: 600,
                     display: "flex",
                     alignItems: "center",
-                    gap: "4px",
+                    gap: "6px",
+                    fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
                   }}
                 >
-                  <MessageCircle size={16} /> Enviar por WhatsApp
+                  <MessageCircle size={18} /> Enviar por WhatsApp
                 </button>
               </div>
             </motion.div>
@@ -2230,8 +2313,9 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 style={{
                   color: "#5c4033",
                   fontFamily: "'Inter', sans-serif",
-                  marginBottom: "1rem",
-                  fontSize: "clamp(1.2rem, 1.5vw, 1.5rem)",
+                  marginBottom: "1.2rem",
+                  fontSize: "clamp(1.4rem, 1.8vw, 1.8rem)",
+                  fontWeight: 700,
                 }}
               >
                 {accion === "aceptar"
@@ -2242,7 +2326,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                 style={{
                   color: "#8a7a5c",
                   marginBottom: "1.5rem",
-                  fontSize: "clamp(0.8rem, 0.9vw, 0.9rem)",
+                  fontSize: "clamp(0.95rem, 1.05vw, 1.1rem)",
                 }}
               >
                 {accion === "aceptar"
@@ -2251,9 +2335,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
               </p>
               {accion === "aceptar" && (
                 <div style={{ marginBottom: "1.5rem" }}>
-                  <label style={labelStyle}>
-                    Mensaje adicional (opcional)
-                  </label>
+                  <label style={labelStyle}>Mensaje adicional (opcional)</label>
                   <textarea
                     value={mensaje}
                     onChange={(e) => setMensaje(e.target.value)}
@@ -2285,8 +2367,8 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     <p
                       style={{
                         color: "#a8452f",
-                        fontSize: "clamp(0.7rem, 0.8vw, 0.8rem)",
-                        marginTop: "4px",
+                        fontSize: "clamp(0.8rem, 0.9vw, 0.95rem)",
+                        marginTop: "6px",
                       }}
                     >
                       ⚠️ El motivo es obligatorio
@@ -2313,7 +2395,7 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     ...buttonStyle,
                     background: "transparent",
                     color: "#5c4033",
-                    border: "1px solid rgba(183,142,86,0.3)",
+                    border: "1.5px solid rgba(183,142,86,0.3)",
                   }}
                 >
                   Cancelar
@@ -2325,12 +2407,12 @@ Lamentamos las molestias. Puedes reservar nuevamente cuando quieras. 💛`;
                     ...buttonStyle,
                     background: accion === "aceptar" ? "#4CAF50" : "#a8452f",
                     color: "#fff",
-                    opacity:
-                      accion === "cancelar" && !motivo.trim() ? 0.5 : 1,
+                    opacity: accion === "cancelar" && !motivo.trim() ? 0.5 : 1,
                     cursor:
                       accion === "cancelar" && !motivo.trim()
                         ? "not-allowed"
                         : "pointer",
+                    fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
                   }}
                 >
                   {accion === "aceptar"
