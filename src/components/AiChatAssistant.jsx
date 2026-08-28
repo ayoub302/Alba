@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import "./AiChatAssistant.css";
 
-const API_URL = "http://localhost:4000/api";
+// ✅ Usar variable de entorno con fallback
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 function AiChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,6 @@ function AiChatAssistant() {
   const [isLoading, setIsLoading] = useState(false);
   const [suggestedQuestions, setSuggestedQuestions] = useState([]);
 
-  // ✅ Inicializar directamente en useState, sin useEffect
   const [sessionId] = useState(
     () =>
       `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
@@ -26,7 +26,6 @@ function AiChatAssistant() {
 
   const messagesEndRef = useRef(null);
 
-  // ✅ Obtener preguntas sugeridas al inicio (esto SÍ necesita useEffect porque es async)
   useEffect(() => {
     fetch(`${API_URL}/ai/preguntas-sugeridas`)
       .then((res) => res.json())
@@ -34,12 +33,10 @@ function AiChatAssistant() {
       .catch((err) => console.error("Error cargando sugerencias:", err));
   }, []);
 
-  // ✅ Scroll automático al último mensaje
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // ✅ Enviar mensaje
   const sendMessage = async (message = input) => {
     if (!message.trim()) return;
 
@@ -88,7 +85,6 @@ function AiChatAssistant() {
     }
   };
 
-  // ✅ Formatear mensaje con markdown básico
   const formatMessage = (content) => {
     return content
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -126,17 +122,14 @@ function AiChatAssistant() {
 
   return (
     <>
-      {/* Botón flotante */}
       {!isOpen && (
         <button className="chat-toggle-btn" onClick={() => setIsOpen(true)}>
           💬
         </button>
       )}
 
-      {/* Ventana de chat */}
       {isOpen && (
         <div className="chat-window">
-          {/* Header */}
           <div className="chat-header">
             <div className="chat-header-info">
               <span className="chat-avatar">🌸</span>
@@ -150,7 +143,6 @@ function AiChatAssistant() {
             </button>
           </div>
 
-          {/* Mensajes */}
           <div className="chat-messages">
             {messages.map((msg, index) => (
               <div
@@ -193,7 +185,6 @@ function AiChatAssistant() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Preguntas sugeridas */}
           {messages.length < 3 && suggestedQuestions.length > 0 && (
             <div className="chat-suggestions">
               <p className="suggestions-title">💡 Preguntas frecuentes:</p>
@@ -211,7 +202,6 @@ function AiChatAssistant() {
             </div>
           )}
 
-          {/* Input */}
           <div className="chat-input-area">
             <input
               type="text"

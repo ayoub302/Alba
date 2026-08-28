@@ -12,11 +12,11 @@
 
 import { useEffect } from "react";
 
-const API_URL = "http://localhost:4000/api";
+// ✅ Usar variable de entorno con fallback
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 export function useTrackVisita() {
   useEffect(() => {
-    // Evita contar varias veces la misma sesión de navegador en el mismo día
     const hoy = new Date().toISOString().split("T")[0];
     const clave = "visita_registrada";
     const ultima = sessionStorage.getItem(clave);
@@ -30,7 +30,7 @@ export function useTrackVisita() {
     })
       .then(() => sessionStorage.setItem(clave, hoy))
       .catch(() => {
-        /* si falla, no pasa nada — no bloqueamos la navegación del usuario */
+        /* si falla, no pasa nada */
       });
   }, []);
 }
